@@ -21,7 +21,7 @@
     "heroku-postbuild": "npm run build"
   },
   "engines": {
-    "node": "6.11.1"
+    "node": "6.x.x"
   },
   "author": "Matthew Eisenstadter, Molly, Jessica, Amy",
   "license": "ISC",
