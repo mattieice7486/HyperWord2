@@ -19,7 +19,7 @@ const Navbar = props => (
           }
         >
           <Link to="/" className="nav-link">
-            Account
+            About
           </Link>
         </li>
         <li
@@ -30,7 +30,7 @@ const Navbar = props => (
           }
         >
           <Link to="/discover" className="nav-link">
-            Score
+            Discover
           </Link>
         </li>
         <li
@@ -41,7 +41,7 @@ const Navbar = props => (
           }
         >
           <Link to="/search" className="nav-link">
-            Contact
+            Search
           </Link>
         </li>
         <li
@@ -53,6 +53,17 @@ const Navbar = props => (
         >
           <Link to="/leaderboard" className="nav-link">
             Leaderboard
+          </Link>
+        </li>
+        <li
+          className={
+            window.location.pathname === "/game"
+              ? "nav-item active"
+              : "nav-item"
+          }
+        >
+          <Link to="/game" className="nav-link">
+            Game
           </Link>
         </li>
       </ul>

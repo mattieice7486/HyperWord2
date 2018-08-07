@@ -4,6 +4,7 @@ import Discover from "./pages/Discover";
 import About from "./pages/About";
 import Search from "./pages/Search";
 import Leaderboard from "./pages/Leaderboard";
+import Game from "./pages/Game";
 import NoMatch from "./pages/NoMatch";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -19,6 +20,7 @@ const App = () => (
         <Route exact path="/discover" component={Discover} />
         <Route exact path="/search" component={Search} />
         <Route exact path="/leaderboard" component={Leaderboard} />
+        <Route exact path="/game" component={Game} />
         {/* <Route component={NoMatch} /> */}
       </Wrapper>
       <Footer />
