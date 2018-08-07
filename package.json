@@ -25,6 +25,9 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
   },
+  "engines": {
+    "node": ">=50.9"
+  },
   "author": "Matthew Eisenstadter, Molly, Jessica, Amy",
   "license": "ISC",
   "devDependencies": {
