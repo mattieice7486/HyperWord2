@@ -14,7 +14,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "install": "npm install",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build": "npm run build",
