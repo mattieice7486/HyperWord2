@@ -16,15 +16,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:prod": "node server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
-    "client": "cd client && npm run start",
-    "seed": "node scripts/seedDB.js",
-    "install": "cd client && npm install",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build"
+    "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": "6.x.x"
   },
   "author": "Matthew Eisenstadter, Molly, Jessica, Amy",
   "license": "ISC",
