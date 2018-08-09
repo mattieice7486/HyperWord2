@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import LoginPage from './components/auth/LoginPage';
 import Discover from "./pages/Discover";
 import About from "./pages/About";
 import Search from "./pages/Search";
@@ -21,6 +22,7 @@ const App = () => (
         <Route exact path="/search" component={Search} />
         <Route exact path="/leaderboard" component={Leaderboard} />
         <Route exact path="/game" component={Game} />
+        <Route path="/login" component={LoginPage}/>
         {/* <Route component={NoMatch} /> */}
       </Wrapper>
       <Footer />
