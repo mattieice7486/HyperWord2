@@ -20,6 +20,7 @@ let targetScore = Math.floor(Math.random() * (15 - 7)) + 7;
 var letterScore;
 
 
+
 class Game extends Component {
     state = {
       randomPOS,
@@ -33,10 +34,11 @@ class Game extends Component {
     };
 
 
-    letterClick = (event, letterGuessed, letterScore) => { //on letter click function
-        event.preventDefault();
-        letterGuessed = event.target.attributes.getNamedItem("value").value; //how push to screen??
-        letterScore = event.target.attributes.getNamedItem("datavalue").value;
+    letterClick = (event) => { //letter click function
+        console.log("letter clicked"); //nothing
+        //event.preventDefault();
+        let letterGuessed = event.target.attributes.getNamedItem("value").value; //how push to screen??
+        let letterScore = event.target.attributes.getNamedItem("datavalue").value;
         console.log("letter: " + letterGuessed);
         console.log("score: " + letterScore);
         //lettersGuessedArray.push(letterGuessed);
@@ -47,11 +49,13 @@ class Game extends Component {
         //need to define answerSpace component and pass props to render lettersGuessed???????????????????
         //$(".answerSpace").html = lettersGuessedArray.join(" "); //rename container?????
         const newState = { ...this.state }; //cloning current state to set state of letter component
+        this.setState(newState);
         //how to push newState & letter value to screen??
     };
         
-    clear = (event, letterGuessed) => {
+    clear = (event) => {
         event.preventDefault();
+        console.log("clear clicked!");
         var blankLetterArray = [];
         var blankScoreArray = [];
         this.setState({
@@ -59,9 +63,10 @@ class Game extends Component {
             lettersGuessedArray: blankLetterArray
         });
     };
-        
+
     backspace = (event, letterGuessed) => { //update this
         event.preventDefault();
+        console.log("backspace clicked!");
         //find last item in LettersGuessedArray and delete it from array and screen
         // this.state.lettersGuessedArray[this.state.lettersGuessedArray.length-1] = "";
         var newLetterArray = this.state.lettersGuessedArray.slice(0, -1);
@@ -75,7 +80,8 @@ class Game extends Component {
     };
 
     submit = (event) => {
-
+        //need if-then win/loss logic here
+        //need to calculate total word score
     };
 
               
@@ -87,7 +93,7 @@ class Game extends Component {
                 </Row>
                 <Row>
                     <h3 className="text-center">
-                    Fill in the blanks with letters that add up to the Target score.
+                    Fill in the blanks with letters that add up to the target score.
                             Your word must match the part of speech as well!
                     </h3>
                 </Row>
@@ -98,7 +104,7 @@ class Game extends Component {
                     <AnswerSpace />
                 </Row> */}
                 <Row className="text-center">
-                <Keyboard />
+                <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
                 </Row>
             </div>
         );
@@ -106,6 +112,7 @@ class Game extends Component {
         
 };
 
+//backspace and clear are console logging!!
 
     // POSIndex: partsOfSpeechArray.indexOf(this.state.randomPOS);
   

@@ -1,10 +1,9 @@
 import React from "react";
-import Game from "../../pages/Game.js";
 import "./KeyboardLetter.css";
 
 const KeyboardLetter = (props) => (
   <button
-    onClick={Game.letterClick}
+    onClick={props.onClick}
     value={props.value}
     datavalue={props.datavalue}
     className={`letter`}
