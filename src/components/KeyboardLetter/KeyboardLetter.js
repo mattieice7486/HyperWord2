@@ -6,10 +6,12 @@ const KeyboardLetter = (props) => (
   <button
     onClick={Game.letterClick}
     value={props.value}
-    data-value={props.dataValue} //changed from data-value
-    className={`letter ${props["value"]}`}
-    {...props}
-  />
+    datavalue={props.datavalue}
+    className={`letter`}
+    // {...props}
+  >
+  {props.value}
+  </button>
 );
 
 export default KeyboardLetter;
