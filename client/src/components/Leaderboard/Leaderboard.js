@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Container from "../Container";
 import Row from "../Row";
 import Col from "../Col";
+import ScoreRow from "../ScoreRow";
 
 const Leaderboard = props => (
     <div>
@@ -23,12 +24,14 @@ const Leaderboard = props => (
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th><span>{props.rank}</span></th>
-                            <th><span>{props.username}</span></th>
-                            <th><span>{props.roundsCompleted}</span></th>
-                            <th><span>{props.score}</span></th>
-                        </tr>
+                        {props.userArray.map((user, index) => {
+                            return (
+                                <ScoreRow 
+                                key={index}
+                                user={user} />
+                            )                
+                        }
+                        )}
                     </tbody>
                 </table>
             </Col>
@@ -48,10 +51,12 @@ const Leaderboard = props => (
                         </tr>
                     </thead>
                     <tbody>
-                        <th><span></span></th>
-                        <th><span></span></th>
-                        <th><span></span></th>
-                        <th><span></span></th>
+                        <tr>
+                        <td><span></span></td>
+                        <td><span></span></td>
+                        <td><span></span></td>
+                        <td><span></span></td>
+                        </tr>
                     </tbody>
                 </table>
             </Col>

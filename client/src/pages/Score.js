@@ -3,7 +3,6 @@ import HiScore from "../utils/HiScore";
 import Leaderboard from "../components/Leaderboard";
 import Container from "../components/Container";
 import Username from "../components/Username";
-import Keyboard from "../components/Keyboard";
 
 class Score extends Component {
     state = {
@@ -11,19 +10,21 @@ class Score extends Component {
         username: "",
         roundsCompleted: 0,
         score: 0,
+        userArray: []
     };
     
     componentDidMount() {
-        HiScore.getUserName()
-          .then(res => this.setState({ username: res.data.message }))
-          .catch(err => console.log(err));
-        HiScore.getRoundsCompleted()
-          .then(res => this.setState({ roundsCompleted: res.data.message }))
-          .catch(err => console.log(err));
-        HiScore.getScore()
-          .then(res => this.setState({ score: res.data.message }))
-          .catch(err => console.log(err));
-      }
+        this.setState({ userArray: HiScore });
+        // HiScore.getUserName()
+        //   .then(res => this.setState({ username: res.data.message }))
+        //   .catch(err => console.log(err));
+        // HiScore.getRoundsCompleted()
+        //   .then(res => this.setState({ roundsCompleted: res.data.message }))
+        //   .catch(err => console.log(err));
+        // HiScore.getScore()
+        //   .then(res => this.setState({ score: res.data.message }))
+        //   .catch(err => console.log(err));
+    }
 
     handleInputChange = event => {
         this.setState({ username: event.target.value });
@@ -44,13 +45,13 @@ class Score extends Component {
                     score={this.state.score}
                     username={this.state.username}
                     roundsCompleted={this.state.roundsCompleted}
+                    userArray={this.state.userArray}
                     />
                     <button className="btn btn-primary" onClick={this.clickButton}>score</button>
                     <Username 
                     handleInputChange={this.handleInputChange}
                     username={this.state.username}
                     />
-                    <Keyboard />
                 </Container>
             </div>
         )
