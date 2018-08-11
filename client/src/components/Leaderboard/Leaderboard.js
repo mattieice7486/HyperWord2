@@ -22,6 +22,16 @@ const Leaderboard = props => (
                             <th scope="col">Score</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr>
+                            <th><span></span></th>
+                            <th><span></span></th>
+                            <th><span></span></th>
+                            <th><span>
+                                {/* {props.state.score} */}
+                            </span></th>
+                        </tr>
+                    </tbody>
                 </table>
             </Col>
         </Row>
@@ -39,7 +49,11 @@ const Leaderboard = props => (
                         <th scope="col">Score</th>
                         </tr>
                     </thead>
-                    <tbody id="waitlistSection">
+                    <tbody>
+                        <th><span></span></th>
+                        <th><span></span></th>
+                        <th><span></span></th>
+                        <th><span></span></th>
                     </tbody>
                 </table>
             </Col>
