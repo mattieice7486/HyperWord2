@@ -52,27 +52,32 @@ class Game extends Component {
         //how to push newState & letter value to screen??
     };
 
-    clear = (event) => {
+    clear = (event) => { //////////////////////////////////////////////////
         event.preventDefault();
         console.log("clear clicked!");
-        var blankLetterArray = [];
-        var blankScoreArray = [];
-        this.setState({ blankScoreArray, blankLetterArray });
+        this.state.lettersGuessedArray.length = 0;
+        this.state.runningScoreArray = [];
+        console.log(this.state.lettersGuessedArray);
+        console.log(this.state.runningScoreArray);
+        // var blankLetterArray = [];
+        // var blankScoreArray = [];
+        // this.setState({ blankScoreArray, blankLetterArray });
     };
 
-    backspace = (event, letterGuessed) => { //update this
+    backspace = (event) => { //update this
         event.preventDefault();
         console.log("backspace clicked!");
         //find last item in LettersGuessedArray and delete it from array and screen
-        // this.state.lettersGuessedArray[this.state.lettersGuessedArray.length-1] = "";
-        var newLetterArray = this.state.lettersGuessedArray.slice(0, -1);
+        this.state.lettersGuessedArray.pop();
+        console.log("new backspaced letter array: " + this.state.lettersGuessedArray);
         //console.log("letters guessed array: " + this.state.lettersGuessedArray);
         //update lettersGuessedArray by removing the last item in the array, and then reset state
-        var newScoreArray = this.state.runningScoreArray.slice(0, -1);
-        this.setState({
-            lettersGuessedArray: newLetterArray,
-            runningScoreArray: newScoreArray
-        });
+        this.state.runningScoreArray.pop();
+        console.log("new backspaced score array: " + this.state.runningScoreArray);
+        // this.setState({
+        //     lettersGuessedArray: newLetterArray,
+        //     runningScoreArray: newScoreArray
+        // });
     };
 
     submit = (event) => {
@@ -93,12 +98,12 @@ class Game extends Component {
                             Your word must match the part of speech as well!
                     </h3>
                 </Row>
-                <Row>
-                    {/* <Timer /> */}
+                <Row className="text-center">
+                    {/* <Timer secondsLeft={"not working"}/> */}
                 </Row>
-                {/* <Row>
-                    <AnswerSpace />
-                </Row> */}
+                <Row className="text-center">
+                    <AnswerSpace message={"working"}/>
+                </Row>
                 <Row className="text-center">
                 <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
                 </Row>

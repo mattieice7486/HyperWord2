@@ -1,6 +1,31 @@
 import React from "react";
 import "./Timer.css";
 
+const Timer = (props) => {
+
+    <div>
+    <h3>Time left: </h3> {props.seconds} seconds
+    </div>
+
+    // state = {
+    //     secondsLeft: 60
+    // };
+
+    // this.timer = setInterval(function add() {
+    //     this.num++;
+    //     console.log(this.num);
+    //   }, 1000);
+
+
+    // setInterval = (props) => {
+    //     this.state.secondsLeft: this.state.secondsLeft - 1,
+    //     if (this.state.secondsLeft === 0) {
+    //         clearInterval();
+    //     }
+    // }
+};
+
+
 // var timer = function() { //should i change this to an object??
 //     var secondsLeft = 30;
 //     $(".timer-container").append("<p><span class='timer'></span></p><br>"); // $ IS NOT DEFINED???????!!!!!!!!
@@ -16,4 +41,4 @@ import "./Timer.css";
 // }
 
 
-// export default Timer;
+export default Timer;

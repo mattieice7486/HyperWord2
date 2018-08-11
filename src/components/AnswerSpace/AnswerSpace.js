@@ -3,11 +3,11 @@ import React from "react";
 import "./AnswerSpace.css";
 
 const AnswerSpace = (props) => {
-    <div>
         return (
-            <h1>Testing!</h1>
+            <div>
+            <h2>Answer space works! {props.message}</h2>
+            </div>
         )
-    </div>
 };
 
 export default AnswerSpace;
