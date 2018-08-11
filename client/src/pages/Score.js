@@ -3,6 +3,7 @@ import HiScore from "../utils/HiScore";
 import Leaderboard from "../components/Leaderboard";
 import Container from "../components/Container";
 import Username from "../components/Username";
+import Keyboard from "../components/Keyboard";
 
 class Score extends Component {
     state = {
@@ -29,7 +30,9 @@ class Score extends Component {
     };
 
     clickButton = () => {
-        this.setState({ score: this.state.score + 1});
+        this.setState({ rank: this.state.rank + 1});
+        this.setState({ roundsCompleted: this.state.roundsCompleted + 1});
+        this.setState({ score: this.state.score + 10});
     }
     
     render() {
@@ -37,17 +40,17 @@ class Score extends Component {
             <div>
                 <Container>
                     <Leaderboard 
+                    rank={this.state.rank}
                     score={this.state.score}
+                    username={this.state.username}
+                    roundsCompleted={this.state.roundsCompleted}
                     />
+                    <button className="btn btn-primary" onClick={this.clickButton}>score</button>
                     <Username 
                     handleInputChange={this.handleInputChange}
                     username={this.state.username}
                     />
-                    <button className="btn btn-primary" onClick={this.clickButton}>score</button>
-                    <p>{this.state.rank}</p>
-                    <p>{this.state.username}</p>
-                    <p>{this.state.roundsCompleted}</p>
-                    <p>{this.state.score}</p>
+                    <Keyboard />
                 </Container>
             </div>
         )

@@ -24,12 +24,10 @@ const Leaderboard = props => (
                     </thead>
                     <tbody>
                         <tr>
-                            <th><span></span></th>
-                            <th><span></span></th>
-                            <th><span></span></th>
-                            <th><span>
-                                {/* {props.state.score} */}
-                            </span></th>
+                            <th><span>{props.rank}</span></th>
+                            <th><span>{props.username}</span></th>
+                            <th><span>{props.roundsCompleted}</span></th>
+                            <th><span>{props.score}</span></th>
                         </tr>
                     </tbody>
                 </table>
