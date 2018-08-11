@@ -11,57 +11,53 @@ import AnswerSpace from "../components/AnswerSpace";
 //red thumb = user got it wrong
 
 //should these functions be contained in an object??
-const partsOfSpeech = { "n.": "noun", "a.": "adjective", "v.": "verb" };
-const partsOfSpeechArray = Object.values(partsOfSpeech);
-const abbreviatedPOSArray = Object.keys(partsOfSpeech);
-let randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
-// let abbreviatedRandomPOS = abbreviatedPOSArray[POSIndex];
-let targetScore = Math.floor(Math.random() * (15 - 7)) + 7;
-var letterScore;
+
 
 
 
 class Game extends Component {
+
+    partsOfSpeech = { "n.": "noun", "a.": "adjective", "v.": "verb" };
+    partsOfSpeechArray = Object.values(this.partsOfSpeech);
+    abbreviatedPOSArray = Object.keys(this.partsOfSpeech);
+
     state = {
-      randomPOS,
-      targetScore,
-      lettersGuessedArray: [],
-      letterGuessed: "",
-      letterScore,
-      runningScoreArray: [],
-      wins: 0,
-      userScore: 0
+        randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
+        targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
+        lettersGuessedArray: [],
+        letterGuessed: "",
+        letterScore: 0,
+        runningScoreArray: [],
+        wins: 0,
+        userScore: 0
     };
 
+    POSIndex = this.partsOfSpeechArray.indexOf(this.state.randomPOS);
+    abbreviatedRandomPOS = this.abbreviatedPOSArray[this.POSIndex];
 
     letterClick = (event) => { //letter click function
-        console.log("letter clicked"); //nothing
-        //event.preventDefault();
+        event.preventDefault();
         let letterGuessed = event.target.attributes.getNamedItem("value").value; //how push to screen??
         let letterScore = event.target.attributes.getNamedItem("datavalue").value;
         console.log("letter: " + letterGuessed);
         console.log("score: " + letterScore);
-        //lettersGuessedArray.push(letterGuessed);
-        //return new array with new letter guessed (concat)////////////////////
-        const newLetterArray = [...this.state.lettersGuessedArray, letterGuessed];
-        console.log("new letter array: " + newLetterArray);
-        this.setState(newLetterArray);
-        //need to define answerSpace component and pass props to render lettersGuessed???????????????????
-        //$(".answerSpace").html = lettersGuessedArray.join(" "); //rename container?????
-        const newState = { ...this.state }; //cloning current state to set state of letter component
-        this.setState(newState);
+        //not adding to array, just replacing with each new letter!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        (this.state.lettersGuessedArray).push(letterGuessed);
+        console.log("new letter array: " + this.state.lettersGuessedArray);
+        //this.setState({lettersGuessedArray}); //is this creating a new state element called newLetterArray, or is it changing lettersGuessedArray?? I think the first???
+        (this.state.runningScoreArray).push(letterScore);
+        console.log("new score array: " + this.state.runningScoreArray);
+        //const newState = { ...this.state }; //cloning current state to set state of component
+        //this.setState({newState});
         //how to push newState & letter value to screen??
     };
-        
+
     clear = (event) => {
         event.preventDefault();
         console.log("clear clicked!");
         var blankLetterArray = [];
         var blankScoreArray = [];
-        this.setState({
-            runningScoreArray: blankScoreArray,
-            lettersGuessedArray: blankLetterArray
-        });
+        this.setState({ blankScoreArray, blankLetterArray });
     };
 
     backspace = (event, letterGuessed) => { //update this
@@ -114,7 +110,7 @@ class Game extends Component {
 
 //backspace and clear are console logging!!
 
-    // POSIndex: partsOfSpeechArray.indexOf(this.state.randomPOS);
+    
   
     // When the component mounts, load the next dog to be displayed
     // componentDidMount() {

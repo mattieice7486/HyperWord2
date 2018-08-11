@@ -11,3 +11,5 @@ const AnswerSpace = (props) => {
 };
 
 export default AnswerSpace;
+
+//hoisting: common interview question

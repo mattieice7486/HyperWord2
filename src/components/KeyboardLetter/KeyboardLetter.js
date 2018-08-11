@@ -6,8 +6,8 @@ const KeyboardLetter = (props) => (
     onClick={props.onClick}
     value={props.value}
     datavalue={props.datavalue}
-    className={`letter`}
-    // {...props}
+    //className={`letter`}
+    {...props}
   >
   {props.value}
   </button>
