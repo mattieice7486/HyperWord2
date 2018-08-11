@@ -51,8 +51,8 @@ const Navbar = props => (
               : "nav-item"
           }
         >
-          <Link to="/leaderboard" className="nav-link">
-            Leaderboard
+          <Link to="/score" className="nav-link">
+            Score
           </Link>
         </li>
         <li
