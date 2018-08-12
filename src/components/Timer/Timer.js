@@ -2,11 +2,11 @@ import React from "react";
 import "./Timer.css";
 
 const Timer = (props) => {
-
-    <div>
-    <h3>{props.message}</h3>
-    </div>
-
+    return (
+        <div>
+        <h3>Timer {props.message}</h3>
+        </div>
+    )
     // state = {
     //     secondsLeft: 60
     // };

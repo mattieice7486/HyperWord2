@@ -1,13 +1,18 @@
 import React from "react";
 //import AnswerSpace from "../AnswerSpace";
 import "./AnswerSpace.css";
+//import "../Keyboard"
 
 const AnswerSpace = (props) => {
-        return (
-            <div>
-            <h2>Answer space {props.message}</h2>
-            </div>
-        )
+    return (
+        <div>
+            <h1>
+                Your letters: 
+                <br/>
+                {props.guesses}
+            </h1>
+        </div>
+    )
 };
 
 export default AnswerSpace;
