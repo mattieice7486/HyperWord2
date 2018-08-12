@@ -67,20 +67,17 @@ class Game extends Component {
         });
     };
 
-    backspace = (event) => { //I KNOW I SHOULDN'T MUTATE STATE--I'LL FIX THIS LATER
+    backspace = (event) => {
         event.preventDefault();
         console.log("backspace clicked!");
-        //find last item in LettersGuessedArray and delete it from array and screen
-        this.state.lettersGuessedArray.pop();
+        var newLetterArray = this.state.lettersGuessedArray;
+        newLetterArray.pop();
+        this.setState({ lettersGuessedArray: newLetterArray });
         console.log("new backspaced letter array: " + this.state.lettersGuessedArray);
-        //console.log("letters guessed array: " + this.state.lettersGuessedArray);
-        //update lettersGuessedArray by removing the last item in the array, and then reset state
-        this.state.runningScoreArray.pop();
+        var newScoreArray = this.state.runningScoreArray;
+        newScoreArray.pop();
+        this.setState({ runningScoreArray: newScoreArray });
         console.log("new backspaced score array: " + this.state.runningScoreArray);
-        // this.setState({
-        //     lettersGuessedArray: newLetterArray,
-        //     runningScoreArray: newScoreArray
-        // });
     };
 
     submit = (event) => {
