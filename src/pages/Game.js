@@ -23,25 +23,32 @@ class Game extends Component {
         runningScoreArray: [],
         wins: 0,
         userScore: 0,
-        secondsLeft: 60
+        secondsLeft: 60,
+        timer: null
+    };
+
+    timeOut = () => {
+        var newSecondsCount = this.state.secondsLeft;
+        //var newSecondsCount = this.state.secondsLeft;
+        newSecondsCount--;
+            //this.newSecondsCount--;
+        this.setState({
+            secondsLeft: newSecondsCount
+        });
+        console.log(this.state.secondsLeft);
+    };
+
+    componentDidMount() {
+        let timer = setInterval(this.timeOut, 1000);
+        this.setState({ timer });
     };
 
     POSIndex = this.partsOfSpeechArray.indexOf(this.state.randomPOS);
     abbreviatedRandomPOS = this.abbreviatedPOSArray[this.POSIndex];
 
-
     //check class recording for timer demo!
-    // timeOut = () => {
-    //     //var newSecondsCount = this.state.secondsLeft;
-    //     setInterval(function subtract() {
-    //         var newSecondsCount = this.state.secondsLeft;
-    //         newSecondsCount--;
-    //         //this.newSecondsCount--;
-    //         console.log(newSecondsCount);
-    //     }
-    // };
 
-    // setInterval(timeOut, 1000);
+
 
     letterClick = (event) => { //letter click function
 //////////////////// ARRAYS ARE BEING UPDATED IN CONSOLE BUT NOT ON SCREEN!!!!!!!!!! ////////////////////
@@ -50,17 +57,15 @@ class Game extends Component {
         var letterScore = event.target.attributes.getNamedItem("datavalue").value;
         console.log("letter: " + letterGuessed);
         console.log("score: " + letterScore);
-
         var newLetterArray = this.state.lettersGuessedArray; //state of letters array at that moment (click)
         newLetterArray.push(letterGuessed);
+        //need join to get rid of comments!!!!!!!!!!!!!!!!!!!!!!!!!!
         this.setState({ lettersGuessedArray: newLetterArray });
         console.log("new letter array: " + this.state.lettersGuessedArray);
-
         var newScoreArray = this.state.runningScoreArray;
         newScoreArray.push(letterScore);
         this.setState({ runningScoreArray: newScoreArray });
         console.log("new score array: " + this.state.runningScoreArray); //why undefined on the first click?????
-        //need to calculate total score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
 
     clear = (event) => {
@@ -91,6 +96,17 @@ class Game extends Component {
         //need if-else win/loss logic here
         //need to calculate final word score
     };
+
+    win = () => {
+        //calculate & display total score
+        //next level
+    };
+
+    loss = () => {
+
+    };
+
+    
 
 
 
