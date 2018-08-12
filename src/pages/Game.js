@@ -19,7 +19,7 @@ class Game extends Component {
     state = {
         randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
-        lettersGuessedArray: [],
+        lettersGuessedArray: ["a"],
         runningScoreArray: [],
         wins: 0,
         userScore: 0
@@ -59,9 +59,12 @@ class Game extends Component {
         this.state.runningScoreArray = [];
         console.log(this.state.lettersGuessedArray);
         console.log(this.state.runningScoreArray);
-        // var blankLetterArray = [];
-        // var blankScoreArray = [];
-        // this.setState({ blankScoreArray, blankLetterArray });
+        var blankLetterArray = [];
+        var blankScoreArray = [];
+        this.setState({
+            runningScoreArray: blankScoreArray,
+            lettersGuessedArray: blankLetterArray
+        });
     };
 
     backspace = (event) => { //I KNOW I SHOULDN'T MUTATE STATE--I'LL FIX THIS LATER
