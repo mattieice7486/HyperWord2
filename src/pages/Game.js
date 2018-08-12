@@ -52,13 +52,13 @@ class Game extends Component {
         //need to calculate total score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
 
-    clear = (event) => { //I KNOW I SHOULDN'T MUTATE STATE--I'LL FIX THIS LATER
+    clear = (event) => {
         event.preventDefault();
         console.log("clear clicked!");
-        this.state.lettersGuessedArray.length = 0;
-        this.state.runningScoreArray = [];
-        console.log(this.state.lettersGuessedArray);
-        console.log(this.state.runningScoreArray);
+        // this.state.lettersGuessedArray.length = 0;
+        // this.state.runningScoreArray = [];
+        // console.log(this.state.lettersGuessedArray);
+        // console.log(this.state.runningScoreArray);
         var blankLetterArray = [];
         var blankScoreArray = [];
         this.setState({
