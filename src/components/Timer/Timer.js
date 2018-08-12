@@ -4,7 +4,7 @@ import "./Timer.css";
 const Timer = (props) => {
 
     <div>
-    <h3>Time left: </h3> {props.seconds} seconds
+    <h3>{props.message}</h3>
     </div>
 
     // state = {

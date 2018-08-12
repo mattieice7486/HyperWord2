@@ -5,7 +5,7 @@ import "./AnswerSpace.css";
 const AnswerSpace = (props) => {
         return (
             <div>
-            <h2>Answer space works! {props.message}</h2>
+            <h2>Answer space {props.message}</h2>
             </div>
         )
 };

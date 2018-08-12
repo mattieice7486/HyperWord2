@@ -99,7 +99,7 @@ class Game extends Component {
                     </h3>
                 </Row>
                 <Row className="text-center">
-                    {/* <Timer secondsLeft={"not working"}/> */}
+                    <Timer message={"working"}/>
                 </Row>
                 <Row className="text-center">
                     <AnswerSpace message={"working"}/>

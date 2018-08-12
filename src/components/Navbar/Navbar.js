@@ -66,6 +66,17 @@ const Navbar = props => (
             Leaderboard
           </Link>
         </li>
+        <li
+          className={
+            window.location.pathname === "/createaccount"
+              ? "nav-item active"
+              : "nav-item"
+          }
+        >
+          <Link to="/createaccount" className="nav-link">
+            Create Account
+          </Link>
+        </li>
         {/* <li
           className={
             window.location.pathname === "/game"
