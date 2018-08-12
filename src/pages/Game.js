@@ -19,18 +19,29 @@ class Game extends Component {
     state = {
         randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
-        lettersGuessedArray: ["a"],
+        lettersGuessedArray: [],
         runningScoreArray: [],
         wins: 0,
-        userScore: 0
+        userScore: 0,
+        secondsLeft: 60
     };
 
     POSIndex = this.partsOfSpeechArray.indexOf(this.state.randomPOS);
     abbreviatedRandomPOS = this.abbreviatedPOSArray[this.POSIndex];
 
-//answerSpace should re-render when lettersGuessedArray is changed!!
 
-//is render() called on load, so the arrays in state are blank???????????????????????????
+    //check class recording for timer demo!
+    // timeOut = () => {
+    //     //var newSecondsCount = this.state.secondsLeft;
+    //     setInterval(function subtract() {
+    //         var newSecondsCount = this.state.secondsLeft;
+    //         newSecondsCount--;
+    //         //this.newSecondsCount--;
+    //         console.log(newSecondsCount);
+    //     }
+    // };
+
+    // setInterval(timeOut, 1000);
 
     letterClick = (event) => { //letter click function
 //////////////////// ARRAYS ARE BEING UPDATED IN CONSOLE BUT NOT ON SCREEN!!!!!!!!!! ////////////////////
@@ -55,10 +66,6 @@ class Game extends Component {
     clear = (event) => {
         event.preventDefault();
         console.log("clear clicked!");
-        // this.state.lettersGuessedArray.length = 0;
-        // this.state.runningScoreArray = [];
-        // console.log(this.state.lettersGuessedArray);
-        // console.log(this.state.runningScoreArray);
         var blankLetterArray = [];
         var blankScoreArray = [];
         this.setState({
@@ -82,7 +89,7 @@ class Game extends Component {
 
     submit = (event) => {
         //need if-else win/loss logic here
-        //need to calculate total word score
+        //need to calculate final word score
     };
 
 
@@ -100,7 +107,7 @@ class Game extends Component {
                     </h3>
                 </Row>
                 <Row className="text-center">
-                    <Timer message={"working"}/>
+                    <Timer seconds={this.state.secondsLeft}/>
                 </Row>
                 <Row className="text-center">
                     <AnswerSpace guesses={this.state.lettersGuessedArray}/>
