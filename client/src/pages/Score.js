@@ -3,6 +3,7 @@ import HiScore from "../utils/HiScore";
 import Leaderboard from "../components/Leaderboard";
 import Container from "../components/Container";
 import Username from "../components/Username";
+import firebase from "firebase";
 import _ from 'lodash';
 
 class Score extends Component {
@@ -39,13 +40,29 @@ class Score extends Component {
                 //     return o.userArray
                 // })   
             }
-            this.setState({ newArray: this.state.newArray[0] + 1})
+            this.setState({ userArray: []})
             console.log(this.state.newArray)
+    };
+    setArray = () => {
+        this.setState({ userArray: HiScore})
     };
 
     handleInputChange = event => {
         this.setState({ username: event.target.value });
     };
+
+    databasepush = () => {
+        var randomdata = 0;
+        randomdata++
+        var database = firebase.database();
+        function saveSearch() {
+            database.ref().push({
+                randomdata: randomdata, //save each new location entered by user to database
+            });
+        };
+        saveSearch();
+        console.log(randomdata);
+    }
 
     clickButton = () => {
         this.setState({ rank: this.state.rank + 1});
@@ -70,6 +87,10 @@ class Score extends Component {
         return (
             <div>
                 <Container>
+                    <button className="btn btn-primary" onClick={this.clickButton}>score</button>
+                    <button className="btn btn-primary" onClick={this.sortedArray}>hide</button>
+                    <button className="btn btn-primary" onClick={this.setArray}>show</button>
+                    <button className="btn btn-primary" onClick={this.databasepush}>firebase</button>
                     <Leaderboard 
                     rank={this.state.rank}
                     score={this.state.score}
@@ -77,8 +98,6 @@ class Score extends Component {
                     roundsCompleted={this.state.roundsCompleted}
                     userArray={this.state.userArray}
                     />
-                    <button className="btn btn-primary" onClick={this.clickButton}>score</button>
-                    <button className="btn btn-primary" onClick={this.sortedArray}>sort</button>
                     <Username 
                     handleInputChange={this.handleInputChange}
                     username={this.state.username}
