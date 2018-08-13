@@ -5,6 +5,8 @@ import Col from "../components/Col";
 import Timer from "../components/Timer";
 import AnswerSpace from "../components/AnswerSpace";
 import UserScore from "../components/UserScore";
+import TargetScore from "../components/TargetScore";
+import PartOfSpeech from "../components/PartOfSpeech";
 
 //each pupster card = the word that the user is guessing (AnswerSpace?)
 //green thumb = user got correct word
@@ -22,7 +24,7 @@ class Game extends Component {
         lettersGuessedArray: [],
         runningScoreArray: [],
         wins: 0,
-        userScore: 0,
+        userScore: 0, //should update on click of letter, not just on click of submit
         secondsLeft: 60,
         timer: null
     };
@@ -86,76 +88,35 @@ class Game extends Component {
 
 
     win = () => {
-        //calculate & display total score
-        //console.log("winner!");
-
-        //why is this.state.userScore showing an array????
-
         function parse(item) {
             //parse runningScoreArray to integers
             //then calculate total
             var parsed = parseInt(item);
             return parsed;
         };
-        
         var parsedArray = this.state.runningScoreArray.map(parse);
-        console.log("parsed array: " + parsedArray);
-
+        //console.log("parsed array: " + parsedArray);
         function getSum(total, num) {
             return total + num;
         };
-
-        //var winningScoreArray = this.state.runningScoreArray;
-        //console.log(winningScoreArray)
-        //console.log("first winningScore: " + winningScoreArray);
         var winningScore = parsedArray.reduce(getSum);
-        console.log("winning score before setState: " + winningScore); //just concatenates the numbers instead of adding
         this.setState({
             userScore: winningScore
         });
-        console.log("winning score after setState: " + this.state.userScore); //0
+
+        //move to next level, push score to db
     }
-
-        // function add(item, index) {
-        //     var sum = (item[index] + item[index+1]);
-        //     return sum;
-        // }
-        
-        // function tally() {
-        //     var winningScore = this.state.runningScoreArray.map(add);
-        //     console.log(winningScore);
-        //     this.setState({ userScore: winningScore });
-        //     return this.state.userScore;
-        // }
-            
-
-
-        //this.setState({ runningScoreArray });
-
-        //this.state.runningScoreArray.map(function(value));
-
-        // var runningScoreArray = [4, 9, 16, 25];
-
-        // function tally() {
-        //     x = document.getElementById("demo")
-        //     x.innerHTML = numbers.map(Math.sqrt);
-        // }
-
-
-        //next level
-
 
 
     loss = () => {
-
+        //need some kind of message saying they lost
+        console.log("sorry, you lost!");
     };
-
-
 
 
     submit = (event) => {
         //need if-else win/loss logic here
-        var win = true;
+        var win = false;
         if (win === true) {
             this.win();
             //calculate final word score
@@ -179,6 +140,12 @@ class Game extends Component {
                     Fill in the blanks with letters that add up to the target score.
                             Your word must match the part of speech as well!
                     </h3>
+                </Row>
+                <Row className="text-center">
+                    <PartOfSpeech POS={"part of speech works"} />
+                </Row>
+                <Row className="text-center">
+                    <TargetScore targetScore={"target score works"} />
                 </Row>
                 <Row className="text-center">
                     <Timer seconds={this.state.secondsLeft}/>
