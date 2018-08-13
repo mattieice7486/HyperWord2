@@ -29,13 +29,10 @@ class Game extends Component {
 
     timeOut = () => {
         var newSecondsCount = this.state.secondsLeft;
-        //var newSecondsCount = this.state.secondsLeft;
         newSecondsCount--;
-            //this.newSecondsCount--;
         this.setState({
             secondsLeft: newSecondsCount
         });
-        console.log(this.state.secondsLeft);
     };
 
     componentDidMount() {
@@ -46,18 +43,13 @@ class Game extends Component {
     POSIndex = this.partsOfSpeechArray.indexOf(this.state.randomPOS);
     abbreviatedRandomPOS = this.abbreviatedPOSArray[this.POSIndex];
 
-    //check class recording for timer demo!
-
-
-
-    letterClick = (event) => { //letter click function
-//////////////////// ARRAYS ARE BEING UPDATED IN CONSOLE BUT NOT ON SCREEN!!!!!!!!!! ////////////////////
+    letterClick = (event) => {
         event.preventDefault();
         var letterGuessed = event.target.attributes.getNamedItem("value").value;
         var letterScore = event.target.attributes.getNamedItem("datavalue").value;
         console.log("letter: " + letterGuessed);
         console.log("score: " + letterScore);
-        var newLetterArray = this.state.lettersGuessedArray; //state of letters array at that moment (click)
+        var newLetterArray = this.state.lettersGuessedArray;
         newLetterArray.push(letterGuessed);
         //need join to get rid of comments!!!!!!!!!!!!!!!!!!!!!!!!!!
         this.setState({ lettersGuessedArray: newLetterArray });
@@ -92,18 +84,84 @@ class Game extends Component {
         console.log("new backspaced score array: " + this.state.runningScoreArray);
     };
 
-    submit = (event) => {
-        //need if-else win/loss logic here
-        //need to calculate final word score
-    };
 
     win = () => {
         //calculate & display total score
+        //console.log("winner!");
+
+        //why is this.state.userScore showing an array????
+
+        function parse(item) {
+            //parse runningScoreArray to integers
+            //then calculate total
+            var parsed = parseInt(item);
+            return parsed;
+        };
+        
+        var parsedArray = this.state.runningScoreArray.map(parse);
+        console.log("parsed array: " + parsedArray);
+
+        function getSum(total, num) {
+            return total + num;
+        };
+
+        //var winningScoreArray = this.state.runningScoreArray;
+        //console.log(winningScoreArray)
+        //console.log("first winningScore: " + winningScoreArray);
+        var winningScore = parsedArray.reduce(getSum);
+        console.log("winning score before setState: " + winningScore); //just concatenates the numbers instead of adding
+        this.setState({
+            userScore: winningScore
+        });
+        console.log("winning score after setState: " + this.state.userScore); //0
+    }
+
+        // function add(item, index) {
+        //     var sum = (item[index] + item[index+1]);
+        //     return sum;
+        // }
+        
+        // function tally() {
+        //     var winningScore = this.state.runningScoreArray.map(add);
+        //     console.log(winningScore);
+        //     this.setState({ userScore: winningScore });
+        //     return this.state.userScore;
+        // }
+            
+
+
+        //this.setState({ runningScoreArray });
+
+        //this.state.runningScoreArray.map(function(value));
+
+        // var runningScoreArray = [4, 9, 16, 25];
+
+        // function tally() {
+        //     x = document.getElementById("demo")
+        //     x.innerHTML = numbers.map(Math.sqrt);
+        // }
+
+
         //next level
-    };
+
+
 
     loss = () => {
 
+    };
+
+
+
+
+    submit = (event) => {
+        //need if-else win/loss logic here
+        var win = true;
+        if (win === true) {
+            this.win();
+            //calculate final word score
+        } else if (win === false) {
+            this.loss();
+        }
     };
 
     
@@ -130,7 +188,7 @@ class Game extends Component {
                     {/* why isn't this re-rendering when state is updated???? */}
                 </Row>
                 <Row className="text-center">
-                    <UserScore score={this.state.runningScoreArray}/>
+                    <UserScore score={this.state.userScore}/>
                 </Row>
                 <Row className="text-center">
                 <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />

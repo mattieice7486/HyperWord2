@@ -41,7 +41,7 @@ const Keyboard = props => (
 
 <div>
     <KeyboardLetter value={"Z"} datavalue={10} onClick={props.letterClick} />
-    <KeyboardLetter value={"W"} datavalue={4} onClick={props.letterClick} />
+    <KeyboardLetter value={"X"} datavalue={8} onClick={props.letterClick} />
     <KeyboardLetter value={"C"} datavalue={3} onClick={props.letterClick} />
     <KeyboardLetter value={"V"} datavalue={4} onClick={props.letterClick} />
     <KeyboardLetter value={"B"} datavalue={3} onClick={props.letterClick} />
