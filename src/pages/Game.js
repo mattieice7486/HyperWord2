@@ -14,13 +14,18 @@ import PartOfSpeech from "../components/PartOfSpeech";
 
 class Game extends Component {
 
-    partsOfSpeech = { "n.": "noun", "a.": "adjective", "v.": "verb" };
+    partsOfSpeech = {
+        "n.": "noun",
+        "a.": "adjective",
+        "v.": "verb" //add transitive verb, etc.
+    };
     partsOfSpeechArray = Object.values(this.partsOfSpeech);
     abbreviatedPOSArray = Object.keys(this.partsOfSpeech);
 
     state = {
         randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
+        //// ^ how to update these two variables on win?? ////
         lettersGuessedArray: [],
         runningScoreArray: [],
         wins: 0,
@@ -53,13 +58,30 @@ class Game extends Component {
         console.log("score: " + letterScore);
         var newLetterArray = this.state.lettersGuessedArray;
         newLetterArray.push(letterGuessed);
-        //need join to get rid of comments!!!!!!!!!!!!!!!!!!!!!!!!!!
-        this.setState({ lettersGuessedArray: newLetterArray });
+        newLetterArray.join(" test "); //not working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         console.log("new letter array: " + this.state.lettersGuessedArray);
+        this.setState({ lettersGuessedArray: newLetterArray });
         var newScoreArray = this.state.runningScoreArray;
         newScoreArray.push(letterScore);
-        this.setState({ runningScoreArray: newScoreArray });
-        console.log("new score array: " + this.state.runningScoreArray); //why undefined on the first click?????
+
+        function parse(item) {
+            //parse runningScoreArray to integers
+            //then calculate total
+            var parsed = parseInt(item);
+            return parsed;
+        };
+        var parsedArray = this.state.runningScoreArray.map(parse);
+        //console.log("parsed array: " + parsedArray);
+        function getSum(total, num) {
+            return total + num;
+        };
+        var totalScore = parsedArray.reduce(getSum);
+
+        this.setState({
+            runningScoreArray: newScoreArray,
+            userScore: totalScore ///////////////////////////////////////
+        });
+        console.log("new score array: " + this.state.runningScoreArray);
     };
 
     clear = (event) => {
@@ -67,9 +89,11 @@ class Game extends Component {
         console.log("clear clicked!");
         var blankLetterArray = [];
         var blankScoreArray = [];
+
         this.setState({
             runningScoreArray: blankScoreArray,
-            lettersGuessedArray: blankLetterArray
+            lettersGuessedArray: blankLetterArray,
+            userScore: 0
         });
     };
 
@@ -82,12 +106,8 @@ class Game extends Component {
         console.log("new backspaced letter array: " + this.state.lettersGuessedArray);
         var newScoreArray = this.state.runningScoreArray;
         newScoreArray.pop();
-        this.setState({ runningScoreArray: newScoreArray });
-        console.log("new backspaced score array: " + this.state.runningScoreArray);
-    };
 
 
-    win = () => {
         function parse(item) {
             //parse runningScoreArray to integers
             //then calculate total
@@ -99,12 +119,29 @@ class Game extends Component {
         function getSum(total, num) {
             return total + num;
         };
-        var winningScore = parsedArray.reduce(getSum);
-        this.setState({
-            userScore: winningScore
-        });
+        var totalScore = parsedArray.reduce(getSum);
 
-        //move to next level, push score to db
+        this.setState({
+            runningScoreArray: newScoreArray,
+            userScore: totalScore ///////////////////////////////////////
+        });
+        console.log("new score array: " + this.state.runningScoreArray);
+    };
+
+
+    win = () => {
+        
+        // this.setState({
+        //     userScore: winningScore
+        // });
+
+        //userScore = winningScore!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        //push score to db
+        //if want to play again...
+            //generate new POS and target score
+            //move to next level
+
     }
 
 
@@ -116,6 +153,9 @@ class Game extends Component {
 
     submit = (event) => {
         //need if-else win/loss logic here
+        
+        //userScore === targetScore??
+        
         var win = false;
         if (win === true) {
             this.win();
@@ -137,22 +177,20 @@ class Game extends Component {
                 </Row>
                 <Row>
                     <h3 className="text-center">
-                    Fill in the blanks with letters that add up to the target score.
-                            Your word must match the part of speech as well!
+                    Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!
                     </h3>
                 </Row>
                 <Row className="text-center">
-                    <PartOfSpeech POS={"part of speech works"} />
+                    <PartOfSpeech POS={this.state.randomPOS} />
                 </Row>
                 <Row className="text-center">
-                    <TargetScore targetScore={"target score works"} />
+                    <TargetScore targetScore={this.state.targetScore} />
                 </Row>
                 <Row className="text-center">
                     <Timer seconds={this.state.secondsLeft}/>
                 </Row>
                 <Row className="text-center">
                     <AnswerSpace guesses={this.state.lettersGuessedArray}/>
-                    {/* why isn't this re-rendering when state is updated???? */}
                 </Row>
                 <Row className="text-center">
                     <UserScore score={this.state.userScore}/>
