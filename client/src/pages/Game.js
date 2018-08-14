@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Keyboard from "../components/Keyboard";
 import Row from "../components/Row";
 import Col from "../components/Col";
+import Container from "../components/Container";
 
 class Game extends Component {
     state = {
@@ -52,17 +53,18 @@ class Game extends Component {
     render() {
       return (
         <div>
-            <Row>
-                <h1 className="text-center">HyperWord 2</h1>
-            </Row>
-            <Row>
-                <h3 className="text-center">
-                Fill in the blanks with letters that add up to the Target score.
-                        Your word must match the part of speech as well!
-                </h3>
-            </Row>
-            <Keyboard>
-            </Keyboard>
+          <Container>
+              <Row>
+                  <h1 className="text-center">HyperWord 2</h1>
+              </Row>
+              <Row>
+                  <h3 className="text-center">
+                  Fill in the blanks with letters that add up to the Target score.
+                          Your word must match the part of speech as well!
+                  </h3>
+              </Row>
+              <Keyboard />
+            </Container>
         </div>
       );
     }

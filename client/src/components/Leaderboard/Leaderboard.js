@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import API from "../utils/API";
-import Card from "../components/Card";
-import Alert from "../components/Alert";
-import Hero from "../components/Hero";
-import Container from "../components/Container";
-import Row from "../components/Row";
-import Col from "../components/Col";
+import React from "react";
+import "./Leaderboard.css";
+import { Link } from "react-router-dom";
+import Container from "../Container";
+import Row from "../Row";
+import Col from "../Col";
+import ScoreRow from "../ScoreRow";
+import _ from 'lodash';
 
-const Leaderboard = () => (
+
+const Leaderboard = props => (
     <div>
     <Container>
         <Row>
@@ -24,6 +25,15 @@ const Leaderboard = () => (
                             <th scope="col">Score</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        {props.userArray.map((user, index) => {
+                            return (
+                                <ScoreRow 
+                                key={index}
+                                user={user} />
+                            )                
+                        })}
+                    </tbody>
                 </table>
             </Col>
         </Row>
@@ -41,15 +51,23 @@ const Leaderboard = () => (
                         <th scope="col">Score</th>
                         </tr>
                     </thead>
-                    <tbody id="waitlistSection">
+                    <tbody>
+                        {props.userArray.map((user, index) => {
+                            return (
+                                <ScoreRow 
+                                key={index}
+                                user={user} />
+                            )                
+                        })}
                     </tbody>
                 </table>
             </Col>
         </Row>
 
-
     </Container>
     </div>
+
 );
+
 
 export default Leaderboard;
