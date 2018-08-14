@@ -50,6 +50,8 @@ class Game extends Component {
     POSIndex = this.partsOfSpeechArray.indexOf(this.state.randomPOS);
     abbreviatedRandomPOS = this.abbreviatedPOSArray[this.POSIndex];
 
+    //function to calculate total??
+
     letterClick = (event) => {
         event.preventDefault();
         var letterGuessed = event.target.attributes.getNamedItem("value").value;
@@ -58,9 +60,10 @@ class Game extends Component {
         console.log("score: " + letterScore);
         var newLetterArray = this.state.lettersGuessedArray;
         newLetterArray.push(letterGuessed);
-        newLetterArray.join(" test "); //not working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         console.log("new letter array: " + this.state.lettersGuessedArray);
-        this.setState({ lettersGuessedArray: newLetterArray });
+        this.setState({
+            lettersGuessedArray: newLetterArray
+        });
         var newScoreArray = this.state.runningScoreArray;
         newScoreArray.push(letterScore);
 
@@ -79,7 +82,7 @@ class Game extends Component {
 
         this.setState({
             runningScoreArray: newScoreArray,
-            userScore: totalScore ///////////////////////////////////////
+            userScore: totalScore
         });
         console.log("new score array: " + this.state.runningScoreArray);
     };
@@ -99,14 +102,15 @@ class Game extends Component {
 
     backspace = (event) => {
         event.preventDefault();
-        console.log("backspace clicked!");
+        //console.log("backspace clicked!");
         var newLetterArray = this.state.lettersGuessedArray;
         newLetterArray.pop();
-        this.setState({ lettersGuessedArray: newLetterArray });
+        this.setState({
+            lettersGuessedArray: newLetterArray
+        });
         console.log("new backspaced letter array: " + this.state.lettersGuessedArray);
         var newScoreArray = this.state.runningScoreArray;
         newScoreArray.pop();
-
 
         function parse(item) {
             //parse runningScoreArray to integers
@@ -123,19 +127,16 @@ class Game extends Component {
 
         this.setState({
             runningScoreArray: newScoreArray,
-            userScore: totalScore ///////////////////////////////////////
+            userScore: totalScore
         });
         console.log("new score array: " + this.state.runningScoreArray);
     };
 
 
+
     win = () => {
         
-        // this.setState({
-        //     userScore: winningScore
-        // });
-
-        //userScore = winningScore!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        console.log("Congratulations, you won! Your total score was " + this.state.userScore + "points.")
 
         //push score to db
         //if want to play again...
@@ -154,7 +155,10 @@ class Game extends Component {
     submit = (event) => {
         //need if-else win/loss logic here
         
-        //userScore === targetScore??
+        //if userScore !== targetScore, loss
+            //otherwise ... if it doesn't appear in dictionary, loss
+                //otherwise ... if part of speech doesn't match, loss
+                    //otherwise, win
         
         var win = false;
         if (win === true) {
@@ -190,7 +194,7 @@ class Game extends Component {
                     <Timer seconds={this.state.secondsLeft}/>
                 </Row>
                 <Row className="text-center">
-                    <AnswerSpace guesses={this.state.lettersGuessedArray}/>
+                    <AnswerSpace guesses={this.state.lettersGuessedArray.join("")}/>
                 </Row>
                 <Row className="text-center">
                     <UserScore score={this.state.userScore}/>
