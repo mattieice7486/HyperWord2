@@ -10,7 +10,7 @@ const Navbar = props => (
     </Link>
     <div>
       <ul className="navbar-nav">
-        <li
+        {/* <li
           className={
             window.location.pathname === "/" ||
             window.location.pathname === "/about"
@@ -21,8 +21,8 @@ const Navbar = props => (
           <Link to="/" className="nav-link">
             About
           </Link>
-        </li>
-        <li
+        </li> */}
+        {/* <li
           className={
             window.location.pathname === "/discover"
               ? "nav-item active"
@@ -32,8 +32,8 @@ const Navbar = props => (
           <Link to="/discover" className="nav-link">
             Discover
           </Link>
-        </li>
-        <li
+        </li> */}
+        {/* <li
           className={
             window.location.pathname === "/search"
               ? "nav-item active"
@@ -43,18 +43,7 @@ const Navbar = props => (
           <Link to="/search" className="nav-link">
             Search
           </Link>
-        </li>
-        <li
-          className={
-            window.location.pathname === "/leaderboard"
-              ? "nav-item active"
-              : "nav-item"
-          }
-        >
-          <Link to="/score" className="nav-link">
-            Score
-          </Link>
-        </li>
+        </li> */}
         <li
           className={
             window.location.pathname === "/game"
@@ -66,7 +55,50 @@ const Navbar = props => (
             Game
           </Link>
         </li>
-        <li><Link to="login">Login</Link></li>
+        <li
+          className={
+            window.location.pathname === "/leaderboard"
+              ? "nav-item active"
+              : "nav-item"
+          }
+        >
+          <Link to="/leaderboard" className="nav-link">
+            Leaderboard
+          </Link>
+        </li>
+        <li
+          className={
+            window.location.pathname === "/createaccount"
+              ? "nav-item active"
+              : "nav-item"
+          }
+        >
+          <Link to="/createaccount" className="nav-link">
+            Create Account
+          </Link>
+        </li>
+        {/* <li
+          className={
+            window.location.pathname === "/game"
+              ? "nav-item active"
+              : "nav-item"
+          }
+        >
+          <Link to="/game" className="nav-link">
+            Create New Account
+          </Link>
+        </li>
+        <li
+          className={
+            window.location.pathname === "/game"
+              ? "nav-item active"
+              : "nav-item"
+          }
+        >
+          <Link to="/game" className="nav-link">
+            Log Out
+          </Link>
+        </li> */}
       </ul>
     </div>
   </nav>
