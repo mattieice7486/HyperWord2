@@ -4,20 +4,39 @@ import Row from "../components/Row";
 import Col from "../components/Col";
 import Timer from "../components/Timer";
 import AnswerSpace from "../components/AnswerSpace";
-import UserScore from "../components/UserScore";
+import UserScore from "../components/UserScore"; //for this round
 import TargetScore from "../components/TargetScore";
 import PartOfSpeech from "../components/PartOfSpeech";
+import NewGameBtn from "../components/NewGameBtn";
+import CurrentLevel from "../components/CurrentLevel";
+import TotalUserScore from "../components/TotalUserScore";
 
-//each pupster card = the word that the user is guessing (AnswerSpace?)
-//green thumb = user got correct word
-//red thumb = user got it wrong
+
+// win-loss logic
+// generate new POS and target score on load
+// other more complex parts of speech, and pluralize words?
+// starting new round of game
+// add definition?
+
+
+//on load AND on start of new game...
+    //generate new randomPOS and targetScore
+    //set score to 0
+    //restart timer
+    //clear lettersGuessedArray
+        // ^ but all of this happens anyway on load
+
+//on start of new game ONLY...
+    //show level they're on
+
 
 class Game extends Component {
 
     partsOfSpeech = {
         "n.": "noun",
         "a.": "adjective",
-        "v.": "verb" //add transitive verb, etc.
+        "v.": "verb", //add transitive verb, etc.
+        "t.v.": "verb"
     };
     partsOfSpeechArray = Object.values(this.partsOfSpeech);
     abbreviatedPOSArray = Object.keys(this.partsOfSpeech);
@@ -28,8 +47,10 @@ class Game extends Component {
         //// ^ how to update these two variables on win?? ////
         lettersGuessedArray: [],
         runningScoreArray: [],
-        wins: 0,
+        //wins: 0,
+        level: 1,
         userScore: 0, //should update on click of letter, not just on click of submit
+        totalUserScore: 0,
         secondsLeft: 60,
         timer: null
     };
@@ -42,9 +63,10 @@ class Game extends Component {
         });
     };
 
-    componentDidMount() {
+    componentDidMount() { //component = game, in this case
         let timer = setInterval(this.timeOut, 1000);
         this.setState({ timer });
+        //generate new POS and target score?????????????????
     };
 
     POSIndex = this.partsOfSpeechArray.indexOf(this.state.randomPOS);
@@ -56,8 +78,8 @@ class Game extends Component {
         event.preventDefault();
         var letterGuessed = event.target.attributes.getNamedItem("value").value;
         var letterScore = event.target.attributes.getNamedItem("datavalue").value;
-        console.log("letter: " + letterGuessed);
-        console.log("score: " + letterScore);
+        // console.log("letter: " + letterGuessed);
+        // console.log("score: " + letterScore);
         var newLetterArray = this.state.lettersGuessedArray;
         newLetterArray.push(letterGuessed);
         console.log("new letter array: " + this.state.lettersGuessedArray);
@@ -78,18 +100,18 @@ class Game extends Component {
         function getSum(total, num) {
             return total + num;
         };
-        var totalScore = parsedArray.reduce(getSum);
+        var total = parsedArray.reduce(getSum);
 
         this.setState({
             runningScoreArray: newScoreArray,
-            userScore: totalScore
+            userScore: total
         });
         console.log("new score array: " + this.state.runningScoreArray);
     };
 
     clear = (event) => {
         event.preventDefault();
-        console.log("clear clicked!");
+        //console.log("clear clicked!");
         var blankLetterArray = [];
         var blankScoreArray = [];
 
@@ -123,11 +145,11 @@ class Game extends Component {
         function getSum(total, num) {
             return total + num;
         };
-        var totalScore = parsedArray.reduce(getSum);
+        var total = parsedArray.reduce(getSum);
 
         this.setState({
             runningScoreArray: newScoreArray,
-            userScore: totalScore
+            userScore: total
         });
         console.log("new score array: " + this.state.runningScoreArray);
     };
@@ -136,37 +158,79 @@ class Game extends Component {
 
     win = () => {
         
-        console.log("Congratulations, you won! Your total score was " + this.state.userScore + "points.")
+        console.log("Congratulations, you won! Your total score was " + this.state.userScore + " points.")
 
-        //push score to db
+        //display score and push to db and leaderboard
+        //show definition?
+        //add 1 to wins tally
+        //stop timer
+        clearInterval(this.timer); //or clearInterval(this.timer)??
+        //disable all buttons
+        //give option to play again
         //if want to play again...
             //generate new POS and target score
             //move to next level
+            this.nextLevel();
+        //otherwise...
+            //say thanks for playing
+            //push score to db (and leaderboard if applicable)
 
     }
 
 
     loss = () => {
         //need some kind of message saying they lost
+        //give option to play again (need "new game" button??)
+        //stop timer
+        clearInterval(this.timer); //or clearInterval(this.timer)??
+        //disable all buttons
         console.log("sorry, you lost!");
     };
 
 
     submit = (event) => {
         //need if-else win/loss logic here
-        
+        var joinedArray = this.state.lettersGuessedArray.join("");
+        console.log(joinedArray);
         //if userScore !== targetScore, loss
-            //otherwise ... if it doesn't appear in dictionary, loss
-                //otherwise ... if part of speech doesn't match, loss
-                    //otherwise, win
-        
-        var win = false;
-        if (win === true) {
-            this.win();
-            //calculate final word score
-        } else if (win === false) {
+        if (this.state.userScore !== this.state.targetScore) {
             this.loss();
-        }
+        } else {
+            //if joinedArray isn't found in dictionary, loss
+        } //otherwise ... if part of speech doesn't match, loss
+        //otherwise, win
+
+        
+        // var win = false; //this part is just for testing purposes
+        // if (win === true) {
+        //     this.win();
+        //     //calculate final word score
+        // } else if (win === false) {
+        //     this.loss();
+        // }
+    };
+
+    nextLevel = () => { //for when user wins and wants to continue to next level
+    
+        var newLevel = this.state.level + 1; //show level they're on (update this.state.level)
+        this.setState({ level: newLevel });
+
+        //calculate totalUserScore (all past scores since last reload added together)!!!!!!!!!!!!!!!
+
+        this.setState({
+            userScore: 0, //set score FOR THIS ROUND to 0
+            lettersGuessedArray: [], //clear lettersGuessedArray
+            randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
+            targetScore: Math.floor(Math.random() * (15 - 7)) + 7
+            //generate new randomPOS and targetScore
+        });
+        
+
+
+    };
+
+    restartGame = () => {
+        //reload page
     };
 
     
@@ -185,6 +249,12 @@ class Game extends Component {
                     </h3>
                 </Row>
                 <Row className="text-center">
+                    <CurrentLevel level={this.state.level} />
+                </Row>
+                <Row className="text-center">
+                    <TotalUserScore totalUserScore={this.state.totalUserScore} />
+                </Row>
+                <Row className="text-center">
                     <PartOfSpeech POS={this.state.randomPOS} />
                 </Row>
                 <Row className="text-center">
@@ -201,6 +271,11 @@ class Game extends Component {
                 </Row>
                 <Row className="text-center">
                 <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
+                </Row>
+                <br />
+                <br />
+                <Row className="text-center">
+                <NewGameBtn />
                 </Row>
             </div>
         );
