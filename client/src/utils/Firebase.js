@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import firebase from 'firebase'
+// import keys from 'keys'
 
 var config = {
     apiKey: "AIzaSyAeNje3Lz-SA6WnqIYHn7PXOtaeTNHICJE",

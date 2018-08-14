@@ -32,7 +32,6 @@ class Score extends Component {
     sortedArray = () => {
         var i;
         for (i=0;i<this.state.newArray.length;i++) {
-            console.log(i);
             // _
             // .chain(this.state.userArray)
             // .sortBy('score')
@@ -41,7 +40,6 @@ class Score extends Component {
                 // })   
             }
             this.setState({ userArray: []})
-            console.log(this.state.newArray)
     };
     setArray = () => {
         this.setState({ userArray: HiScore})
@@ -104,6 +102,7 @@ class Score extends Component {
                     />
                     <p>{_.dropRight(this.state.newArray)}</p>
                     {/* <p>{(this.state.userArray)}</p> */}
+                    <p>{(this.state.username)}</p>
                 </Container>
             </div>
         )
