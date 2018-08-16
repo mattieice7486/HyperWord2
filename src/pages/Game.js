@@ -10,16 +10,15 @@ import PartOfSpeech from "../components/PartOfSpeech";
 import NewGameBtn from "../components/NewGameBtn";
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
+//import ScoreThisRound from "../components/ScoreThisRound";
 import Card from "../components/Card";
 
-//userWordValue is for the value of their current word; totalUserScore is from secondsLeft, and it's carried over from round to round!!!!!!!!!!!
-//double-check scoring!
-//WHY WON'T randomPOS SHOW UP ON CARD????????????????????
+//unable to stop/restart timer on win/loss!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//on submit, doesn't clear total user score!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // win-loss logic
 // other more complex parts of speech, and pluralize words?
 // starting new round of game
 // add definition?
-// cards for aliens that represent parts of speech (plus target score??)
 // start button to begin game if time
 // on submit, trigger next card with score, result, definition!!!!!!!!!!!!!!!!!!!!
 // deploy to heroku
@@ -70,11 +69,13 @@ class Game extends Component {
         this.setState({
             secondsLeft: newSecondsCount
         });
+        //console.log("seconds left: " + this.state.secondsLeft)
     };
 
     componentDidMount() { //component = game, in this case
         let timer = setInterval(this.timeOut, 1000);
         this.setState({ timer });
+        //load next dog function
     };
 
     POSIndex = this.partsOfSpeechArray.indexOf(this.state.randomPOS);
@@ -168,28 +169,27 @@ class Game extends Component {
         
         //display score from this round
         var newWinningScore = this.state.secondsLeft * 10;
+        //console.log("new winning score: " + newWinningScore); //ok
         this.setState({ scoreThisRound: newWinningScore });
-        console.log("score this round: " + this.state.scoreThisRound);
-        
+        //console.log("score this round: " + this.state.scoreThisRound);
         //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!
-        var newTotalScore = this.state.totalUserScore + this.state.scoreThisRound;
+        var newTotalScore = this.state.totalUserScore + newWinningScore;
+        //console.log("new total score: " + newTotalScore); //ok
         this.setState({ totalUserScore: newTotalScore });
+        //print both to screen
 
-        console.log("your total score so far is " + this.state.totalUserScore);
-
-
-
-        console.log("Congratulations, you won! Your total score was " + this.state.totalUserScore + " points. Would you like to play again?")
-
+        console.log("Congratulations, you won! This round, you scored " + newWinningScore + " points. Your total score so far is " + newTotalScore + " points. Would you like to play again?");
+        // WHY IS SCORETHISROUND 0???????????????????????????????????????????????????????????????/
         //display score and push to db and leaderboard
         //show definition?
-        //add 1 to wins tally?
+        //add 1 to wins tally? necessary??
         
         //stop timer
         clearInterval(this.timer); //not working
         clearInterval(this.timeOut); //not working
         //disable all buttons
         //give option to play again
+
         //if want to play again...
             //generate new POS and target score
             //move to next level
@@ -214,7 +214,7 @@ class Game extends Component {
 
     submit = (event) => {
 
-        var joinedArray = this.state.lettersGuessedArray.join("");
+        //var joinedArray = this.state.lettersGuessedArray.join("");
         //console.log(joinedArray);
         //if userScore !== targetScore, loss
         if (this.state.userWordValue !== this.state.targetScore) {
@@ -238,15 +238,16 @@ class Game extends Component {
     nextLevel = () => { //for when user wins and wants to continue to next level
     
         var newLevel = this.state.level + 1; //show level they're on (update this.state.level)
-        this.setState({ level: newLevel });
 
         //console.log("you're on level " + this.state.level);
-
         //calculate totalUserScore (all past scores since last reload added together)!!!!!!!!!!!!!!!
 
         this.setState({
+            level: newLevel,
             userWordValue: 0, //set current word value to 0
             lettersGuessedArray: [], //clear lettersGuessedArray
+            runningScoreArray: [],
+            scoreThisRound: 0,
             //generate new randomPOS and targetScore
             randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
             targetScore: Math.floor(Math.random() * (15 - 7)) + 7
@@ -279,15 +280,12 @@ class Game extends Component {
                 <Row className="text-center">
                     <CurrentLevel level={this.state.level} />
                 </Row>
+                {/* <Row className="text-center">
+                    <ScoreThisRound scoreThisRound={this.state.scoreThisRound} />
+                </Row> */}
                 <Row className="text-center">
                     <TotalUserScore totalUserScore={this.state.totalUserScore} />
                 </Row>
-                {/* <Row className="text-center">
-                    <PartOfSpeech POS={this.state.randomPOS} />
-                </Row> */}
-                {/* <Row className="text-center">
-                    <TargetScore targetScore={this.state.targetScore} />
-                </Row> */}
                 <Row className="text-center">
                     <Timer seconds={this.state.secondsLeft}/>
                 </Row>
