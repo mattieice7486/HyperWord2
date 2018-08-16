@@ -4,22 +4,29 @@ import Row from "../components/Row";
 import Col from "../components/Col";
 import Timer from "../components/Timer";
 import AnswerSpace from "../components/AnswerSpace";
-import UserScore from "../components/UserScore"; //for this round
+import UserWordValue from "../components/UserWordValue"; //for this round
 import TargetScore from "../components/TargetScore";
 import PartOfSpeech from "../components/PartOfSpeech";
 import NewGameBtn from "../components/NewGameBtn";
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
+import Card from "../components/Card";
 
-
+//userWordValue is for the value of their current word; totalUserScore is from secondsLeft, and it's carried over from round to round!!!!!!!!!!!
+//double-check scoring!
+//WHY WON'T randomPOS SHOW UP ON CARD????????????????????
 // win-loss logic
-// generate new POS and target score on load
 // other more complex parts of speech, and pluralize words?
 // starting new round of game
 // add definition?
+// cards for aliens that represent parts of speech (plus target score??)
+// start button to begin game if time
+// on submit, trigger next card with score, result, definition!!!!!!!!!!!!!!!!!!!!
+// deploy to heroku
+// merge with dev
 
 
-//on load AND on start of new game...
+// on load AND on start of new game...
     //generate new randomPOS and targetScore
     //set score to 0
     //restart timer
@@ -49,8 +56,10 @@ class Game extends Component {
         runningScoreArray: [],
         //wins: 0,
         level: 1,
-        userScore: 0, //should update on click of letter, not just on click of submit
+        userWordValue: 0, //should update on click of letter, not just on click of submit
+        // userScoreThisRound: 0,
         totalUserScore: 0,
+        scoreThisRound: 0,
         secondsLeft: 60,
         timer: null
     };
@@ -66,7 +75,6 @@ class Game extends Component {
     componentDidMount() { //component = game, in this case
         let timer = setInterval(this.timeOut, 1000);
         this.setState({ timer });
-        //generate new POS and target score?????????????????
     };
 
     POSIndex = this.partsOfSpeechArray.indexOf(this.state.randomPOS);
@@ -82,7 +90,7 @@ class Game extends Component {
         // console.log("score: " + letterScore);
         var newLetterArray = this.state.lettersGuessedArray;
         newLetterArray.push(letterGuessed);
-        console.log("new letter array: " + this.state.lettersGuessedArray);
+        //console.log("new letter array: " + this.state.lettersGuessedArray);
         this.setState({
             lettersGuessedArray: newLetterArray
         });
@@ -104,21 +112,21 @@ class Game extends Component {
 
         this.setState({
             runningScoreArray: newScoreArray,
-            userScore: total
+            userWordValue: total
         });
-        console.log("new score array: " + this.state.runningScoreArray);
+        //console.log("new score array: " + this.state.runningScoreArray);
     };
 
     clear = (event) => {
         event.preventDefault();
-        //console.log("clear clicked!");
         var blankLetterArray = [];
         var blankScoreArray = [];
+        //console.log(this.state.randomPOS) //renders but doesn't print to card!!!!!!!!!!!!!!!!!!
 
         this.setState({
             runningScoreArray: blankScoreArray,
             lettersGuessedArray: blankLetterArray,
-            userScore: 0
+            userWordValue: 0
         });
     };
 
@@ -130,7 +138,7 @@ class Game extends Component {
         this.setState({
             lettersGuessedArray: newLetterArray
         });
-        console.log("new backspaced letter array: " + this.state.lettersGuessedArray);
+        //console.log("new backspaced letter array: " + this.state.lettersGuessedArray);
         var newScoreArray = this.state.runningScoreArray;
         newScoreArray.pop();
 
@@ -149,22 +157,37 @@ class Game extends Component {
 
         this.setState({
             runningScoreArray: newScoreArray,
-            userScore: total
+            userWordValue: total
         });
-        console.log("new score array: " + this.state.runningScoreArray);
+        //console.log("new score array: " + this.state.runningScoreArray);
     };
 
 
 
     win = () => {
         
-        console.log("Congratulations, you won! Your total score was " + this.state.userScore + " points.")
+        //display score from this round
+        var newWinningScore = this.state.secondsLeft * 10;
+        this.setState({ scoreThisRound: newWinningScore });
+        console.log("score this round: " + this.state.scoreThisRound);
+        
+        //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!
+        var newTotalScore = this.state.totalUserScore + this.state.scoreThisRound;
+        this.setState({ totalUserScore: newTotalScore });
+
+        console.log("your total score so far is " + this.state.totalUserScore);
+
+
+
+        console.log("Congratulations, you won! Your total score was " + this.state.totalUserScore + " points. Would you like to play again?")
 
         //display score and push to db and leaderboard
         //show definition?
-        //add 1 to wins tally
+        //add 1 to wins tally?
+        
         //stop timer
-        clearInterval(this.timer); //or clearInterval(this.timer)??
+        clearInterval(this.timer); //not working
+        clearInterval(this.timeOut); //not working
         //disable all buttons
         //give option to play again
         //if want to play again...
@@ -182,19 +205,21 @@ class Game extends Component {
         //need some kind of message saying they lost
         //give option to play again (need "new game" button??)
         //stop timer
-        clearInterval(this.timer); //or clearInterval(this.timer)??
+        clearInterval(this.timer); //not working
+        clearInterval(this.timeOut); //not working
         //disable all buttons
         console.log("sorry, you lost!");
     };
 
 
     submit = (event) => {
-        //need if-else win/loss logic here
+
         var joinedArray = this.state.lettersGuessedArray.join("");
-        console.log(joinedArray);
+        //console.log(joinedArray);
         //if userScore !== targetScore, loss
-        if (this.state.userScore !== this.state.targetScore) {
-            this.loss();
+        if (this.state.userWordValue !== this.state.targetScore) {
+            this.win(); //need to delete, this is just for testing!!
+            // this.loss();
         } else {
             //if joinedArray isn't found in dictionary, loss
         } //otherwise ... if part of speech doesn't match, loss
@@ -215,22 +240,22 @@ class Game extends Component {
         var newLevel = this.state.level + 1; //show level they're on (update this.state.level)
         this.setState({ level: newLevel });
 
+        //console.log("you're on level " + this.state.level);
+
         //calculate totalUserScore (all past scores since last reload added together)!!!!!!!!!!!!!!!
 
         this.setState({
-            userScore: 0, //set score FOR THIS ROUND to 0
+            userWordValue: 0, //set current word value to 0
             lettersGuessedArray: [], //clear lettersGuessedArray
+            //generate new randomPOS and targetScore
             randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
             targetScore: Math.floor(Math.random() * (15 - 7)) + 7
-            //generate new randomPOS and targetScore
         });
-        
-
 
     };
 
     restartGame = () => {
-        //reload page
+        window.location.reload();
     };
 
     
@@ -244,6 +269,9 @@ class Game extends Component {
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
                 <Row>
+                    <Card randomPOS={this.state.randomPOS} targetScore={this.state.targetScore}/>
+                </Row>
+                <Row>
                     <h3 className="text-center">
                     Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!
                     </h3>
@@ -254,12 +282,12 @@ class Game extends Component {
                 <Row className="text-center">
                     <TotalUserScore totalUserScore={this.state.totalUserScore} />
                 </Row>
-                <Row className="text-center">
+                {/* <Row className="text-center">
                     <PartOfSpeech POS={this.state.randomPOS} />
-                </Row>
-                <Row className="text-center">
+                </Row> */}
+                {/* <Row className="text-center">
                     <TargetScore targetScore={this.state.targetScore} />
-                </Row>
+                </Row> */}
                 <Row className="text-center">
                     <Timer seconds={this.state.secondsLeft}/>
                 </Row>
@@ -267,7 +295,7 @@ class Game extends Component {
                     <AnswerSpace guesses={this.state.lettersGuessedArray.join("")}/>
                 </Row>
                 <Row className="text-center">
-                    <UserScore score={this.state.userScore}/>
+                    <UserWordValue score={this.state.userWordValue}/>
                 </Row>
                 <Row className="text-center">
                 <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
@@ -275,7 +303,10 @@ class Game extends Component {
                 <br />
                 <br />
                 <Row className="text-center">
-                <NewGameBtn />
+                    <NewGameBtn func={this.restartGame}/>
+                </Row>
+                <Row className="text-center">
+                    <NewGameBtn func={this.nextLevel}/>
                 </Row>
             </div>
         );
