@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Firebase from '../utils/Firebase';
+import Firebase, { auth, provider } from '../utils/Firebase';
 import firebase from 'firebase';
 
 class App extends Component {
@@ -9,16 +9,38 @@ class App extends Component {
       userround: 0,
       userscore: 0,
       username: '',
-      items: []
+      items: [],
+      user: null
     }
     this.handleChange = this.handleChange.bind(this); 
     this.handleSubmit = this.handleSubmit.bind(this); 
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
+  }
+
+  logout() {
+    auth.signOut()
+    .then(() => {
+      this.setState({
+        user: null
+      });
+    });
+   }
+
+  login() {
+    auth.signInWithPopup(provider) 
+      .then((result) => {
+        const user = result.user;
+        this.setState({
+          user
+        });
+      });
   }
 
   handleSubmit(e) {
@@ -38,6 +60,11 @@ class App extends Component {
   }
 
   componentDidMount(){
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user });
+      } 
+    });
     const itemsRef = firebase.database().ref('Users');
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();
@@ -64,11 +91,26 @@ class App extends Component {
     return (
       <div className='app'>
         <header>
-            <div className="wrapper">
-              <h1>Fun Food Friends</h1>
-                             
-            </div>
+          <div className="wrapper">
+            <h1>Fun Food Friends</h1>
+            {this.state.user ?
+              <button onClick={this.logout}>Logout</button>                
+            :
+              <button onClick={this.login}>Log In</button>              
+            }
+          </div>
         </header>
+        {this.state.user ?
+          <div>
+            <div className='user-profile'>
+              <img src={this.state.user.photoURL} />
+            </div>
+          </div>
+          :
+          <div className='wrapper'>
+            <p>You must be logged in to record your high score.</p>
+          </div>
+        }
         <div className='container'>
           <section className='add-item'>
                 <form onSubmit={this.handleSubmit}>
