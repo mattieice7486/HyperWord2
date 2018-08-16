@@ -4,9 +4,10 @@ import "./KeyboardLetter.css";
 const KeyboardLetter = props => (
   <button
     onClick={props.onClick}
-    className={`keyboard-btn ${props["data-value"]}`}
+    className={`btn btn-danger ${props["data-value"]}`}
     {...props}
-  />
+    >{props.letter}
+  </button>
 );
 
 export default KeyboardLetter;

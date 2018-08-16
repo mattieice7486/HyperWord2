@@ -13,50 +13,6 @@ const Navbar = props => (
         <li
           className={
             window.location.pathname === "/" ||
-            window.location.pathname === "/about"
-              ? "nav-item active"
-              : "nav-item"
-          }
-        >
-          <Link to="/" className="nav-link">
-            About
-          </Link>
-        </li>
-        <li
-          className={
-            window.location.pathname === "/discover"
-              ? "nav-item active"
-              : "nav-item"
-          }
-        >
-          <Link to="/discover" className="nav-link">
-            Discover
-          </Link>
-        </li>
-        <li
-          className={
-            window.location.pathname === "/search"
-              ? "nav-item active"
-              : "nav-item"
-          }
-        >
-          <Link to="/search" className="nav-link">
-            Search
-          </Link>
-        </li>
-        <li
-          className={
-            window.location.pathname === "/leaderboard"
-              ? "nav-item active"
-              : "nav-item"
-          }
-        >
-          <Link to="/leaderboard" className="nav-link">
-            Leaderboard
-          </Link>
-        </li>
-        <li
-          className={
             window.location.pathname === "/game"
               ? "nav-item active"
               : "nav-item"
@@ -66,6 +22,20 @@ const Navbar = props => (
             Game
           </Link>
         </li>
+
+        <li
+          className={
+            window.location.pathname === "/leaderboard"
+              ? "nav-item active"
+              : "nav-item"
+          }
+        >
+          <Link to="/score" className="nav-link">
+            Score
+          </Link>
+        </li>
+        
+        <li><Link to="login">Login</Link></li>
       </ul>
     </div>
   </nav>

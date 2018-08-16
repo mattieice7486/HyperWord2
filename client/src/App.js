@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Discover from "./pages/Discover";
+
+import LoginPage from './pages/LoginPage';
 import About from "./pages/About";
-import Search from "./pages/Search";
-import Leaderboard from "./pages/Leaderboard";
+import Score from "./pages/Score";
 import Game from "./pages/Game";
 import NoMatch from "./pages/NoMatch";
 import Navbar from "./components/Navbar";
@@ -15,12 +15,11 @@ const App = () => (
     <div>
       <Navbar />
       <Wrapper>
-        <Route exact path="/" component={About} />
+        <Route exact path="/" component={Game} />
         <Route exact path="/about" component={About} />
-        <Route exact path="/discover" component={Discover} />
-        <Route exact path="/search" component={Search} />
-        <Route exact path="/leaderboard" component={Leaderboard} />
+        <Route exact path="/score" component={Score} />
         <Route exact path="/game" component={Game} />
+        <Route path="/login" component={LoginPage}/>
         {/* <Route component={NoMatch} /> */}
       </Wrapper>
       <Footer />
