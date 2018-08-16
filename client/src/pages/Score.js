@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Leaderboard from "../components/Leaderboard";
 import Container from "../components/Container";
-import Username from "../components/Username";
-import Firebase from '../utils/Firebase';
+import Firebase, { auth, provider } from '../utils/Firebase';
 import firebase from 'firebase';
 import _ from 'lodash';
 
