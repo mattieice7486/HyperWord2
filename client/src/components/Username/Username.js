@@ -13,16 +13,7 @@ const Username = props => (
         type="text"
         className="form-control"
         placeholder="User Name"
-        id="breed"
       />
-      
-      <button
-        type="submit"
-        onClick={props.handleFormSubmit}
-        className="btn btn-success"
-      >
-        Submit
-      </button>
     </div>
   </form>
 );

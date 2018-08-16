@@ -1,62 +1,149 @@
 import React, { Component } from 'react';
-import fire from '../utils/Firebase';
-import Hero from "../components/Hero";
-import Container from "../components/Container";
-import Row from "../components/Row";
-import Col from "../components/Col";
-
-// const About = () => (
-//   <div>
-//     <Hero backgroundImage="https://i.imgur.com/qkdpN.jpg">
-//       <h1>HyperWord</h1>
-//       <h2>Create an Account</h2>
-//     </Hero>
-//     <Container style={{ marginTop: 30 }}>
-//       <Row>
-//         <Col size="md-12">
-//           <h1>Welcome To HyperWord!</h1>
-//         </Col>
-//       </Row>
- 
-//     </Container>
-//   </div>
-// );
-
-// export default About;
-
-
+import Firebase, { auth, provider } from '../utils/Firebase';
+import firebase from 'firebase';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { messages: [] }; // <- set up react state
+    this.state = {
+      userround: 0,
+      userscore: 0,
+      username: '',
+      items: [],
+      user: null
+    }
+    this.handleChange = this.handleChange.bind(this); 
+    this.handleSubmit = this.handleSubmit.bind(this); 
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
-  componentWillMount(){
-    /* Create reference to messages in Firebase Database */
-    // let messagesRef = fire.database().ref('messages').orderByKey().limitToLast(100);
-    // messagesRef.on('child_added', snapshot => {
-    //   /* Update React state when message is added at Firebase Database */
-    //   let message = { text: snapshot.val(), id: snapshot.key };
-    //   this.setState({ messages: [message].concat(this.state.messages) });
-    // })
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
-  addMessage(e){
-    e.preventDefault(); // <- prevent form submit from reloading the page
-    /* Send the message to Firebase */
-    fire.database().ref('messages').push( this.inputEl.value );
-    this.inputEl.value = ''; // <- clear the input
+
+  logout() {
+    auth.signOut()
+    .then(() => {
+      this.setState({
+        user: null
+      });
+    });
+   }
+
+  login() {
+    auth.signInWithPopup(provider) 
+      .then((result) => {
+        const user = result.user;
+        this.setState({
+          user
+        });
+      });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const itemsRef = firebase.database().ref('Users');
+    const item = {
+      user: this.state.username,
+      round: this.state.userround,
+      score: this.state.userscore
+    }
+    itemsRef.push(item);
+    this.setState({
+      username: '',
+      userround: 0,
+      userscore: 0
+    });
+  }
+
+  componentDidMount(){
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user });
+      } 
+    });
+    const itemsRef = firebase.database().ref('Users');
+    itemsRef.on('value', (snapshot) => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          user: items[item].user,
+          round: items[item].round,
+          score: items[item].score
+        });
+      }
+      this.setState({
+        items: newState
+      });
+    });
+  }
+
+  removeItem(itemId) {
+    const itemRef = firebase.database().ref(`/Users/${itemId}`);
+    itemRef.remove();
   }
   render() {
     return (
-      <form onSubmit={this.addMessage.bind(this)}>
-        <input type="text" ref={ el => this.inputEl = el }/>
-        <input type="submit"/>
-        <ul>
-          { /* Render the list of messages */
-            this.state.messages.map( message => <li key={message.id}>{message.text}</li> )
-          }
-        </ul>
-      </form>
+      <div className='app'>
+        <header>
+          <div className="wrapper">
+            <h1>Fun Food Friends</h1>
+            {this.state.user ?
+              <button onClick={this.logout}>Logout</button>                
+            :
+              <button onClick={this.login}>Log In</button>              
+            }
+          </div>
+        </header>
+        {this.state.user ?
+          <div>
+            <div className='user-profile'>
+              <img src={this.state.user.photoURL} />
+            </div>
+          </div>
+          :
+          <div className='wrapper'>
+            <p>You must be logged in to record your high score.</p>
+          </div>
+        }
+        <div className='container'>
+          <section className='add-item'>
+                <form onSubmit={this.handleSubmit}>
+                  <input type="text" name="username" placeholder="user name" onChange={this.handleChange} value={this.state.username} />
+                  <input type="number" name="userround" placeholder="round" onChange={this.handleChange} value={this.state.userround} />
+                  <input type="number" name="userscore" placeholder="score" onChange={this.handleChange} value={this.state.userscore} />
+                  <button>Add Item</button>
+                </form>
+          </section>
+          <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Rounds Completed</th>
+                            <th scope="col">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.items.map((item) => {
+                            return (
+                                <tr key={item.id}>
+                                  <td>{item.id}<button onClick={() => this.removeItem(item.id)}>Remove Item</button></td>
+                                  <td>{item.user}</td>
+                                  <td>{item.round}</td>
+                                  <td>{item.score}</td>
+                                </tr>
+                            )                
+                        })}
+                    </tbody>
+                </table>
+        </div>
+      </div>
     );
   }
 }

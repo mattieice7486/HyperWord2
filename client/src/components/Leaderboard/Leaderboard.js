@@ -5,6 +5,7 @@ import Container from "../Container";
 import Row from "../Row";
 import Col from "../Col";
 import ScoreRow from "../ScoreRow";
+import UserRow from "../UserRow";
 import _ from 'lodash';
 
 
@@ -52,9 +53,9 @@ const Leaderboard = props => (
                         </tr>
                     </thead>
                     <tbody>
-                        {props.userArray.map((user, index) => {
+                        {props.users.map((user, index) => {
                             return (
-                                <ScoreRow 
+                                <UserRow 
                                 key={index}
                                 user={user} />
                             )                
