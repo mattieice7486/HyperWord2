@@ -1,8 +1,6 @@
 import React from 'react';
 import Container from "../components/Container";
 
-import OktaSignIn from '@okta/okta-signin-widget';
-import Backbone from 'backbone';
 import Firebase, { auth, provider } from '../utils/Firebase';
 import firebase from 'firebase';
 
