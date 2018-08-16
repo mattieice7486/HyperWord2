@@ -5,22 +5,19 @@ import Col from "../components/Col";
 import Timer from "../components/Timer";
 import AnswerSpace from "../components/AnswerSpace";
 import UserWordValue from "../components/UserWordValue"; //for this round
-import TargetScore from "../components/TargetScore";
-import PartOfSpeech from "../components/PartOfSpeech";
 import NewGameBtn from "../components/NewGameBtn";
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
-//import ScoreThisRound from "../components/ScoreThisRound";
 import Card from "../components/Card";
 
-//unable to stop/restart timer on win/loss!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //on submit, doesn't clear total user score!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//timer doesn't resume when next level begins!!!!!!!!!!!!!!!!!!!!!!!!!
 // win-loss logic
 // other more complex parts of speech, and pluralize words?
-// starting new round of game
+
 // add definition?
 // start button to begin game if time
-// on submit, trigger next card with score, result, definition!!!!!!!!!!!!!!!!!!!!
+// on submit, trigger next card with score, result, definition!!!!!!!!!!!!!! (loadNextDog function!)
 // deploy to heroku
 // merge with dev
 
@@ -179,14 +176,12 @@ class Game extends Component {
         //print both to screen
 
         console.log("Congratulations, you won! This round, you scored " + newWinningScore + " points. Your total score so far is " + newTotalScore + " points. Would you like to play again?");
-        // WHY IS SCORETHISROUND 0???????????????????????????????????????????????????????????????/
         //display score and push to db and leaderboard
         //show definition?
         //add 1 to wins tally? necessary??
         
         //stop timer
-        clearInterval(this.timer); //not working
-        clearInterval(this.timeOut); //not working
+        //clearInterval(this.state.timer); //RESUME ON LOAD OF NEW GAME
         //disable all buttons
         //give option to play again
 
@@ -205,8 +200,7 @@ class Game extends Component {
         //need some kind of message saying they lost
         //give option to play again (need "new game" button??)
         //stop timer
-        clearInterval(this.timer); //not working
-        clearInterval(this.timeOut); //not working
+        //clearInterval(this.state.timer);
         //disable all buttons
         console.log("sorry, you lost!");
     };
@@ -216,6 +210,8 @@ class Game extends Component {
 
         //var joinedArray = this.state.lettersGuessedArray.join("");
         //console.log(joinedArray);
+        this.setState({ secondsLeft: 60 });
+        //clearInterval(this.state.timer);
         //if userScore !== targetScore, loss
         if (this.state.userWordValue !== this.state.targetScore) {
             this.win(); //need to delete, this is just for testing!!
@@ -248,10 +244,16 @@ class Game extends Component {
             lettersGuessedArray: [], //clear lettersGuessedArray
             runningScoreArray: [],
             scoreThisRound: 0,
+            secondsLeft: 60,
+            //RESET TIMER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
             //generate new randomPOS and targetScore
             randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
             targetScore: Math.floor(Math.random() * (15 - 7)) + 7
         });
+
+        // let timer = setInterval(this.timeOut, 1000);
+        // this.setState({ timer }); ???????????????????????????????????
+
 
     };
 
@@ -259,7 +261,6 @@ class Game extends Component {
         window.location.reload();
     };
 
-    
 
 
 
