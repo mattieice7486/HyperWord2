@@ -3,52 +3,62 @@ import Keyboard from "../components/Keyboard";
 import Row from "../components/Row";
 import Col from "../components/Col";
 import Container from "../components/Container";
+import Firebase from '../utils/Firebase';
+import firebase from 'firebase';
 
 class Game extends Component {
-    state = {
-      image: "",
-      match: false,
-      matchCount: 0
-    };
-  
-    // When the component mounts, load the next dog to be displayed
-    // componentDidMount() {
-    //   this.loadNextDog();
-    // }
-  
-    // handleBtnClick = event => {
-    //   // Get the data-value of the clicked button
-    //   const btnType = event.target.attributes.getNamedItem("data-value").value;
-    //   // Clone this.state to the newState object
-    //   // We'll modify this object and use it to set our component's state
-    //   const newState = { ...this.state };
-  
-    //   if (btnType === "pick") {
-    //     // Set newState.match to either true or false depending on whether or not the dog likes us (1/5 chance)
-    //     newState.match = 1 === Math.floor(Math.random() * 5) + 1;
-  
-    //     // Set newState.matchCount equal to its current value or its current value + 1 depending on whether the dog likes us
-    //     newState.matchCount = newState.match
-    //       ? newState.matchCount + 1
-    //       : newState.matchCount;
-    //   } else {
-    //     // If we thumbs down'ed the dog, we haven't matched with it
-    //     newState.match = false;
-    //   }
-    //   // Replace our component's state with newState, load the next dog image
-    //   this.setState(newState);
-    //   this.loadNextDog();
-    // };
-  
-    // loadNextDog = () => {
-    //   API.getRandomDog()
-    //     .then(res =>
-    //       this.setState({
-    //         image: res.data.message
-    //       })
-    //     )
-    //     .catch(err => console.log(err));
-    // };
+  constructor(props) {
+    super(props);
+    this.state = {
+      userround: 0,
+      userscore: 0,
+      username: '',
+      items: []
+    }
+    this.handleChange = this.handleChange.bind(this); 
+    this.handleSubmit = this.handleSubmit.bind(this); 
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const itemsRef = firebase.database().ref('Users');
+    const item = {
+      user: this.state.username,
+      round: this.state.userround,
+      score: this.state.userscore
+    }
+    itemsRef.push(item);
+    this.setState({
+      username: '',
+      userround: 0,
+      userscore: 0
+    });
+  }
+    componentDidMount(){
+      const itemsRef = firebase.database().ref('Users');
+      itemsRef.on('value', (snapshot) => {
+        let items = snapshot.val();
+        let newState = [];
+        for (let item in items) {
+          newState.push({
+            id: item,
+            user: items[item].user,
+            round: items[item].round,
+            score: items[item].score
+          });
+        }
+        this.setState({
+          items: newState
+        });
+      });
+    }
+   
   
     render() {
       return (
@@ -63,6 +73,16 @@ class Game extends Component {
                           Your word must match the part of speech as well!
                   </h3>
               </Row>
+              <div className='container'>
+            <section className='add-item'>
+                  <form onSubmit={this.handleSubmit}>
+                    <input type="text" name="username" placeholder="user name" onChange={this.handleChange} value={this.state.username} />
+                    <input type="number" name="userround" placeholder="round" onChange={this.handleChange} value={this.state.userround} />
+                    <input type="number" name="userscore" placeholder="score" onChange={this.handleChange} value={this.state.userscore} />
+                    <button>Add Item</button>
+                  </form>
+            </section>
+            </div>
               <Keyboard />
             </Container>
         </div>

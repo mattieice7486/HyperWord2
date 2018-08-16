@@ -1,112 +1,103 @@
 import React, { Component } from "react";
-import HiScore from "../utils/HiScore";
 import Leaderboard from "../components/Leaderboard";
 import Container from "../components/Container";
 import Username from "../components/Username";
-import firebase from "firebase";
+import Firebase from '../utils/Firebase';
+import firebase from 'firebase';
 import _ from 'lodash';
 
 class Score extends Component {
-    state = {
-        rank: 0,
-        username: "",
-        roundsCompleted: 0,
-        score: 0,
-        userArray: [],
-        newArray: [0, 4, 3, 5]
-    };
-    
-    componentDidMount() {
-        this.setState({ userArray: HiScore });
-        
-        // HiScore.getUserName()
-        //   .then(res => this.setState({ username: res.data.message }))
-        //   .catch(err => console.log(err));
-        // HiScore.getRoundsCompleted()
-        //   .then(res => this.setState({ roundsCompleted: res.data.message }))
-        //   .catch(err => console.log(err));
-        // HiScore.getScore()
-        //   .then(res => this.setState({ score: res.data.message }))
-        //   .catch(err => console.log(err));
-    };
-    sortedArray = () => {
-        var i;
-        for (i=0;i<this.state.newArray.length;i++) {
-            // _
-            // .chain(this.state.userArray)
-            // .sortBy('score')
-            // .map(function(o) {
-                //     return o.userArray
-                // })   
-            }
-            this.setState({ userArray: []})
-    };
-    setArray = () => {
-        this.setState({ userArray: HiScore})
-    };
-
-    handleInputChange = event => {
-        this.setState({ username: event.target.value });
-    };
-
-    databasepush = () => {
-        var randomdata = 0;
-        randomdata++
-        var database = firebase.database();
-        function saveSearch() {
-            database.ref().push({
-                randomdata: randomdata, //save each new location entered by user to database
-            });
-        };
-        saveSearch();
-        console.log(randomdata);
+    constructor(props) {
+      super(props);
+      this.state = {
+        userround: 0,
+        userscore: 0,
+        username: '',
+        items: []
+      }
+      this.handleChange = this.handleChange.bind(this); 
+      this.handleSubmit = this.handleSubmit.bind(this); 
     }
-
-    clickButton = () => {
-        this.setState({ rank: this.state.rank + 1});
-        this.setState({ roundsCompleted: this.state.roundsCompleted + 1});
-        this.setState({ score: this.state.score + 10});
-        this.setState({ newArray: this.state.newArray[1] + 10});
-        console.log(this.state.userArray);
-        console.log(this.state.newArray);
-        var i;
-        for (i=0;i<this.state.userArray.length;i++) {
-            console.log(this.state.userArray[i].rank);
-            if (this.state.userArray[i].rank > 10) {
-                console.log("didn't make the top 10")
-            } else {
-                console.log("top ten")
-            }
+  
+    handleChange(e) {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
+  
+    handleSubmit(e) {
+      e.preventDefault();
+      const itemsRef = firebase.database().ref('Users');
+      const item = {
+        user: this.state.username,
+        round: this.state.userround,
+        score: this.state.userscore
+      }
+      itemsRef.push(item);
+      this.setState({
+        username: '',
+        userround: 0,
+        userscore: 0
+      });
+    }
+  
+    componentDidMount(){
+      const itemsRef = firebase.database().ref('Users');
+      itemsRef.on('value', (snapshot) => {
+        let items = snapshot.val();
+        let newState = [];
+        for (let item in items) {
+          newState.push({
+            id: item,
+            user: items[item].user,
+            round: items[item].round,
+            score: items[item].score
+          });
         }
-
-    };
-    
-    render() {
-        return (
-            <div>
-                <Container>
-                    <button className="btn btn-primary" onClick={this.clickButton}>score</button>
-                    <button className="btn btn-primary" onClick={this.sortedArray}>hide</button>
-                    <button className="btn btn-primary" onClick={this.setArray}>show</button>
-                    <button className="btn btn-primary" onClick={this.databasepush}>firebase</button>
-                    <Leaderboard 
-                    rank={this.state.rank}
-                    score={this.state.score}
-                    username={this.state.username}
-                    roundsCompleted={this.state.roundsCompleted}
-                    userArray={this.state.userArray}
-                    />
-                    <Username 
-                    handleInputChange={this.handleInputChange}
-                    username={this.state.username}
-                    />
-                    <p>{_.dropRight(this.state.newArray)}</p>
-                    {/* <p>{(this.state.userArray)}</p> */}
-                    <p>{(this.state.username)}</p>
-                </Container>
-            </div>
-        )
+        this.setState({
+          items: newState
+        });
+      });
     }
-}
-
-export default Score;
+  
+    removeItem(itemId) {
+      const itemRef = firebase.database().ref(`/Users/${itemId}`);
+      itemRef.remove();
+    }
+    render() {
+      return (
+        <div className='container'>
+          <header>
+              <div className="wrapper">
+                <h1>Leaderboard</h1>
+                               
+              </div>
+          </header>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Rounds Completed</th>
+                        <th scope="col">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.state.items.map((item) => {
+                        return (
+                            <tr key={item.id}>
+                                <td>{item.id}<button onClick={() => this.removeItem(item.id)}>Remove Item</button></td>
+                                <td>{item.user}</td>
+                                <td>{item.round}</td>
+                                <td>{item.score}</td>
+                            </tr>
+                        )                
+                    })}
+                </tbody>
+            </table>
+        </div>
+      );
+    }
+  }
+  
+  export default Score;
