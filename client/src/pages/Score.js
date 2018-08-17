@@ -16,6 +16,8 @@ class Score extends Component {
       }
       this.handleChange = this.handleChange.bind(this); 
       this.handleSubmit = this.handleSubmit.bind(this); 
+      this.sortByScore = this.sortByScore.bind(this);
+      this.sortByRound = this.sortByRound.bind(this);
     }
   
     handleChange(e) {
@@ -45,14 +47,20 @@ class Score extends Component {
       itemsRef.on('value', (snapshot) => {
         let items = snapshot.val();
         let newState = [];
+        let counter = 0;
         for (let item in items) {
+          if (counter > 9) break;
           newState.push({
             id: item,
             user: items[item].user,
             round: items[item].round,
             score: items[item].score
           });
+          counter += 1;
         }
+        newState.sort(function (a, b) {
+          return b.score - a.score;
+        });
         this.setState({
           items: newState
         });
@@ -63,13 +71,34 @@ class Score extends Component {
       const itemRef = firebase.database().ref(`/Users/${itemId}`);
       itemRef.remove();
     }
+
+    sortByScore() {
+      let items = this.state.items
+      items.sort(function (a, b) {
+        return a.score - b.score;
+      });
+      this.setState({
+        items: items
+      });
+      console.log(items);
+    }
+
+    sortByRound() {
+      let items = this.state.items
+      items.sort(function (a, b) {
+        return a.round - b.round;
+      });
+      this.setState({
+        items: items
+      });
+    }
+
     render() {
       return (
         <div className='container'>
           <header>
               <div className="wrapper">
                 <h1>Leaderboard</h1>
-                               
               </div>
           </header>
             <table className="table table-striped">
@@ -77,15 +106,19 @@ class Score extends Component {
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Username</th>
-                        <th scope="col">Rounds Completed</th>
-                        <th scope="col">Score</th>
+                        <th scope="col">
+                          <span onClick={this.sortByRound}>Rounds Completed</span>
+                        </th>
+                        <th scope="col">
+                          <span onClick={this.sortByScore}>Score</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.items.map((item) => {
+                    {this.state.items.map((item, index) => {
                         return (
                             <tr key={item.id}>
-                                <td>{item.id}<button onClick={() => this.removeItem(item.id)}>Remove Item</button></td>
+                                <td>{index + 1}</td>
                                 <td>{item.user}</td>
                                 <td>{item.round}</td>
                                 <td>{item.score}</td>
