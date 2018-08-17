@@ -3,10 +3,10 @@ import "./CardBtn.css";
 
 const CardBtn = props => (
   <button
-    onClick={props.onClick}
-    className={`card-btn ${props["data-value"]}`}
-    {...props}
-  />
+    onClick={props.onClick} value={props.value}
+  >
+  {props.value}
+  </button>
 );
 
 export default CardBtn;

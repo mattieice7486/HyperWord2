@@ -12,15 +12,18 @@ import TotalUserScore from "../components/TotalUserScore";
 import Card from "../components/Card";
 
 
-// win-loss logic
-// loss when secondsLeft === 0
-// work out POS and abbreviated POS stuff
+//import oxford-dictionary-api -- link to API in utils folder
+//PARTS OF SPEECH ARE WRITTEN OUT IN THIS ONE!!!!!
+
+
+//make json dummy test file with words, POS, etc., THEN pull from API
+// create card buttons for play again and not (win: yes or no; loss: yes or no)
+// work out POS and abbreviated POS stuff, plus pluralization or reverse
 // disable buttons on click of submit
 // dummy variables for dictionary lookup
-// pluralize words!!!!!!!
 
 // add definition?
-// start button to begin game if time
+// start button to begin game if time (see trivia game)
 // on submit, trigger next card with score, result, definition!!!!!!!!!!!!!! (loadNextDog function!)
 // deploy to heroku
 // merge with dev
@@ -135,6 +138,9 @@ class Game extends Component {
         });
     };
 
+    quit = () => {
+        console.log("Thanks for playing! Come back soon.")
+    };
 
 
     win = () => {
@@ -144,7 +150,7 @@ class Game extends Component {
         var newTotalScore = this.state.totalUserScore + newWinningScore;
         this.setState({
             totalUserScore: newTotalScore,
-            resultsMessage: "Congratulations, you won! This round, you scored " + newWinningScore + " points. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
+            resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
         });
 
         // console.log("Congratulations, you won! This round, you scored " + newWinningScore + " points. Your total score so far is " + newTotalScore + " points. Would you like to play again?");
@@ -169,7 +175,9 @@ class Game extends Component {
         //need some kind of message saying they lost
         //give option to play again
         //disable all buttons
-        console.log("sorry, you lost!");
+        this.setState({
+            resultsMessage: "Sorry, you lost!"
+        });
     };
 
 
@@ -179,29 +187,28 @@ class Game extends Component {
         // console.log(this.submit);
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
-        //this.setState({ secondsLeft: 60 }); //this shouldn't be here!!! how to pause count????????????????????
+        //this.setState({ secondsLeft: 60 }); //this shouldn't be here!!! how to pause count??????????
         //if userScore !== targetScore, loss
         if (this.state.secondsLeft === 0) {
-            //stop timer
-            // clearInterval(this.state.timer); //ok
+            clearInterval(this.state.timer); //not working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             this.loss();
         } else if (this.state.userWordValue !== this.state.targetScore) {
             this.win(); //need to delete, this is just for testing!!
             // this.loss();
         } else {
-            //if joinedArray isn't found in dictionary, loss
+            //if joinedArray -- OR THAT WORD WITHOUT AN S -- isn't found in dictionary, loss
         } //otherwise ...
         //if part of speech doesn't match, loss
         
 
-
+        // REACTIFY THIS
         // // function getDefinition() {
         // //     $.get("/api/all", function (data) {
         //         for (var i=0; i <data.length; i++) {
         //             if (guessedWord === data[i].word) { //if it's a word
         //                 //$("#definition-div").html(data[i].definition); //print definition
         //                 var wordtypelong = data[i].wordtype; //get POS from API
-        //                 var wordtype = wordtypelong[0] + wordtypelong[1]; //is this just the first 2 characters?
+        //                 var wordtype = wordtypelong[0] + wordtypelong[1]; //just the first 2 characters?
         //                 if (abbreviatedRandomPOS == wordtype) { //if right POS
         //                     win();
         //                 } else {
@@ -216,20 +223,14 @@ class Game extends Component {
         // //     });
         // // }
         // // getDefinition();
+    };
 
+    lostQuit = () => {
+        console.log("hello")
+    };
 
-
-        
-        //otherwise, win
-
-        
-        // var win = false; //this part is just for testing purposes
-        // if (win === true) {
-        //     this.win();
-        //     //calculate final word score
-        // } else if (win === false) {
-        //     this.loss();
-        // }
+    wonQuit = () => {
+        console.log("hi")
     };
 
     nextLevel = () => { //for when user wins and wants to continue to next level
@@ -251,6 +252,7 @@ class Game extends Component {
         window.location.reload();
     };
 
+// need wonQuit, lostQuit functions????????????
 
 
 
@@ -261,19 +263,11 @@ class Game extends Component {
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
                 <Row>
-                    <Card randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage}/>
+                    <Card randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit} />
                 </Row>
-                {/* <Row>
-                    <h3 className="text-center">
-                    Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!
-                    </h3>
-                </Row> */}
                 <Row className="text-center">
                     <CurrentLevel level={this.state.level} />
                 </Row>
-                {/* <Row className="text-center">
-                    <ScoreThisRound scoreThisRound={this.state.scoreThisRound} />
-                </Row> */}
                 <Row className="text-center">
                     <TotalUserScore totalUserScore={this.state.totalUserScore} />
                 </Row>

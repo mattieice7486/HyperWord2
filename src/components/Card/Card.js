@@ -3,6 +3,7 @@ import React from "react";
 import PartOfSpeech from "../PartOfSpeech";
 import TargetScore from "../TargetScore";
 import ResultsMessage from "../ResultsMessage";
+import CardBtn from "../CardBtn";
 import "./Card.css";
 import "../PartOfSpeech/PartOfSpeech.css";
 import "../TargetScore/TargetScore.css";
@@ -20,16 +21,15 @@ const Card = props => (
     <PartOfSpeech randomPOS={props.randomPOS} />  
     <TargetScore targetScore={props.targetScore} />
 
-<br/>
+<br />
 
     <ResultsMessage resultsMessage={props.resultsMessage}/>
 
-    {/* {!props.image && <i className="fa fa-spinner fa-spin" aria-hidden="true" />}
-    <CardBtn
-      style={{ opacity: props.image ? 1 : 0 }}
-      onClick={props.handleBtnClick}   //how does it know to refer to this function in Game.js???????????????
-      data-value="pass"
-    /> */}
+    <CardBtn onClick={props.wonPlayAgain} value={"Won: play again"} />
+    <CardBtn onClick={props.wonQuit} value={"Won: quit"}/>
+
+    <CardBtn onClick={props.lostPlayAgain} value={"Lost: play again"}/>
+    <CardBtn onClick={props.lostQuit} value={"Lost: quit"}/>
 
   </div>
 );
