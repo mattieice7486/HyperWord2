@@ -8,12 +8,16 @@ import UserWordValue from "../components/UserWordValue"; //for this round
 import NewGameBtn from "../components/NewGameBtn";
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
+//import ResultsMessage from "../components/ResultsMessage";
 import Card from "../components/Card";
 
-//on submit, doesn't clear total user score!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//timer doesn't resume when next level begins!!!!!!!!!!!!!!!!!!!!!!!!!
+
 // win-loss logic
-// other more complex parts of speech, and pluralize words?
+// loss when secondsLeft === 0
+// work out POS and abbreviated POS stuff
+// disable buttons on click of submit
+// dummy variables for dictionary lookup
+// pluralize words!!!!!!!
 
 // add definition?
 // start button to begin game if time
@@ -22,41 +26,28 @@ import Card from "../components/Card";
 // merge with dev
 
 
-// on load AND on start of new game...
-    //generate new randomPOS and targetScore
-    //set score to 0
-    //restart timer
-    //clear lettersGuessedArray
-        // ^ but all of this happens anyway on load
-
-//on start of new game ONLY...
-    //show level they're on
-
-
 class Game extends Component {
 
     partsOfSpeech = {
-        "n.": "noun",
+        "n., pl.": "noun",
         "a.": "adjective",
-        "v.": "verb", //add transitive verb, etc.
-        "t.v.": "verb"
+        "v., v. t., p. p., imp., p. pr., v. i., vb. n., ": "verb",
+        // ^ do these need to be entered one by one???????????????????????????????
     };
-    partsOfSpeechArray = Object.values(this.partsOfSpeech);
+    POSArray = Object.values(this.partsOfSpeech);
     abbreviatedPOSArray = Object.keys(this.partsOfSpeech);
 
     state = {
-        randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
+        randomPOS: this.POSArray[Math.floor(Math.random() * this.POSArray.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
-        //// ^ how to update these two variables on win?? ////
         lettersGuessedArray: [],
+        resultsMessage: "Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!",
         runningScoreArray: [],
-        //wins: 0,
         level: 1,
-        userWordValue: 0, //should update on click of letter, not just on click of submit
-        // userScoreThisRound: 0,
+        userWordValue: 0,
         totalUserScore: 0,
         scoreThisRound: 0,
-        secondsLeft: 60,
+        secondsLeft: 15,
         timer: null
     };
 
@@ -66,7 +57,6 @@ class Game extends Component {
         this.setState({
             secondsLeft: newSecondsCount
         });
-        //console.log("seconds left: " + this.state.secondsLeft)
     };
 
     componentDidMount() { //component = game, in this case
@@ -75,20 +65,15 @@ class Game extends Component {
         //load next dog function
     };
 
-    POSIndex = this.partsOfSpeechArray.indexOf(this.state.randomPOS);
+    POSIndex = this.POSArray.indexOf(this.state.randomPOS);
     abbreviatedRandomPOS = this.abbreviatedPOSArray[this.POSIndex];
-
-    //function to calculate total??
 
     letterClick = (event) => {
         event.preventDefault();
         var letterGuessed = event.target.attributes.getNamedItem("value").value;
         var letterScore = event.target.attributes.getNamedItem("datavalue").value;
-        // console.log("letter: " + letterGuessed);
-        // console.log("score: " + letterScore);
         var newLetterArray = this.state.lettersGuessedArray;
         newLetterArray.push(letterGuessed);
-        //console.log("new letter array: " + this.state.lettersGuessedArray);
         this.setState({
             lettersGuessedArray: newLetterArray
         });
@@ -96,13 +81,11 @@ class Game extends Component {
         newScoreArray.push(letterScore);
 
         function parse(item) {
-            //parse runningScoreArray to integers
-            //then calculate total
+            //parse runningScoreArray to integers, then calculate total
             var parsed = parseInt(item);
             return parsed;
         };
         var parsedArray = this.state.runningScoreArray.map(parse);
-        //console.log("parsed array: " + parsedArray);
         function getSum(total, num) {
             return total + num;
         };
@@ -112,15 +95,12 @@ class Game extends Component {
             runningScoreArray: newScoreArray,
             userWordValue: total
         });
-        //console.log("new score array: " + this.state.runningScoreArray);
     };
 
     clear = (event) => {
         event.preventDefault();
         var blankLetterArray = [];
         var blankScoreArray = [];
-        //console.log(this.state.randomPOS) //renders but doesn't print to card!!!!!!!!!!!!!!!!!!
-
         this.setState({
             runningScoreArray: blankScoreArray,
             lettersGuessedArray: blankLetterArray,
@@ -130,24 +110,20 @@ class Game extends Component {
 
     backspace = (event) => {
         event.preventDefault();
-        //console.log("backspace clicked!");
         var newLetterArray = this.state.lettersGuessedArray;
         newLetterArray.pop();
         this.setState({
             lettersGuessedArray: newLetterArray
         });
-        //console.log("new backspaced letter array: " + this.state.lettersGuessedArray);
         var newScoreArray = this.state.runningScoreArray;
         newScoreArray.pop();
 
         function parse(item) {
-            //parse runningScoreArray to integers
-            //then calculate total
+            //parse runningScoreArray to integers, then calculate total
             var parsed = parseInt(item);
             return parsed;
         };
         var parsedArray = this.state.runningScoreArray.map(parse);
-        //console.log("parsed array: " + parsedArray);
         function getSum(total, num) {
             return total + num;
         };
@@ -157,31 +133,24 @@ class Game extends Component {
             runningScoreArray: newScoreArray,
             userWordValue: total
         });
-        //console.log("new score array: " + this.state.runningScoreArray);
     };
 
 
 
     win = () => {
-        
-        //display score from this round
         var newWinningScore = this.state.secondsLeft * 10;
-        //console.log("new winning score: " + newWinningScore); //ok
         this.setState({ scoreThisRound: newWinningScore });
-        //console.log("score this round: " + this.state.scoreThisRound);
-        //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!
+        //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var newTotalScore = this.state.totalUserScore + newWinningScore;
-        //console.log("new total score: " + newTotalScore); //ok
-        this.setState({ totalUserScore: newTotalScore });
-        //print both to screen
+        this.setState({
+            totalUserScore: newTotalScore,
+            resultsMessage: "Congratulations, you won! This round, you scored " + newWinningScore + " points. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
+        });
 
-        console.log("Congratulations, you won! This round, you scored " + newWinningScore + " points. Your total score so far is " + newTotalScore + " points. Would you like to play again?");
-        //display score and push to db and leaderboard
+        // console.log("Congratulations, you won! This round, you scored " + newWinningScore + " points. Your total score so far is " + newTotalScore + " points. Would you like to play again?");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+        //should i create a modal, or add this to the card????????????????????????????????????????
         //show definition?
-        //add 1 to wins tally? necessary??
-        
-        //stop timer
-        //clearInterval(this.state.timer); //RESUME ON LOAD OF NEW GAME
         //disable all buttons
         //give option to play again
 
@@ -191,34 +160,66 @@ class Game extends Component {
             this.nextLevel();
         //otherwise...
             //say thanks for playing
-            //push score to db (and leaderboard if applicable)
+            //push score to db (and leaderboard if applicable)!!!!!!!
 
     }
 
 
     loss = () => {
         //need some kind of message saying they lost
-        //give option to play again (need "new game" button??)
-        //stop timer
-        //clearInterval(this.state.timer);
+        //give option to play again
         //disable all buttons
         console.log("sorry, you lost!");
     };
 
 
     submit = (event) => {
-
-        //var joinedArray = this.state.lettersGuessedArray.join("");
-        //console.log(joinedArray);
-        this.setState({ secondsLeft: 60 });
-        //clearInterval(this.state.timer);
+        
+        //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // console.log(this.submit);
+        var joinedArray = this.state.lettersGuessedArray.join("");
+        clearInterval(this.state.timer);
+        //this.setState({ secondsLeft: 60 }); //this shouldn't be here!!! how to pause count????????????????????
         //if userScore !== targetScore, loss
-        if (this.state.userWordValue !== this.state.targetScore) {
+        if (this.state.secondsLeft === 0) {
+            //stop timer
+            // clearInterval(this.state.timer); //ok
+            this.loss();
+        } else if (this.state.userWordValue !== this.state.targetScore) {
             this.win(); //need to delete, this is just for testing!!
             // this.loss();
         } else {
             //if joinedArray isn't found in dictionary, loss
-        } //otherwise ... if part of speech doesn't match, loss
+        } //otherwise ...
+        //if part of speech doesn't match, loss
+        
+
+
+        // // function getDefinition() {
+        // //     $.get("/api/all", function (data) {
+        //         for (var i=0; i <data.length; i++) {
+        //             if (guessedWord === data[i].word) { //if it's a word
+        //                 //$("#definition-div").html(data[i].definition); //print definition
+        //                 var wordtypelong = data[i].wordtype; //get POS from API
+        //                 var wordtype = wordtypelong[0] + wordtypelong[1]; //is this just the first 2 characters?
+        //                 if (abbreviatedRandomPOS == wordtype) { //if right POS
+        //                     win();
+        //                 } else {
+        //                     loss();
+        //                 }
+        //                 return;
+
+        //             } else {
+        //             loss();
+        //             }
+        //         } 
+        // //     });
+        // // }
+        // // getDefinition();
+
+
+
+        
         //otherwise, win
 
         
@@ -232,28 +233,17 @@ class Game extends Component {
     };
 
     nextLevel = () => { //for when user wins and wants to continue to next level
-    
         var newLevel = this.state.level + 1; //show level they're on (update this.state.level)
-
-        //console.log("you're on level " + this.state.level);
-        //calculate totalUserScore (all past scores since last reload added together)!!!!!!!!!!!!!!!
-
         this.setState({
             level: newLevel,
-            userWordValue: 0, //set current word value to 0
-            lettersGuessedArray: [], //clear lettersGuessedArray
+            userWordValue: 0,
+            lettersGuessedArray: [],
             runningScoreArray: [],
             scoreThisRound: 0,
-            secondsLeft: 60,
-            //RESET TIMER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-            //generate new randomPOS and targetScore
-            randomPOS: this.partsOfSpeechArray[Math.floor(Math.random() * this.partsOfSpeechArray.length)],
+            secondsLeft: 15,
+            randomPOS: this.POSArray[Math.floor(Math.random() * this.POSArray.length)],
             targetScore: Math.floor(Math.random() * (15 - 7)) + 7
         });
-
-        // let timer = setInterval(this.timeOut, 1000);
-        // this.setState({ timer }); ???????????????????????????????????
-
 
     };
 
@@ -271,13 +261,13 @@ class Game extends Component {
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
                 <Row>
-                    <Card randomPOS={this.state.randomPOS} targetScore={this.state.targetScore}/>
+                    <Card randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage}/>
                 </Row>
-                <Row>
+                {/* <Row>
                     <h3 className="text-center">
                     Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!
                     </h3>
-                </Row>
+                </Row> */}
                 <Row className="text-center">
                     <CurrentLevel level={this.state.level} />
                 </Row>

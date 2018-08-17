@@ -2,6 +2,7 @@ import React from "react";
 import KeyboardLetter from "../KeyboardLetter";
 import KeyboardSpecial from "../KeyboardSpecial";
 import "./Keyboard.css";
+import KeyboardSubmit from "../KeyboardSubmit";
 
 //see card & cardbutton.js for keys template
 //for now, just is right or wrong (don't worry about dictionary yet)
@@ -52,13 +53,11 @@ const Keyboard = props => (
 <div>
     <KeyboardSpecial value={"Clear"} onClick={props.clear} />
     <KeyboardSpecial value={"Backspace"} onClick={props.backspace} />
-    <KeyboardSpecial value={"Submit"} onClick={props.submit} />
+    <KeyboardSubmit value={"Submit"} onClick={props.submit} />
 </div>
 
 </div>
 
 );
-
-//not Game.____? console.log in onClick above works, but not this!
 
 export default Keyboard;
