@@ -1,10 +1,34 @@
 import axios from "axios";
-import Dictionary from "oxford-dictionary-api";
+//import Dictionary from "oxford-dictionary-api";
 
 //need to insert key and ID into header
 //use postman to test
 
 export default {
+
+    doesDefinitionExist: function(word) { //see if it returns a definition
+        return axios.get("https://wordsapiv1.p.mashape.com/words/" + word, {
+            headers: {
+                "X-Mashape-Key": "745ec98a-e6e0-4ae7-8ccc-b0534980e177",
+                'Access-Control-Allow-Origin': 'http://localhost',
+            }
+        }
+    )
+    }
+
+    
+
+};
+
+
+// curl "https://wordsapiv1.p.mashape.com/words/soliloquy" -H "X-Mashape-Key: <required>" 745ec98a-e6e0-4ae7-8ccc-b0534980e177
+    
+
+
+
+
+
+
     // wordSearch: function() { //loop through whole dictionary
     //     return axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/word", {
     //         headers: {
@@ -14,24 +38,24 @@ export default {
     //     }
     //     );
     // },
-    doesDefinitionExist: function(word) { //see if it returns a definition
-      return axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word, {
-        headers: {
-            app_id: "0a036353",
-            app_key: "d095c3cae77b50f576eea84cd7d7c6c6",
-            "Access-Control-Allow-Origin": "*",
-            "Allow-Control-Allow-Origin": "*",
-            'Access-Control-Allow-Credentials' : 'true',
-            'Access-Control-Allow-Origin': 'http://localhost',
-            'Access-Control-Allow-Origins': 'http://localhost',
-            'Content-Type': 'application/json' 
-        }    
-    }
-    );
-    } // ^ NEED TO ADD API_KEY AND USER ID!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // doesDefinitionExist: function(word) { //see if it returns a definition
+    //   return axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word, {
+    //     headers: {
+    //         app_id: "0a036353",
+    //         app_key: "d095c3cae77b50f576eea84cd7d7c6c6",
+    //         "Access-Control-Allow-Origin": "*",
+    //         "Allow-Control-Allow-Origin": "*",
+    //         'Access-Control-Allow-Credentials' : 'true',
+    //         'Access-Control-Allow-Origin': 'http://localhost',
+    //         'Access-Control-Allow-Origins': 'http://localhost',
+    //         'Content-Type': 'application/json' 
+    //     }    
+    // }
+    // );
+    // } // ^ NEED TO ADD API_KEY AND USER ID!!!!!!!!!!!!!!!!!!!!!!!!!!
     //but if there's no definition returned, what IS returned???
     //pass in app key and id
-};
+
 
 
 // export default {

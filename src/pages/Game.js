@@ -218,7 +218,7 @@ class Game extends Component {
             API.doesDefinitionExist("ace") //switch to joinedArray
             .then(function(res) {
                 if (res) {
-                    console.log("definition found!")
+                    console.log(res.data)
                 }
                 else {
                     console.log("not a word!")
