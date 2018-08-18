@@ -47,7 +47,7 @@ class Game extends Component {
         randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
         lettersGuessedArray: [],
-        isHidden: true,
+        ishidden: "true",
         resultsMessage: "Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!",
         runningScoreArray: [],
         level: 1,
@@ -158,7 +158,7 @@ class Game extends Component {
         var newTotalScore = this.state.totalUserScore + newWinningScore;
         //how to show buttons????????????? 
         this.setState({
-            isHidden: false,
+            ishidden: "false", 
             totalUserScore: newTotalScore,
             resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
         });
@@ -271,7 +271,7 @@ class Game extends Component {
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
                 <Row>
-                    <Card imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit} isHidden={this.state.isHidden}/>
+                    <Card imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit} ishidden={this.state.ishidden} />
                 </Row>
                 <Row className="text-center">
                     <CurrentLevel level={this.state.level} />

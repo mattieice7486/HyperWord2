@@ -22,16 +22,18 @@ const Card = props => (
 
     <CardImg imgSrc={props.imgSrc} className={"cardImage"}/>
 
+
 <br />
 
     <ResultsMessage resultsMessage={props.resultsMessage}/>
-
-    <CardBtn isHidden={true} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Won: play again"} />
+<div className={"buttonsDiv"}>
+    <CardBtn style={{display: "none"}} ishidden={props.ishidden} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Won: play again"} />
     <CardBtn onClick={props.wonQuit} value={"Won: quit"}/>
 
     <CardBtn onClick={props.lostPlayAgain} value={"Lost: play again"}/>
     <CardBtn onClick={props.lostQuit} value={"Lost: quit"}/>
 
+</div>
   </div>
 );
 

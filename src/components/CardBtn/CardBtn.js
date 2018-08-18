@@ -3,10 +3,12 @@ import "./CardBtn.css";
 
 const CardBtn = props => (
   <button
-    isHidden={props.isHidden} className={props.classname} onClick={props.onClick} value={props.value}
+    ishidden={props.ishidden} style={props.style} className={props.classname} onClick={props.onClick} value={props.value}
   >
   {props.value}
   </button>
 );
+
+//style={if (this.state.ishidden == "true") { display: 'none' }}
 
 export default CardBtn;
