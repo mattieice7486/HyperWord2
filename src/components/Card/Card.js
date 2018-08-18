@@ -26,7 +26,7 @@ const Card = props => (
 
     <ResultsMessage resultsMessage={props.resultsMessage}/>
 
-    <CardBtn onClick={props.wonPlayAgain} value={"Won: play again"} />
+    <CardBtn isHidden={true} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Won: play again"} />
     <CardBtn onClick={props.wonQuit} value={"Won: quit"}/>
 
     <CardBtn onClick={props.lostPlayAgain} value={"Lost: play again"}/>

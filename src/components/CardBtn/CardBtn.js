@@ -3,7 +3,7 @@ import "./CardBtn.css";
 
 const CardBtn = props => (
   <button
-    onClick={props.onClick} value={props.value}
+    isHidden={props.isHidden} className={props.classname} onClick={props.onClick} value={props.value}
   >
   {props.value}
   </button>

@@ -5,16 +5,15 @@ import Col from "../components/Col";
 import Timer from "../components/Timer";
 import AnswerSpace from "../components/AnswerSpace";
 import UserWordValue from "../components/UserWordValue"; //for this round
-//import NewGameBtn from "../components/NewGameBtn";
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
-//import ResultsMessage from "../components/ResultsMessage";
 import Card from "../components/Card";
 import API from "../utils/API.js";
+//Definition??
 
 
 
-// make json dummy test file with words, POS, etc., THEN pull from API (need key, ID, etc.)
+// hide buttons until win/loss is triggered
 // create card buttons for play again and not (win: yes or no; loss: yes or no)
 // disable buttons on click of submit
 // start button to begin game if time (see trivia game)
@@ -48,6 +47,7 @@ class Game extends Component {
         randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
         lettersGuessedArray: [],
+        isHidden: true,
         resultsMessage: "Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!",
         runningScoreArray: [],
         level: 1,
@@ -156,7 +156,9 @@ class Game extends Component {
         this.setState({ scoreThisRound: newWinningScore });
         //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var newTotalScore = this.state.totalUserScore + newWinningScore;
+        //how to show buttons????????????? 
         this.setState({
+            isHidden: false,
             totalUserScore: newTotalScore,
             resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
         });
@@ -186,23 +188,20 @@ class Game extends Component {
     };
 
 
+    // {this.props.isHidden ? null : <SomeComponent/>} (or simpler, {!this.props.isHidden && <SomeComponent/>})
+
 
     submit = (event) => {
         //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // console.log(this.submit);
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
-        //this.setState({ secondsLeft: 60 }); //this shouldn't be here!!! how to pause count??????????
 
         // function searchForWord() {
         //     Words.map(function(thisWord) {
         //         return thisWord.word;
         //     }).indexOf(joinedArray);
-        // }
-        
+        // }        
         // console.log(searchForWord); //undefined
-
-
 
         //word: results.id; POS: results.lexicalEntries.lexicalCategory
 
@@ -212,18 +211,20 @@ class Game extends Component {
                 if (res) {
                     console.log("definition found!")
                 }
+                else {
+                    console.log("not a word!")
+                    this.loss();
+                }
             }
             )
               .catch(err => console.log(err));
         };
-
-        checkForWord();
+        checkForWord(); //only if target score matches
 
 
 
         //if userScore !== targetScore, loss
         if (this.state.userWordValue !== this.state.targetScore) {
-            //this.win(); //need to delete, this is just for testing!!
             this.loss();
         } else {
               console.log("whatever")  
@@ -231,32 +232,8 @@ class Game extends Component {
             //if joinedArray -- OR THAT WORD WITHOUT AN S -- isn't found in dictionary, loss
 
         } //otherwise ...
-        //if part of speech doesn't match, loss
-        
+        //if part of speech doesn't match, loss        
 
-
-        // REACTIFY THIS
-        // // function getDefinition() {
-        // //     $.get("/api/all", function (data) {
-        //         for (var i=0; i <data.length; i++) {
-        //             if (guessedWord === data[i].word) { //if it's a word
-        //                 //$("#definition-div").html(data[i].definition); //print definition
-        //                 var wordtypelong = data[i].wordtype; //get POS from API
-        //                 var wordtype = wordtypelong[0] + wordtypelong[1]; //just the first 2 characters?
-        //                 if (abbreviatedRandomPOS == wordtype) { //if right POS
-        //                     win();
-        //                 } else {
-        //                     loss();
-        //                 }
-        //                 return;
-
-        //             } else {
-        //             loss();
-        //             }
-        //         } 
-        // //     });
-        // // }
-        // // getDefinition();
     };
 
     lostQuit = () => { //////////////////////////////////////////////////
@@ -294,7 +271,7 @@ class Game extends Component {
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
                 <Row>
-                    <Card imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit} />
+                    <Card imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit} isHidden={this.state.isHidden}/>
                 </Row>
                 <Row className="text-center">
                     <CurrentLevel level={this.state.level} />
