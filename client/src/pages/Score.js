@@ -75,7 +75,7 @@ class Score extends Component {
     sortByScore() {
       let items = this.state.items
       items.sort(function (a, b) {
-        return a.score - b.score;
+        return b.score - a.score;
       });
       this.setState({
         items: items
@@ -86,7 +86,7 @@ class Score extends Component {
     sortByRound() {
       let items = this.state.items
       items.sort(function (a, b) {
-        return a.round - b.round;
+        return b.round - a.round;
       });
       this.setState({
         items: items
@@ -107,10 +107,14 @@ class Score extends Component {
                         <th scope="col">#</th>
                         <th scope="col">Username</th>
                         <th scope="col">
-                          <span onClick={this.sortByRound}>Rounds Completed</span>
+                          <span onClick={this.sortByRound}>Rounds Completed&nbsp;
+                            <i className="fa fa-angle-up" style={{fontSize : "24px"}}></i>
+                          </span>
                         </th>
                         <th scope="col">
-                          <span onClick={this.sortByScore}>Score</span>
+                          <span onClick={this.sortByScore}>Score&nbsp;
+                            <i className="fa fa-angle-down" style={{fontSize : "24px"}}></i>
+                          </span>
                         </th>
                     </tr>
                 </thead>
