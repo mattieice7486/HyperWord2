@@ -1,9 +1,9 @@
 import React from "react";
-// import CardBtn from "../CardBtn";
 import PartOfSpeech from "../PartOfSpeech";
 import TargetScore from "../TargetScore";
 import ResultsMessage from "../ResultsMessage";
 import CardBtn from "../CardBtn";
+import CardImg from "../CardImg";
 import "./Card.css";
 import "../PartOfSpeech/PartOfSpeech.css";
 import "../TargetScore/TargetScore.css";
@@ -13,13 +13,14 @@ import "../TargetScore/TargetScore.css";
 const Card = props => (
   <div
     className="card"
-    style={{
-      backgroundImage: props.image ? `url(${props.image})` : "none"
-    }}
+    // style={{
+    //   backgroundImage: props.image ? `url(${props.image})` : "none"
+    // }}
   >
-  {/* **HOW REFER TO STATE IN GAME.JS??** */}
     <PartOfSpeech randomPOS={props.randomPOS} />  
     <TargetScore targetScore={props.targetScore} />
+
+    <CardImg imgSrc={props.imgSrc} className={"cardImage"}/>
 
 <br />
 

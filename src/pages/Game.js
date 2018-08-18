@@ -5,43 +5,41 @@ import Col from "../components/Col";
 import Timer from "../components/Timer";
 import AnswerSpace from "../components/AnswerSpace";
 import UserWordValue from "../components/UserWordValue"; //for this round
-import NewGameBtn from "../components/NewGameBtn";
+//import NewGameBtn from "../components/NewGameBtn";
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
 //import ResultsMessage from "../components/ResultsMessage";
 import Card from "../components/Card";
+import API from "../utils/API.js";
 
 
-//import oxford-dictionary-api -- link to API in utils folder
-//PARTS OF SPEECH ARE WRITTEN OUT IN THIS ONE!!!!!
 
-
-//make json dummy test file with words, POS, etc., THEN pull from API
+// make json dummy test file with words, POS, etc., THEN pull from API (need key, ID, etc.)
 // create card buttons for play again and not (win: yes or no; loss: yes or no)
-// work out POS and abbreviated POS stuff, plus pluralization or reverse
 // disable buttons on click of submit
-// dummy variables for dictionary lookup
-
-// add definition?
 // start button to begin game if time (see trivia game)
-// on submit, trigger next card with score, result, definition!!!!!!!!!!!!!! (loadNextDog function!)
-// deploy to heroku
+// on submit, trigger next card with score, result, definition (loadNextDog function!)
 // merge with dev
+// deploy to heroku
+
+// for the API, do I even need to loop through all entries? can I just see if joinedArray returns any definition?????
+
+
 
 
 class Game extends Component {
 
-    partsOfSpeech = {
-        "n., pl.": "noun",
-        "a.": "adjective",
-        "v., v. t., p. p., imp., p. pr., v. i., vb. n., ": "verb",
-        // ^ do these need to be entered one by one???????????????????????????????
-    };
-    POSArray = Object.values(this.partsOfSpeech);
-    abbreviatedPOSArray = Object.keys(this.partsOfSpeech);
+    partsOfSpeech = [
+        "noun",
+        "verb",
+        "adjective"
+    ];
+
+    // POSArray = Object.values(this.partsOfSpeech);
+    // abbreviatedPOSArray = Object.keys(this.partsOfSpeech);
 
     state = {
-        randomPOS: this.POSArray[Math.floor(Math.random() * this.POSArray.length)],
+        randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
         lettersGuessedArray: [],
         resultsMessage: "Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!",
@@ -60,6 +58,10 @@ class Game extends Component {
         this.setState({
             secondsLeft: newSecondsCount
         });
+        if (this.state.secondsLeft === 0) {
+            clearInterval(this.state.timer);
+            this.loss();
+        };
     };
 
     componentDidMount() { //component = game, in this case
@@ -68,8 +70,8 @@ class Game extends Component {
         //load next dog function
     };
 
-    POSIndex = this.POSArray.indexOf(this.state.randomPOS);
-    abbreviatedRandomPOS = this.abbreviatedPOSArray[this.POSIndex];
+    // POSIndex = this.partsOfSpeech.indexOf(this.state.randomPOS);
+    // abbreviatedRandomPOS = this.abbreviatedPOSArray[this.POSIndex];
 
     letterClick = (event) => {
         event.preventDefault();
@@ -153,11 +155,8 @@ class Game extends Component {
             resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
         });
 
-        // console.log("Congratulations, you won! This round, you scored " + newWinningScore + " points. Your total score so far is " + newTotalScore + " points. Would you like to play again?");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////        
-        //should i create a modal, or add this to the card????????????????????????????????????????
         //show definition?
-        //disable all buttons
         //give option to play again
 
         //if want to play again...
@@ -181,25 +180,54 @@ class Game extends Component {
     };
 
 
+
     submit = (event) => {
-        
         //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // console.log(this.submit);
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
         //this.setState({ secondsLeft: 60 }); //this shouldn't be here!!! how to pause count??????????
+
+        // function searchForWord() {
+        //     Words.map(function(thisWord) {
+        //         return thisWord.word;
+        //     }).indexOf(joinedArray);
+        // }
+        
+        // console.log(searchForWord); //undefined
+
+
+
+        //word: results.id; POS: results.lexicalEntries.lexicalCategory
+
+        function checkForWord() {
+            API.doesDefinitionExist("ace") //switch to joinedArray
+            .then(function(res) {
+                if (res) {
+                    console.log("definition found!")
+                }
+            }
+            )
+              .catch(err => console.log(err));
+        };
+
+        checkForWord();
+
+
+
         //if userScore !== targetScore, loss
-        if (this.state.secondsLeft === 0) {
-            clearInterval(this.state.timer); //not working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (this.state.userWordValue !== this.state.targetScore) {
+            //this.win(); //need to delete, this is just for testing!!
             this.loss();
-        } else if (this.state.userWordValue !== this.state.targetScore) {
-            this.win(); //need to delete, this is just for testing!!
-            // this.loss();
         } else {
+              console.log("whatever")  
+                
             //if joinedArray -- OR THAT WORD WITHOUT AN S -- isn't found in dictionary, loss
+
         } //otherwise ...
         //if part of speech doesn't match, loss
         
+
 
         // REACTIFY THIS
         // // function getDefinition() {
@@ -225,11 +253,11 @@ class Game extends Component {
         // // getDefinition();
     };
 
-    lostQuit = () => {
+    lostQuit = () => { //////////////////////////////////////////////////
         console.log("hello")
     };
 
-    wonQuit = () => {
+    wonQuit = () => { //////////////////////////////////////////////////
         console.log("hi")
     };
 
@@ -242,7 +270,7 @@ class Game extends Component {
             runningScoreArray: [],
             scoreThisRound: 0,
             secondsLeft: 15,
-            randomPOS: this.POSArray[Math.floor(Math.random() * this.POSArray.length)],
+            randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
             targetScore: Math.floor(Math.random() * (15 - 7)) + 7
         });
 
@@ -252,9 +280,6 @@ class Game extends Component {
         window.location.reload();
     };
 
-// need wonQuit, lostQuit functions????????????
-
-
 
     render() {
         return (
@@ -263,7 +288,7 @@ class Game extends Component {
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
                 <Row>
-                    <Card randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit} />
+                    <Card imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit} />
                 </Row>
                 <Row className="text-center">
                     <CurrentLevel level={this.state.level} />
@@ -283,87 +308,10 @@ class Game extends Component {
                 <Row className="text-center">
                 <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
                 </Row>
-                <br />
-                <br />
-                <Row className="text-center">
-                    <NewGameBtn func={this.restartGame}/>
-                </Row>
-                <Row className="text-center">
-                    <NewGameBtn func={this.nextLevel}/>
-                </Row>
             </div>
         );
     };
         
-};
+};    
 
-   
-  
-    // When the component mounts, load the next dog to be displayed
-    // componentDidMount() {
-    //   this.loadNextDog();
-    // }
-  
-    // handleBtnClick = event => {
-    //   // Get the data-value of the clicked button
-    //   const btnType = event.target.attributes.getNamedItem("data-value").value;
-    //   // Clone this.state to the newState object
-    //   // We'll modify this object and use it to set our component's state
-    //   const newState = { ...this.state };
-  
-    //   if (btnType === "pick") {
-    //     // Set newState.match to either true or false depending on whether or not the dog likes us (1/5 chance)
-    //     newState.match = 1 === Math.floor(Math.random() * 5) + 1;
-  
-    //     // Set newState.matchCount equal to its current value or its current value + 1 depending on whether the dog likes us
-    //     newState.matchCount = newState.match
-    //       ? newState.matchCount + 1
-    //       : newState.matchCount;
-    //   } else {
-    //     // If we thumbs down'ed the dog, we haven't matched with it
-    //     newState.match = false;
-    //   }
-    //   // Replace our component's state with newState, load the next dog image
-    //   this.setState(newState);
-    //   this.loadNextDog();
-    // };
-  
-    // loadNextDog = () => {
-    //   API.getRandomDog()
-    //     .then(res =>
-    //       this.setState({
-    //         image: res.data.message
-    //       })
-    //     )
-    //     .catch(err => console.log(err));
-    // };
-  
-//     render() {
-//       return (
-//         <div>
-//             <Row>
-//                 <h1 className="text-center">HyperWord 2</h1>
-//             </Row>
-//             <Row>
-//                 <h3 className="text-center">
-//                 Fill in the blanks with letters that add up to the Target score.
-//                         Your word must match the part of speech as well!
-//                 </h3>
-//             </Row>
-//             <Keyboard>
-//             </Keyboard>
-//         </div>
-//       );
-//     }
-//   }
-
-
-//     //need to account for other abbreviations too (e.g., "v.t.")
-
-//     //ON LOAD, when the component mounts (is added to page/tree), load the next dog to be displayed
-//     // componentDidMount() {
-//     // //   this.loadNextDog(); //load next word?
-//     // };
-  
-    
-    export default Game;
+export default Game;
