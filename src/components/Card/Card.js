@@ -2,7 +2,8 @@ import React from "react";
 import PartOfSpeech from "../PartOfSpeech";
 import TargetScore from "../TargetScore";
 import ResultsMessage from "../ResultsMessage";
-import CardBtn from "../CardBtn";
+import CardBtnLoss from "../CardBtnLoss";
+import CardBtnWin from "../CardBtnWin";
 import CardImg from "../CardImg";
 import "./Card.css";
 import "../PartOfSpeech/PartOfSpeech.css";
@@ -26,14 +27,14 @@ const Card = props => (
 <br />
 
     <ResultsMessage resultsMessage={props.resultsMessage}/>
-<div className={"buttonsDiv"}>
-    <CardBtn style={{display: "none"}} ishidden={props.ishidden} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Won: play again"} />
-    <CardBtn onClick={props.wonQuit} value={"Won: quit"}/>
 
-    <CardBtn onClick={props.lostPlayAgain} value={"Lost: play again"}/>
-    <CardBtn onClick={props.lostQuit} value={"Lost: quit"}/>
+    <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Won: play again"} />
+    <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} onClick={props.wonQuit} value={"Won: quit"}/>
 
-</div>
+    <CardBtnLoss style={props.lossbtnstyle} lostbtnhidden={props.lossbtnhidden} onClick={props.lostPlayAgain} value={"Lost: play again"}/>
+    <CardBtnLoss style={props.lossbtnstyle} lostbtnhidden={props.lossbtnhidden} onClick={props.lostQuit} value={"Lost: quit"}/>
+
+
   </div>
 );
 

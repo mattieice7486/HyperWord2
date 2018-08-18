@@ -1,13 +1,14 @@
 import React from "react";
 import "./CardBtn.css";
 
-const CardBtn = props => (
-  <button
-    ishidden={props.ishidden} style={props.style} className={props.classname} onClick={props.onClick} value={props.value}
+const CardBtn = props => {
+
+  return (<button
+    style={props.lossbtnstyle} winbtnstyle={props.winbtnstyle} className={props.classname} onClick={props.onClick} value={props.value} winbtnhidden={props.winbtnhidden} lossbtnhidden={props.lossbtnhidden}
   >
   {props.value}
-  </button>
-);
+  </button>)
+};
 
 //style={if (this.state.ishidden == "true") { display: 'none' }}
 

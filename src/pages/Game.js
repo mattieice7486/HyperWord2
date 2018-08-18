@@ -8,6 +8,7 @@ import UserWordValue from "../components/UserWordValue"; //for this round
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
 import Card from "../components/Card";
+//import CardBtn from "../components/CardBtn";
 import API from "../utils/API.js";
 //Definition??
 
@@ -32,6 +33,9 @@ import API from "../utils/API.js";
 
 
 
+
+
+
 class Game extends Component {
 
     partsOfSpeech = [
@@ -47,7 +51,9 @@ class Game extends Component {
         randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
         lettersGuessedArray: [],
-        ishidden: "true",
+        //ishidden: false,
+        winbtnhidden: true,
+        lossbtnhidden: true,
         resultsMessage: "Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!",
         runningScoreArray: [],
         level: 1,
@@ -153,12 +159,16 @@ class Game extends Component {
 
     win = () => {
         var newWinningScore = this.state.secondsLeft * 10;
+
+        // this.setState({ishidden: !this.state.ishidden})
+
         this.setState({ scoreThisRound: newWinningScore });
         //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var newTotalScore = this.state.totalUserScore + newWinningScore;
         //how to show buttons????????????? 
         this.setState({
-            ishidden: "false", 
+            // ishidden: "false", 
+            winbtnhidden: false,
             totalUserScore: newTotalScore,
             resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
         });
@@ -183,12 +193,11 @@ class Game extends Component {
         //give option to play again
         //disable all buttons
         this.setState({
-            resultsMessage: "Sorry, you lost!"
+            resultsMessage: "Sorry, you lost!",
+            lossbtnhidden: false
         });
     };
 
-
-    // {this.props.isHidden ? null : <SomeComponent/>} (or simpler, {!this.props.isHidden && <SomeComponent/>})
 
 
     submit = (event) => {
@@ -263,6 +272,19 @@ class Game extends Component {
         window.location.reload();
     };
 
+    // winbtnstyle = {
+    //     display: this.state.winbtnhidden? "none" : "block"
+    // };
+
+    // lossbtnstyle = {
+    //     display: this.state.lossbtnhidden? "none" : "block" //if lossbuttonhidden not set to true, don't show
+    // }; //////////////////////////////////////////////////////////////
+
+//ok so want to render card buttons onto card.js...
+//in game.js, need to pass in card style
+//
+
+
 
     render() {
         return (
@@ -271,7 +293,10 @@ class Game extends Component {
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
                 <Row>
-                    <Card imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit} ishidden={this.state.ishidden} />
+                    <Card winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}} lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}} winbtnhidden={this.state.winbtnhidden} lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit}>
+                    
+                    
+                    </Card>
                 </Row>
                 <Row className="text-center">
                     <CurrentLevel level={this.state.level} />
