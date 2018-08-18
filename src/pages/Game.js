@@ -21,6 +21,12 @@ import API from "../utils/API.js";
 // on submit, trigger next card with score, result, definition (loadNextDog function!)
 // merge with dev
 // deploy to heroku
+// PREPARE PRESENTATION --
+    // tell a story: how you got there (challenges, how you've worked through them)
+    // use buzzwords: state, etc. -- JQuery to React how?
+    // focus more on demoing -- no powerpoint
+    // what we've taken from this class (how to juggle hw while working full-time)
+
 
 // for the API, do I even need to loop through all entries? can I just see if joinedArray returns any definition?????
 
