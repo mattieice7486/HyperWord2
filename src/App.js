@@ -4,11 +4,14 @@ import Discover from "./pages/Discover";
 import About from "./pages/About";
 import Search from "./pages/Search";
 import Leaderboard from "./pages/Leaderboard";
-import Game from "./pages/Game";
+import Score from "./pages/Score";
+import Game from "./pages/MollyGame";
 import NoMatch from "./pages/NoMatch";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
+import "./App.css";
+
 
 const App = () => (
   <Router>

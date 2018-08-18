@@ -1,0 +1,109 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+body {
+  background-image: url("./purplebground.jpeg");
+  background-color: gray;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  background-size: 100%;
+}
+
+.container {
+  margin-top: 100px;
+  border: 5px solid rgb(204, 194, 194);
+  background-color: transparent;
+}
+
+.header {
+  color: rgba(45, 202, 241, 0.993);
+  font-size: 50px;
+  font-weight: bolder;
+  opacity: 1;
+  margin-top: 20px;
+  height: 75px;
+
+  text-shadow: 2px 2px darkmagenta;
+ 
+}
+
+p {
+  color: rgba(45, 202, 241, 0.993);
+  font-size: 30px;
+  font-weight: bolder;
+  opacity: 1;
+  margin: 30px, 0px, 10px, 0px;
+  padding: 15px;
+}
+
+/* user profile image */
+img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 80px;
+  left:400px;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
+  box-shadow: 2px 2px 1px white;
+
+}
+
+.logout {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 80px;
+  right: 400px;
+  font-size: 13px;
+  color:#000000;
+  box-shadow: 2px 2px 1px white;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
+}
+
+.login {
+  height: 50px;
+  width: 75px;
+  border-radius: 20%;
+  position: absolute;
+  top: 410px;
+  color:#000000;
+  box-shadow: 2px 2px 1px white;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
+}
+
+.instruct {
+  color:#ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  opacity: 1;
+  
+}

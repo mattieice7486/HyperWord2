@@ -5,3 +5,8 @@ nav.navbar.navbar-default {
 li {
   margin: auto 50px;
 }
+
+.nav-link {
+  color: purple;
+
+}

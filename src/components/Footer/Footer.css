@@ -10,5 +10,7 @@
   left: 0;
   right: 0;
   padding: 3px;
-  background: #B8B8B8;
+  color: rgb(25, 0, 255);
+  background: magenta;
+  opacity: .2;
 }

@@ -1,6 +1,6 @@
 .card-btn {
   border-radius: 50%;
-  height: 50px;
+  height:15px;
   width: 50px;
   position: absolute;
   border: none;
@@ -47,4 +47,23 @@
     font-size: 24px;
   }
 
+}
+
+.result {
+  border-radius: 50%;
+  height: 60px;
+  margin: 5px;
+  font-size: 13px;
+  color:#000000;
+  box-shadow: 2px 2px 1px white;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
+}
+
+.hold {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 65px;
+  padding: 40px;
+  float: left;
 }
