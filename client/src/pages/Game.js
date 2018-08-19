@@ -215,7 +215,7 @@ class Game extends Component {
         //word: results.id; POS: results.lexicalEntries.lexicalCategory
 
         function checkForWord() {
-            API.doesDefinitionExist("ace") //switch to joinedArray
+            API.doesDefinitionExist(joinedArray) //switch to joinedArray
             .then(function(res) {
                 if (res) {
                     console.log(res.data)
@@ -228,15 +228,15 @@ class Game extends Component {
             )
               .catch(err => console.log(err));
         };
-        checkForWord(); //only if target score matches
+        
 
 
 
         //if userScore !== targetScore, loss
         if (this.state.userWordValue !== this.state.targetScore) {
             this.loss();
-        } else {
-              console.log("whatever")  
+        } else { 
+            checkForWord(); //only if target score matches 
                 
             //if joinedArray -- OR THAT WORD WITHOUT AN S -- isn't found in dictionary, loss
 
@@ -245,12 +245,16 @@ class Game extends Component {
 
     };
 
-    lostQuit = () => { //////////////////////////////////////////////////
-        console.log("hello")
+    lostQuit = () => {
+        this.setState({
+            resultsMessage: "Thanks for playing! Come back soon."
+        });
     };
 
-    wonQuit = () => { //////////////////////////////////////////////////
-        console.log("hi")
+    wonQuit = () => {
+        this.setState({
+            resultsMessage: "Thanks for playing! Come back soon."
+        });
     };
 
     nextLevel = () => { //for when user wins and wants to continue to next level
