@@ -1,15 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Discover from "./pages/Discover";
+//import Discover from "./pages/Discover";
 import About from "./pages/About";
 import Search from "./pages/Search";
 import Leaderboard from "./pages/Leaderboard";
 import Score from "./pages/Score";
-import Game from "./pages/MollyGame";
+import Game from "./pages/Game";
 import NoMatch from "./pages/NoMatch";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
+import Discover from "./pages/Discover";
 import "./App.css";
 
 
