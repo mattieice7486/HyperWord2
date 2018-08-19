@@ -32,10 +32,6 @@ import API from "../utils/API.js";
 
 
 
-
-
-
-
 class Game extends Component {
 
     partsOfSpeech = [
@@ -218,7 +214,7 @@ class Game extends Component {
             API.doesDefinitionExist(joinedArray) //switch to joinedArray
             .then(function(res) {
                 if (res) {
-                    console.log(res.data) //IF ERROR CODE IS 404, NO WORD FOUND
+                    console.log(res.data) //identify no match by error code?
                 }
                 else {
                     console.log("not a word!")
