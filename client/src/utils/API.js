@@ -1,30 +1,50 @@
 import axios from "axios";
+import unirest from "unirest";
 //import Dictionary from "oxford-dictionary-api";
 
 //need to insert key and ID into header
 //use postman to test
 
+
+const RapidAPI = require('rapidapi-connect');
+const rapid = new RapidAPI('hyperword2_5b79d912e4b070c2fc657380', '3a8694f1-919c-4dda-9ba9-941cf1544d42');
+
+
 export default {
 
     doesDefinitionExist: function(word) { //see if it returns a definition
-        // return axios.get(curl "https://wordsapiv1.p.mashape.com/words/soliloquy" -H "X-Mashape-Key: '745ec98a-e6e0-4ae7-8ccc-b0534980e177'")
-        return axios.get("https://wordsapiv1.p.mashape.com/words/" + word, {
-            headers: {
-                "X-Mashape-Key": "745ec98a-e6e0-4ae7-8ccc-b0534980e177",
-                'Access-Control-Allow-Origin': '*',
+
+        return axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word, {
+            "headers": { ///////////////
+                "app_id": "0a036353",
+                "app_key": "d095c3cae77b50f576eea84cd7d7c6c6",
+                "Allow-Control-Allow-Origin": "*",
+                'Access-Control-Allow-Credentials' : 'true',
+                'Access-Control-Allow-Origin': 'http://localhost',
+                'Access-Control-Allow-Origins': 'http://localhost',
+                'Content-Type': 'application/json',
+                'Accept-Charset' : 'utf-8' 
             }
         }
-    )
-    }
+        )
 
-    
+        // return unirest.get("https://wordsapiv1.p.mashape.com/words/" + word)
+        // .header("X-Mashape-Key", "8JuhiE3Y6KmshrbzdUvl45rBJ9zDp1DLlKyjsnmyNDN01gDuIf");
+    //     return axios.get("https://wordsapiv1.p.mashape.com/words/" + word, {
+    //         headers: {
+    //             "X-Mashape-Key": "8JuhiE3Y6KmshrbzdUvl45rBJ9zDp1DLlKyjsnmyNDN01gDuIf",
+    //             "X-Mashape-Host": "wordsapiv1.p.mashape.com"
+    //         }
+    //     }
+    // )
+
+    }
+  
 
 };
 
 
-// curl "https://wordsapiv1.p.mashape.com/words/soliloquy" -H "X-Mashape-Key: <required>" 745ec98a-e6e0-4ae7-8ccc-b0534980e177
-    
-
+//pEdyxcBMz3msh6axxLsYbXGpkCoEp18RuBKjsnjJsVptbYQR3M
 
 
 

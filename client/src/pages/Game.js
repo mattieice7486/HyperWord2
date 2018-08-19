@@ -218,7 +218,7 @@ class Game extends Component {
             API.doesDefinitionExist(joinedArray) //switch to joinedArray
             .then(function(res) {
                 if (res) {
-                    console.log(res.data)
+                    console.log(res.data) //IF ERROR CODE IS 404, NO WORD FOUND
                 }
                 else {
                     console.log("not a word!")
@@ -233,10 +233,10 @@ class Game extends Component {
 
 
         //if userScore !== targetScore, loss
-        if (this.state.userWordValue !== this.state.targetScore) {
+        if (this.state.userWordValue === this.state.targetScore) { //CHANGE BACK TO !==
             this.loss();
         } else { 
-            checkForWord(); //only if target score matches 
+            checkForWord();
                 
             //if joinedArray -- OR THAT WORD WITHOUT AN S -- isn't found in dictionary, loss
 

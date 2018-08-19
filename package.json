@@ -25,11 +25,13 @@
         "firebase": "^5.3.1",
         "firebase-admin": "^6.0.0",
         "if-env": "^1.0.4",
+        "rapidapi-connect": "0.0.6",
         "react": "^16.4.2",
         "react-dom": "^16.4.2",
         "react-native-leaderboard": "^1.0.5",
         "react-router-dom": "^4.3.1",
-        "react-scripts": "1.1.4"
+        "react-scripts": "1.1.4",
+        "unirest": "^0.5.1"
     },
     "devDependencies": {
         "concurrently": "^3.5.0",
