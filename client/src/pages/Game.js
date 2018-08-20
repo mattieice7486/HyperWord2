@@ -9,12 +9,11 @@ import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
 import Card from "../components/Card";
 //import CardBtn from "../components/CardBtn";
-import API from "../utils/API.js";
+//import API from "../utils/API.js";////////////////////////////
 //Definition??
 
 
 
-// hide buttons until win/loss is triggered
 // create card buttons for play again and not (win: yes or no; loss: yes or no)
 // disable buttons on click of submit
 // start button to begin game if time (see trivia game)
@@ -201,28 +200,19 @@ class Game extends Component {
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
 
-        // function searchForWord() {
-        //     Words.map(function(thisWord) {
-        //         return thisWord.word;
-        //     }).indexOf(joinedArray);
-        // }        
-        // console.log(searchForWord); //undefined
-
-        //word: results.id; POS: results.lexicalEntries.lexicalCategory
-
         function checkForWord() {
-            API.doesDefinitionExist(joinedArray) //switch to joinedArray
-            .then(function(res) {
-                if (res) {
-                    console.log(res.data) //identify no match by error code?
-                }
-                else {
-                    console.log("not a word!")
-                    this.loss();
-                }
-            }
-            )
-              .catch(err => console.log(err));
+            // API.doesDefinitionExist(joinedArray) //switch to joinedArray
+            // .then(function(res) {
+            //     if (res) {
+            //         console.log(res.data) //identify no match by error code?
+            //     }
+            //     else {
+            //         console.log("not a word!")
+            //         this.loss();
+            //     }
+            // }
+            // )
+            //   .catch(err => console.log(err));
         };
         
 
