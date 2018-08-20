@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import Keyboard from "../components/Keyboard";
+import firebase from "firebase";
+import Firebase, { auth, provider } from '../utils/Firebase';
+
 import Row from "../components/Row";
 import Col from "../components/Col";
 import Timer from "../components/Timer";
@@ -11,7 +14,6 @@ import Card from "../components/Card";
 //import CardBtn from "../components/CardBtn";
 import API from "../utils/API.js";
 //Definition??
-
 
 
 // hide buttons until win/loss is triggered
@@ -31,12 +33,9 @@ import API from "../utils/API.js";
 // for the API, do I even need to loop through all entries? can I just see if joinedArray returns any definition?????
 
 
+export default class Game extends React.Component{
 
-
-
-
-
-class Game extends Component {
+// class Game extends Component {
 
     partsOfSpeech = [
         "noun",
@@ -46,8 +45,9 @@ class Game extends Component {
 
     // POSArray = Object.values(this.partsOfSpeech);
     // abbreviatedPOSArray = Object.keys(this.partsOfSpeech);
-
-    state = {
+    constructor(props) {
+      super(props);
+      this.state = {
         randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
         lettersGuessedArray: [],
@@ -61,8 +61,18 @@ class Game extends Component {
         totalUserScore: 0,
         scoreThisRound: 0,
         secondsLeft: 15,
-        timer: null
-    };
+        timer: null,
+        userround: 0,
+        userscore: 0,
+        username: '',
+        items: [],
+        user: null
+      }
+    this.handleChange = this.handleChange.bind(this); 
+    this.handleSubmit = this.handleSubmit.bind(this); 
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+    }
 
     timeOut = () => {
         var newSecondsCount = this.state.secondsLeft;
@@ -79,7 +89,27 @@ class Game extends Component {
     componentDidMount() { //component = game, in this case
         let timer = setInterval(this.timeOut, 1000);
         this.setState({ timer });
-        //load next dog function
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            this.setState({ user });
+          } 
+        });
+        const itemsRef = firebase.database().ref('Users');
+        itemsRef.on('value', (snapshot) => {
+          let items = snapshot.val();
+          let newState = [];
+          for (let item in items) {
+            newState.push({
+              id: item,
+              user: items[item].user,
+              round: items[item].round,
+              score: items[item].score
+            });
+          }
+          this.setState({
+            items: newState
+          });
+        });
     };
 
     // POSIndex = this.partsOfSpeech.indexOf(this.state.randomPOS);
@@ -276,6 +306,47 @@ class Game extends Component {
         window.location.reload();
     };
 
+    handleChange(e) {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
+  
+    logout() {
+      auth.signOut()
+      .then(() => {
+        this.setState({
+          user: null
+        });
+      });
+     }
+  
+    login() {
+      auth.signInWithPopup(provider) 
+        .then((result) => {
+          const user = result.user;
+          this.setState({
+            user
+          });
+        });
+    }
+  
+    handleSubmit(e) {
+      e.preventDefault();
+      const itemsRef = firebase.database().ref('Users');
+      const item = {
+        user: this.state.username,
+        round: this.state.userround,
+        score: this.state.userscore
+      }
+      itemsRef.push(item);
+      this.setState({
+        username: '',
+        userround: 0,
+        userscore: 0
+      });
+    }
+
     // winbtnstyle = {
     //     display: this.state.winbtnhidden? "none" : "block"
     // };
@@ -296,6 +367,34 @@ class Game extends Component {
                 <Row>
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
+                <div className='container'>
+                {this.state.user ?
+                <button onClick={this.logout}>Logout</button>                
+              :
+                <button onClick={this.login}>Log In</button>              
+              }
+              
+              {this.state.user ?
+                <div>
+                  <div className='user-profile'>
+                    <img src={this.state.user.photoURL} />
+                  </div>
+                </div>
+                :
+                <div className='wrapper'>
+                  <p>You must be logged in to record your high score.</p>
+                </div>
+              }
+
+                <section className='add-item'>
+                      <form onSubmit={this.handleSubmit}>
+                        <input type="text" name="username" placeholder="user name" onChange={this.handleChange} value={this.state.username} />
+                        <input type="number" name="userround" placeholder="round" onChange={this.handleChange} value={this.state.userround} />
+                        <input type="number" name="userscore" placeholder="score" onChange={this.handleChange} value={this.state.userscore} />
+                        <button>Add Item</button>
+                      </form>
+                </section>
+              </div>
                 <Row>
                     <Card winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}} lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}} winbtnhidden={this.state.winbtnhidden} lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit}>
                     
@@ -326,4 +425,4 @@ class Game extends Component {
         
 };    
 
-export default Game;
+// export default Game;
