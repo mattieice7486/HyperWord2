@@ -32,7 +32,8 @@ class Score extends Component {
       const item = {
         user: this.state.username,
         round: this.state.userround,
-        score: this.state.userscore
+        score: this.state.userscore,
+        avatar: this.state.avatar
       }
       itemsRef.push(item);
       this.setState({
@@ -54,7 +55,8 @@ class Score extends Component {
             id: item,
             user: items[item].user,
             round: items[item].round,
-            score: items[item].score
+            score: items[item].score,
+            avatar: items[item].avatar
           });
           counter += 1;
         }
@@ -104,6 +106,7 @@ class Score extends Component {
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col"></th>
                         <th scope="col">Username</th>
                         <th scope="col">
                           <span onClick={this.sortByRound}>Rounds Completed&nbsp;
@@ -122,6 +125,7 @@ class Score extends Component {
                         return (
                             <tr key={item.id}>
                                 <td>{index + 1}</td>
+                                <td><img src={item.avatar} style={{borderRadius : "50%", height : "50px", width : "auto"}}></img></td>
                                 <td>{item.user}</td>
                                 <td>{item.round}</td>
                                 <td>{item.score}</td>

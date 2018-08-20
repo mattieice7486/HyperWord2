@@ -1,13 +1,13 @@
 import axios from "axios";
-import unirest from "unirest";
+// import unirest from "unirest";
 //import Dictionary from "oxford-dictionary-api";
 
 //need to insert key and ID into header
 //use postman to test
 
 
-const RapidAPI = require('rapidapi-connect');
-const rapid = new RapidAPI('hyperword2_5b79d912e4b070c2fc657380', '3a8694f1-919c-4dda-9ba9-941cf1544d42');
+// const RapidAPI = require('rapidapi-connect');
+// const rapid = new RapidAPI('hyperword2_5b79d912e4b070c2fc657380', '3a8694f1-919c-4dda-9ba9-941cf1544d42');
 
 
 export default {

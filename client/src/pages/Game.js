@@ -103,7 +103,8 @@ export default class Game extends React.Component{
               id: item,
               user: items[item].user,
               round: items[item].round,
-              score: items[item].score
+              score: items[item].score,
+              avatar: items[item].avatar,
             });
           }
           this.setState({
@@ -333,17 +334,19 @@ export default class Game extends React.Component{
   
     handleSubmit(e) {
       e.preventDefault();
+      console.log(this.state.user.displayName);
       const itemsRef = firebase.database().ref('Users');
       const item = {
-        user: this.state.username,
-        round: this.state.userround,
-        score: this.state.userscore
+        user: this.state.user.displayName,
+        round: this.state.level,
+        score: this.state.secondsLeft,
+        avatar: this.state.user.photoURL
       }
       itemsRef.push(item);
       this.setState({
-        username: '',
-        userround: 0,
-        userscore: 0
+        // username: '',
+        // userround: 0,
+        // userscore: 0
       });
     }
 
@@ -377,7 +380,7 @@ export default class Game extends React.Component{
               {this.state.user ?
                 <div>
                   <div className='user-profile'>
-                    <img src={this.state.user.photoURL} />
+                    <img src={this.state.user.photoURL} style={{borderRadius : "50%", height : "100px", width : "auto"}}/>
                   </div>
                 </div>
                 :
@@ -388,9 +391,6 @@ export default class Game extends React.Component{
 
                 <section className='add-item'>
                       <form onSubmit={this.handleSubmit}>
-                        <input type="text" name="username" placeholder="user name" onChange={this.handleChange} value={this.state.username} />
-                        <input type="number" name="userround" placeholder="round" onChange={this.handleChange} value={this.state.userround} />
-                        <input type="number" name="userscore" placeholder="score" onChange={this.handleChange} value={this.state.userscore} />
                         <button>Add Item</button>
                       </form>
                 </section>
