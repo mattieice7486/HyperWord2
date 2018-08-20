@@ -31,8 +31,6 @@
   "author": "Matthew Eisenstadter, Molly, Jessica, Amy",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^3.5.0",
-    "nodemon": "^1.11.0",
     "autoprefixer": "^6.7.2",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
@@ -43,15 +41,17 @@
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-1": "^6.22.0",
     "babel-runtime": "^6.22.0",
+    "concurrently": "^3.5.0",
     "css-loader": "^0.26.1",
     "file-loader": "^0.10.1",
     "node-sass": "^4.5.0",
+    "nodemon": "^1.11.0",
     "postcss-loader": "^1.2.2",
     "precss": "^1.4.0",
     "sass-loader": "^5.0.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.8",
-    "webpack": "^2.2.1",
+    "webpack": "^3.1.0",
     "webpack-dev-server": "^2.4.2",
     "webpack-hot-middleware": "^2.16.1"
   }
