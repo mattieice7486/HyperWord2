@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin';
 import firebase from 'firebase'
 // import keys from 'keys'
 
