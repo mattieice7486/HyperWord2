@@ -1,148 +1,63 @@
 import React from "react";
 import KeyboardLetter from "../KeyboardLetter";
 import KeyboardSpecial from "../KeyboardSpecial";
-import Row from "../Row";
 import "./Keyboard.css";
+import KeyboardSubmit from "../KeyboardSubmit";
+
+//see card & cardbutton.js for keys template
+//for now, just is right or wrong (don't worry about dictionary yet)
+//need to add subscripts!!
+
+//need function to push values to answerSpace?? shouldn't go here though, right?????????? How to access function here from Game.js? Game.function doesn't seem to work!!
 
 const Keyboard = props => (
-  <div>
-    <Row>
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="q"
-        letter="q"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="w"
-        letter="w"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="e"
-        letter="e"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="r"
-        letter="r"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="t"
-        letter="t"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="y"
-        letter="y"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="u"
-        letter="u"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="i"
-        letter="i"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="o"
-        letter="o"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="p"
-        letter="p"
-      />
-    </Row>
-    <Row>
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="a"
-        letter="a"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="s"
-        letter="s"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="d"
-        letter="d"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="f"
-        letter="f"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="g"
-        letter="g"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="h"
-        letter="h"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="j"
-        letter="j"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="k"
-        letter="k"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="l"
-        letter="l"
-      />
-    </Row>
-    <Row>
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="z"
-        letter="z"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="x"
-        letter="x"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="c"
-        letter="c"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="v"
-        letter="v"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="b"
-        letter="b"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="n"
-        letter="n"
-      />
-      <KeyboardLetter
-        onClick={props.handleBtnClick}
-        data-value="m"
-        letter="m"
-      />
-    </Row>
-  </div>
+  
+<div className="keyboard">    
+
+<div className="row">
+    <KeyboardLetter value={"Q"} datavalue={10} onClick={props.letterClick} /> 
+    <KeyboardLetter value={"W"} datavalue={4} onClick={props.letterClick} />
+    <KeyboardLetter value={"E"} datavalue={1} onClick={props.letterClick} />
+    <KeyboardLetter value={"R"} datavalue={1} onClick={props.letterClick} />
+    <KeyboardLetter value={"T"} datavalue={1} onClick={props.letterClick} />
+    <KeyboardLetter value={"Y"} datavalue={4} onClick={props.letterClick} />
+    <KeyboardLetter value={"U"} datavalue={1} onClick={props.letterClick} />
+    <KeyboardLetter value={"I"} datavalue={1} onClick={props.letterClick} />
+    <KeyboardLetter value={"O"} datavalue={1} onClick={props.letterClick} />
+    <KeyboardLetter value={"P"} datavalue={3} onClick={props.letterClick} />
+</div>
+
+<div>        
+    <KeyboardLetter value={"A"} datavalue={1} onClick={props.letterClick} />
+    <KeyboardLetter value={"S"} datavalue={1} onClick={props.letterClick} />
+    <KeyboardLetter value={"D"} datavalue={2} onClick={props.letterClick} />
+    <KeyboardLetter value={"F"} datavalue={4} onClick={props.letterClick} />
+    <KeyboardLetter value={"G"} datavalue={2} onClick={props.letterClick} />
+    <KeyboardLetter value={"H"} datavalue={4} onClick={props.letterClick} />
+    <KeyboardLetter value={"J"} datavalue={8} 
+    onClick={props.letterClick}/>
+    <KeyboardLetter value={"K"} datavalue={5} onClick={props.letterClick} />
+    <KeyboardLetter value={"L"} datavalue={1} onClick={props.letterClick} />
+</div>
+
+<div>
+    <KeyboardLetter value={"Z"} datavalue={10} onClick={props.letterClick} />
+    <KeyboardLetter value={"X"} datavalue={8} onClick={props.letterClick} />
+    <KeyboardLetter value={"C"} datavalue={3} onClick={props.letterClick} />
+    <KeyboardLetter value={"V"} datavalue={4} onClick={props.letterClick} />
+    <KeyboardLetter value={"B"} datavalue={3} onClick={props.letterClick} />
+    <KeyboardLetter value={"N"} datavalue={1} onClick={props.letterClick} />
+    <KeyboardLetter value={"M"} datavalue={3} onClick={props.letterClick} />
+</div>
+
+<div>
+    <KeyboardSpecial value={"Clear"} onClick={props.clear} />
+    <KeyboardSpecial value={"Backspace"} onClick={props.backspace} />
+    <KeyboardSubmit value={"Submit"} onClick={props.submit} />
+</div>
+
+</div>
+
 );
 
 export default Keyboard;

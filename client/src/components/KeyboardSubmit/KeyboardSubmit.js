@@ -1,9 +1,8 @@
 import React from "react";
-import Game from "../../pages/Game.js";
-import "./KeyboardSpecial.css";
+import "./KeyboardSubmit.css";
 
 
-const KeyboardSpecial = props => (
+const KeyboardSubmit = props => (
   <button
     onClick={props.onClick} value={props.value}
     //className={`specialBtn ${props["value"]}`}
@@ -13,4 +12,4 @@ const KeyboardSpecial = props => (
   </button>
 );
 
-export default KeyboardSpecial;
+export default KeyboardSubmit;

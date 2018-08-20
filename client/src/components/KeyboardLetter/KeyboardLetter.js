@@ -1,12 +1,15 @@
 import React from "react";
 import "./KeyboardLetter.css";
 
-const KeyboardLetter = props => (
+const KeyboardLetter = (props) => (
   <button
     onClick={props.onClick}
-    className={`btn btn-danger ${props["data-value"]}`}
+    value={props.value}
+    datavalue={props.datavalue}
+    //className={`letter`}
     {...props}
-    >{props.letter}
+  >
+  {props.value}
   </button>
 );
 
