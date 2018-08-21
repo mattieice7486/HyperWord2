@@ -8,6 +8,7 @@ import UserWordValue from "../components/UserWordValue"; //for this round
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
 import Card from "../components/Card";
+import unirest from "unirest";
 //import CardBtn from "../components/CardBtn";
 import API from "../utils/API.js";
 //Definition??
@@ -215,19 +216,27 @@ class Game extends Component {
         //word: results.id; POS: results.lexicalEntries.lexicalCategory
 
         function checkForWord() {
-            API.doesDefinitionExist("ace") //switch to joinedArray
-            .then(function(res) {
-                if (res) {
-                    console.log(res.data)
-                }
-                else {
-                    console.log("not a word!")
-                    this.loss();
-                }
-            }
-            )
-              .catch(err => console.log(err));
-        };
+            // API.doesDefinitionExist("ace") //switch to joinedArray
+            // .end(function(res) {
+            //     if (res) {
+            //         console.log(res.data)
+            //     }
+            //     else {
+            //         console.log("not a word!")
+            //         this.loss();
+            //     }
+            // }
+            // )
+              
+        unirest.get("https://wordsapiv1.p.mashape.com/words/bump/also")
+        .header("X-Mashape-Key", "4rGyLqapg6msh6rdkELFqlYwFydgp17sO62jsn3Y525iPgOulD")
+        .header("X-Mashape-Host", "wordsapiv1.p.mashape.com")
+        .end(function (result) {
+          console.log(result.status, result.headers, result.body);
+        });
+
+
+         };
         checkForWord(); //only if target score matches
 
 
@@ -290,21 +299,20 @@ class Game extends Component {
         return (
             <div>
                 <Row>
-                    <h1 className="text-center">HyperWord 2</h1>
+                    <h1 className="header animated fadeInDown">HyperWord 2</h1>
+                </Row>
+                <Row className="text-center animated wobble delay 3s">
+                    <CurrentLevel level={this.state.level} />
                 </Row>
                 <Row>
-                    <Card winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}} lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}} winbtnhidden={this.state.winbtnhidden} lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit}>
+                <Card winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}} lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}} winbtnhidden={this.state.winbtnhidden} lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit}>
                     
                     
                     </Card>
                 </Row>
-                <Row className="text-center">
-                    <CurrentLevel level={this.state.level} />
-                </Row>
-                <Row className="text-center">
-                    <TotalUserScore totalUserScore={this.state.totalUserScore} />
-                </Row>
-                <Row className="text-center">
+            <div className="block animated slideInRight delay 3s">
+                <Row className="US text-center">
+                <TotalUserScore totalUserScore={this.state.totalUserScore} />
                     <Timer seconds={this.state.secondsLeft}/>
                 </Row>
                 <Row className="text-center">
@@ -313,10 +321,11 @@ class Game extends Component {
                 <Row className="text-center">
                     <UserWordValue score={this.state.userWordValue}/>
                 </Row>
-                <Row className="text-center">
-                <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
-                </Row>
             </div>
+                <Row className="text-center">
+                <Keyboard image="candy" letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
+                     </Row>
+</div>
         );
     };
         

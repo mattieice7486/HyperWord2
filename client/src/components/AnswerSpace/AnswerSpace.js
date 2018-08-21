@@ -6,8 +6,9 @@ import "./AnswerSpace.css";
 const AnswerSpace = (props) => {
     return (
         <div>
-            <h1>
+            <h1 className="letters">
                 Your letters: 
+                <br/>
                 <br/>
                 {props.guesses.toString()}
             </h1>

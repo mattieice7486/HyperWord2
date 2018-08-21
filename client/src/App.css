@@ -38,15 +38,13 @@
   }
   
   .header {
-    color: rgba(45, 202, 241, 0.993);
+    color:#ffffff;
     font-size: 50px;
     font-weight: bolder;
     opacity: 1;
     margin-top: 20px;
     height: 75px;
-  
-    text-shadow: 2px 2px darkmagenta;
-   
+    text-shadow: 3px 3px deepskyblue;
   }
   
   p {
@@ -58,7 +56,7 @@
     padding: 15px;
   }
   
-  /* user profile image */
+  /* user profile image 
   img {
     height: 50px;
     width: 50px;
@@ -70,7 +68,7 @@
     background-color: deepskyblue;
     box-shadow: 2px 2px 1px white;
   
-  }
+  }*/
   
   .logout {
     height: 50px;
@@ -107,3 +105,35 @@
     opacity: 1;
     
   }
+
+/*.US {
+  color: #ffffff;
+  border: 1px solid darkmagenta;
+  border-radius: 40%;
+  width: 300px; 
+  opacity: 1;
+  padding: 5px;
+  position: relative;
+  
+}*/
+
+ .card {
+   float: left;
+   margin-left: 350px;
+ }
+
+ .block {
+  background-size: cover;
+  background-position: center;
+  background-clip: content-box;
+  border: 6px solid white;
+  height: 300px;
+  width: 400px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  position: relative;
+  bottom: 330px;
+  margin: 0 auto;
+  margin-top: 30px;
+  float: right;
+  margin-right: 350px;
+ }

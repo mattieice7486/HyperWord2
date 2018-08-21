@@ -1,4 +1,5 @@
 import axios from "axios";
+import unirest from "unirest";
 //import Dictionary from "oxford-dictionary-api";
 
 //need to insert key and ID into header
@@ -6,14 +7,13 @@ import axios from "axios";
 
 export default {
 
-    doesDefinitionExist: function(word) { //see if it returns a definition
-        return axios.get("https://wordsapiv1.p.mashape.com/words/" + word, {
-            headers: {
-                "X-Mashape-Key": "745ec98a-e6e0-4ae7-8ccc-b0534980e177",
-                'Access-Control-Allow-Origin': 'http://localhost',
-            }
-        }
-    )
+    doesDefinitionExist: function(word) {
+        unirest.get("https://wordsapiv1.p.mashape.com/words/" + word)
+        .header("X-Mashape-Key", "4rGyLqapg6msh6rdkELFqlYwFydgp17sO62jsn3Y525iPgOulD")
+        .header("X-Mashape-Host", "wordsapiv1.p.mashape.com")
+        .end(function (result) {
+          console.log(result.status, result.headers, result.body);
+        });
     }
 
     

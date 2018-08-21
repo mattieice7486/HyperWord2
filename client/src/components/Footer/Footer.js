@@ -2,8 +2,8 @@ import React from "react";
 import "./Footer.css";
 
 const Footer = () => (
-  <footer className="footer">
-    <span>Hyperword 2018</span>
+  <footer>
+    <span className="footer">Hyperword 2018</span>
   </footer>
 );
 
