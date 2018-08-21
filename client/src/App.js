@@ -9,6 +9,7 @@ import NoMatch from "./pages/NoMatch";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
+import "./App.css";
 
 const App = () => (
   <Router>

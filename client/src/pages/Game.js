@@ -368,7 +368,7 @@ export default class Game extends React.Component{
         return (
             <div>
                 <Row>
-                    <h1 className="text-center">HyperWord 2</h1>
+                    <h1 className="header animated fadeInDown delay 3s text-center">HyperWord 2</h1>
                 </Row>
                 <div className='container'>
                 {this.state.user ?
