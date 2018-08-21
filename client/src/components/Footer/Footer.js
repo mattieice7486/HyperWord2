@@ -1,10 +1,9 @@
+
 import React from "react";
 import "./Footer.css";
-
 const Footer = () => (
-  <footer className="footer">
-    <span>Pupster 2017</span>
+  <footer>
+    <span className="footer">Hyperword 2018</span>
   </footer>
 );
-
 export default Footer;
