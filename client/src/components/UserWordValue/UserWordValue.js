@@ -4,7 +4,7 @@ import "./UserWordValue.css";
 const UserWordValue = (props) => {
         return (
             <div>
-            <h2>Your word's value: {props.score.toString()}</h2>
+            <h2 className="value">Your word's value: {props.score.toString()}</h2>
             </div>
         )
 };
