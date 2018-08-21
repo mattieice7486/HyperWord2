@@ -1,6 +1,6 @@
 .card-btn {
   border-radius: 50%;
-  height: 50px;
+  height:15px;
   width: 50px;
   position: absolute;
   border: none;
@@ -11,29 +11,23 @@
   font-family: FontAwesome;
   outline: none;
 }
-
 .pass {
   left: 1%;
   background: #E53935;
 }
-
 .pass::after {
   content: "\f165";
 }
-
 .pick {
   right: 1%;
   background: #43A047;
 }
-
 .pick::after {
   content: "\f164";
 }
-
 .pick:hover::after, .pass:hover::after {
   animation: iconBounce .57s 1;
 }
-
 @keyframes iconBounce {
   0% {
     font-size: 24px;
@@ -46,5 +40,21 @@
   100% {
     font-size: 24px;
   }
-
+}
+.result {
+  border-radius: 50%;
+  height: 60px;
+  margin: 5px;
+  font-size: 13px;
+  color:#000000;
+  box-shadow: 2px 2px 1px white;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
+}
+.hold {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 65px;
+  padding: 40px;
+  float: left;
 }
