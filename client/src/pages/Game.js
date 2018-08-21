@@ -334,7 +334,7 @@ export default class Game extends React.Component{
   
     handleSubmit(e) {
       e.preventDefault();
-      console.log(this.state.user.displayName);
+      console.log(this.state.user);
       const itemsRef = firebase.database().ref('Users');
       const item = {
         user: this.state.user.displayName,
