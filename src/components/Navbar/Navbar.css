@@ -1,7 +1,19 @@
 nav.navbar.navbar-default {
   margin-bottom: 0;
+  font-family: 'Oswald', sans-serif;
+  background-image: url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/MPaEbz-/videoblocks-computer-generated-abstract-footage-with-glowing-purple-vertical-stripes-moving-against-dark-background-loop-ready-animation_hsggepohlz_thumbnail-small01.jpg);
+  color: white !important;
+  font-size: 40px;
 }
 
+  
 li {
-  margin: auto 50px;
+  margin: auto 100px;
+  color: white !important;
+  font-size: 20px;
+}
+
+a {
+  color: white !important;
+
 }
