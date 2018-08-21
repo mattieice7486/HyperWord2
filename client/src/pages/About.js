@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Firebase, { auth, provider } from '../utils/Firebase';
 import firebase from 'firebase';
+//import LoginPage from LoginPage;
 
 class App extends Component {
   constructor(props) {

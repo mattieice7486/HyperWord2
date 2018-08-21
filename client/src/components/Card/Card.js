@@ -20,7 +20,12 @@ const Card = props => (
   >
     <PartOfSpeech randomPOS={props.randomPOS} />  
     <TargetScore targetScore={props.targetScore} />
-    <CardImg imgSrc={props.imgSrc} className="cardImage animated fadeOut"/>
+
+    <CardImg imgSrc={props.imgSrc} className={"cardImage"}/>
+
+
+<br />
+
     <ResultsMessage resultsMessage={props.resultsMessage}/>
 
     <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Won: play again"} />

@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
 import Discover from "./pages/Discover";
+import LoginPage  from "./pages/LoginPage";
 import "./App.css";
 
 
@@ -21,6 +22,7 @@ const App = () => (
       <Wrapper>
         <Route exact path="/" component={About} />
         <Route exact path="/about" component={About} />
+        <Route exact path="/login" component={LoginPage} />
         <Route exact path="/discover" component={Discover} />
         <Route exact path="/search" component={Search} />
         <Route exact path="/leaderboard" component={Leaderboard} />

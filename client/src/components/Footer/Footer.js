@@ -3,7 +3,7 @@ import "./Footer.css";
 
 const Footer = () => (
   <footer>
-    <span className="footer">Hyperword 2018</span>
+    <span className="footer">Hyperword2 2018</span>
   </footer>
 );
 

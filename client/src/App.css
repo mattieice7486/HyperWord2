@@ -56,7 +56,7 @@
     padding: 15px;
   }
   
-  /* user profile image 
+  /*user profile image */
   img {
     height: 50px;
     width: 50px;
@@ -68,7 +68,7 @@
     background-color: deepskyblue;
     box-shadow: 2px 2px 1px white;
   
-  }*/
+  }
   
   .logout {
     height: 50px;
@@ -117,10 +117,10 @@
   
 }*/
 
- .card {
+ /*.card {
    float: left;
    margin-left: 350px;
- }
+ }*/
 
  .block {
   background-size: cover;
@@ -136,4 +136,44 @@
   margin-top: 30px;
   float: right;
   margin-right: 350px;
+ }
+
+input {
+  color:deepskyblue;
+  box-shadow: 2px 2px 1px white;
+  text-align: center;
+  
+  background-color: darkmagenta;
+  margin: 10px;
+
+
+ }
+
+th {
+  color:#000000;
+  box-shadow: 2px 2px 1px white;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
+
+ }
+
+ tr {
+  color:deepskyblue;
+   text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: white;
+
+ }
+
+ button.add {
+  height: 50px;
+  width: 100px;
+  border-radius: 20%;
+  
+  margin: 10px;
+  color:#000000;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
  }

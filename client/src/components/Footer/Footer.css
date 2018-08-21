@@ -7,7 +7,7 @@ footer {
   background: magenta;
   opacity: .2;
 }
-.footer {
-  color: deepskyblue;
-  text-shadow: .5px 1px #ffffff;
+span.footer {
+  color: #ffffff;
+  text-shadow: .5px 1px deepskyblue;
 }

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-//import Leaderboard from "../components/Leaderboard";
-//import Container from "../components/Container";
-import Firebase, { auth, provider } from "../utils/Firebase";
-//import firebase from 'firebase';
-//import _ from 'lodash';
+// import Leaderboard from "../components/Leaderboard";
+// import Container from "../components/Container";
+// import Firebase, { auth, provider } from '../utils/Firebase';
+import firebase from 'firebase';
+import _ from 'lodash';
 
 class Score extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class Score extends Component {
         items: []
       }
       this.handleChange = this.handleChange.bind(this); 
-      this.handleSubmit = this.handleSubmit.bind(this); 
+      this.handleSubmit = this.handleSubmit.bind(this);
       this.sortByScore = this.sortByScore.bind(this);
       this.sortByRound = this.sortByRound.bind(this);
     }
@@ -28,11 +28,12 @@ class Score extends Component {
   
     handleSubmit(e) {
       e.preventDefault();
-      const itemsRef = Firebase.database().ref('Users');
+      const itemsRef = firebase.database().ref('Users');
       const item = {
         user: this.state.username,
         round: this.state.userround,
-        score: this.state.userscore
+        score: this.state.userscore,
+        avatar: this.state.avatar
       }
       itemsRef.push(item);
       this.setState({
@@ -43,7 +44,7 @@ class Score extends Component {
     }
   
     componentDidMount(){
-      const itemsRef = Firebase.database().ref('Users');
+      const itemsRef = firebase.database().ref('Users');
       itemsRef.on('value', (snapshot) => {
         let items = snapshot.val();
         let newState = [];
@@ -54,22 +55,18 @@ class Score extends Component {
             id: item,
             user: items[item].user,
             round: items[item].round,
-            score: items[item].score
+            score: items[item].score,
+            avatar: items[item].avatar
           });
           counter += 1;
         }
-        newState.sort(function (a, b) {
+          newState.sort(function (a, b) {
           return b.score - a.score;
         });
         this.setState({
           items: newState
         });
       });
-    }
-  
-    removeItem(itemId) {
-      const itemRef = Firebase.database().ref(`/Users/${itemId}`);
-      itemRef.remove();
     }
 
     sortByScore() {
@@ -93,18 +90,23 @@ class Score extends Component {
       });
     }
 
+    removeItem(itemId) {
+      const itemRef = firebase.database().ref(`/Users/${itemId}`);
+      itemRef.remove();
+    }
     render() {
       return (
         <div className='container'>
           <header>
               <div className="wrapper">
-                <h1>Leaderboard</h1>
+                <h1>Leaderboard</h1>         
               </div>
           </header>
             <table className="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col"></th>
                         <th scope="col">Username</th>
                         <th scope="col">
                           <span onClick={this.sortByRound}>Rounds Completed&nbsp;
@@ -123,6 +125,7 @@ class Score extends Component {
                         return (
                             <tr key={item.id}>
                                 <td>{index + 1}</td>
+                                <td><img src={item.avatar} style={{borderRadius : "50%", height : "50px", width : "auto"}}></img></td>
                                 <td>{item.user}</td>
                                 <td>{item.round}</td>
                                 <td>{item.score}</td>
