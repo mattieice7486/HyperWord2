@@ -4,16 +4,18 @@ nav.navbar.navbar-default {
   background-image: url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/MPaEbz-/videoblocks-computer-generated-abstract-footage-with-glowing-purple-vertical-stripes-moving-against-dark-background-loop-ready-animation_hsggepohlz_thumbnail-small01.jpg);
   color: white !important;
   font-size: 40px;
+  border-style: ridge;
+  border-color: black;
 }
 
-  
+
 li {
-  margin: auto 100px;
+  margin: auto 110px;
   color: white !important;
   font-size: 20px;
 }
 
 a {
   color: white !important;
-
+  background-color: transparent !important;
 }
