@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import firebase from "firebase";
+import Firebase, { auth, provider } from '../utils/Firebase';
 import Keyboard from "../components/Keyboard";
 import Row from "../components/Row";
 import Col from "../components/Col";
@@ -12,24 +14,19 @@ import Card from "../components/Card";
 import { EventEmitter } from "events";
 //import CardBtn from "../components/CardBtn";
 //import API from "../utils/API.js";////////////////////////////
-//Definition??
 
 
-
-// create card buttons for play again and not (win: yes or no; loss: yes or no)
+// need subscripts
 // disable buttons on click of submit
 // start button to begin game if time (see trivia game)
 // on submit, trigger next card with score, result, definition (loadNextDog function!)
 // merge with dev
 // deploy to heroku
 // PREPARE PRESENTATION --
-// tell a story: how you got there (challenges, how you've worked through them)
-// use buzzwords: state, etc. -- JQuery to React how?
-// focus more on demoing -- no powerpoint
-// what we've taken from this class (how to juggle hw while working full-time)
-
-
-// for the API, do I even need to loop through all entries? can I just see if joinedArray returns any definition?????
+    // tell a story: how you got there (challenges, how you've worked through them)
+    // use buzzwords: state, etc. -- JQuery to React how?
+    // focus more on demoing -- no powerpoint
+    // what we've taken from this class (how to juggle hw while working full-time)
 
 
 
@@ -41,14 +38,15 @@ class Game extends Component {
         "adjective"
     ];
 
-    // POSArray = Object.values(this.partsOfSpeech);
-    // abbreviatedPOSArray = Object.keys(this.partsOfSpeech);
 
-    state = {
+    
+    constructor(props) {
+        super(props);
+
+    this.state = {
         randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
         lettersGuessedArray: [],
-        //ishidden: false,
         winbtnhidden: true,
         lossbtnhidden: true,
         resultsMessage: "Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!",
@@ -59,8 +57,19 @@ class Game extends Component {
         scoreThisRound: 0,
         secondsLeft: 15,
         timer: null,
-        error: null
+        error: null,
+        userround: 0,
+        userscore: 0,
+        username: '',
+        items: [],
+        user: null
     };
+
+    this.handleChange = this.handleChange.bind(this); 
+    this.handleSubmit = this.handleSubmit.bind(this); 
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+}
 
     timeOut = () => {
         var newSecondsCount = this.state.secondsLeft;
@@ -77,11 +86,30 @@ class Game extends Component {
     componentDidMount() { //component = game, in this case
         let timer = setInterval(this.timeOut, 1000);
         this.setState({ timer });
-        //load next dog function
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+              this.setState({ user });
+            } 
+          });
+          const itemsRef = firebase.database().ref('Users');
+          itemsRef.on('value', (snapshot) => {
+            let items = snapshot.val();
+            let newState = [];
+            for (let item in items) {
+              newState.push({
+                id: item,
+                user: items[item].user,
+                round: items[item].round,
+                score: items[item].score,
+                avatar: items[item].avatar,
+              });
+            }
+            this.setState({
+              items: newState
+            });
+          });
     };
 
-    // POSIndex = this.partsOfSpeech.indexOf(this.state.randomPOS);
-    // abbreviatedRandomPOS = this.abbreviatedPOSArray[this.POSIndex];
 
     letterClick = (event) => {
         event.preventDefault();
@@ -150,22 +178,12 @@ class Game extends Component {
         });
     };
 
-    quit = () => {
-        console.log("Thanks for playing! Come back soon.")
-    };
-
-
     win = () => {
         var newWinningScore = this.state.secondsLeft * 10;
-
-        // this.setState({ishidden: !this.state.ishidden})
-
         this.setState({ scoreThisRound: newWinningScore });
         //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var newTotalScore = this.state.totalUserScore + newWinningScore;
-        //how to show buttons????????????? 
         this.setState({
-            // ishidden: "false", 
             winbtnhidden: false,
             totalUserScore: newTotalScore,
             resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
@@ -178,7 +196,7 @@ class Game extends Component {
         //if want to play again...
         //generate new POS and target score
         //move to next level
-        this.nextLevel();
+        //this.nextLevel();
         //otherwise...
         //say thanks for playing
         //push score to db (and leaderboard if applicable)!!!!!!!
@@ -192,7 +210,8 @@ class Game extends Component {
         //disable all buttons
         this.setState({
             resultsMessage: "Sorry, you lost!",
-            lossbtnhidden: false
+            lossbtnhidden: false,
+            winbtnhidden: true
         });
     };
 
@@ -203,7 +222,9 @@ class Game extends Component {
         //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
-        axios.post(`http://localhost:3001/api/check-word`, { guess: joinedArray })
+
+        function checkForWord() {
+            axios.post(`http://localhost:3001/api/check-word`, { guess: joinedArray })
             .then((response) => {
                 if (response.data === "its a word") {
                     // Set the error state to null (in case there was a previous error and someone resubmited)
@@ -211,7 +232,7 @@ class Game extends Component {
                         error: null
                     })
                 } else {
-                    // If the guess isn't a word, set the error state
+                    //If the guess isn't a word, set the error state
                     return this.setState({
                         error: "Your guess must be a valid word"
                     });
@@ -220,19 +241,24 @@ class Game extends Component {
             .catch((error, response) => {
                 return;
             });
+        }
 
-        //if userScore !== targetScore, loss
+
         if (this.state.userWordValue === this.state.targetScore) { //CHANGE BACK TO !==
-            this.loss();
+            this.win(); //change back to loss
         } else {
-            // checkForWord();
-
-            //if joinedArray -- OR THAT WORD WITHOUT AN S -- isn't found in dictionary, loss
+            checkForWord();
+            //if not found in dictionary (404 error), loss
 
         } //otherwise ...
         //if part of speech doesn't match, loss        
 
     };
+
+
+// RE-IMPLEMENT CHECK FOR WORD FUNCTION!!!!!!!!!!!!!!!!!!!!!! //
+
+
 
     lostQuit = () => {
         this.setState({
@@ -248,9 +274,12 @@ class Game extends Component {
 
     nextLevel = () => { //for when user wins and wants to continue to next level
         var newLevel = this.state.level + 1; //show level they're on (update this.state.level)
+        let timer = setInterval(this.timeOut, 1000);
         this.setState({
+            timer: timer,
             level: newLevel,
             userWordValue: 0,
+            resultsMessage: "Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!",
             lettersGuessedArray: [],
             runningScoreArray: [],
             scoreThisRound: 0,
@@ -265,17 +294,48 @@ class Game extends Component {
         window.location.reload();
     };
 
-    // winbtnstyle = {
-    //     display: this.state.winbtnhidden? "none" : "block"
-    // };
+    handleChange(e) {
+        this.setState({
+          [e.target.name]: e.target.value
+        });
+    }
 
-    // lossbtnstyle = {
-    //     display: this.state.lossbtnhidden? "none" : "block" //if lossbuttonhidden not set to true, don't show
-    // }; //////////////////////////////////////////////////////////////
-
-    //ok so want to render card buttons onto card.js...
-    //in game.js, need to pass in card style
-    //
+    logout() {
+        auth.signOut()
+        .then(() => {
+          this.setState({
+            user: null
+          });
+        });
+       }
+    
+      login() {
+        auth.signInWithPopup(provider) 
+          .then((result) => {
+            const user = result.user;
+            this.setState({
+              user
+            });
+          });
+      }
+    
+      handleSubmit(e) {
+        e.preventDefault();
+        console.log(this.state.user);
+        const itemsRef = firebase.database().ref('Users');
+        const item = {
+          user: this.state.user.displayName,
+          round: this.state.level,
+          score: this.state.secondsLeft,
+          avatar: this.state.user.photoURL
+        }
+        itemsRef.push(item);
+        this.setState({
+          // username: '',
+          // userround: 0,
+          // userscore: 0
+        });
+      }
 
 
 
@@ -285,10 +345,35 @@ class Game extends Component {
                 <Row>
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
+                
+                <div className='container'>
+                {this.state.user ?
+                <button onClick={this.logout}>Logout</button>                
+              :
+                <button onClick={this.login}>Log In</button>              
+              }
+              
+              {this.state.user ?
+                <div>
+                  <div className='user-profile'>
+                    <img src={this.state.user.photoURL} style={{borderRadius : "50%", height : "100px", width : "auto"}}/>
+                  </div>
+                </div>
+                :
+                <div className='wrapper'>
+                  <p>You must be logged in to record your high score.</p>
+                </div>
+              }
+
+                <section className='add-item'>
+                      <form onSubmit={this.handleSubmit}>
+                        <button>Add Item</button>
+                      </form>
+                </section>
+              </div>
+
                 <Row>
                     <Card winbtnstyle={{ display: this.state.winbtnhidden ? "none" : "block" }} lossbtnstyle={{ display: this.state.lossbtnhidden ? "none" : "block" }} winbtnhidden={this.state.winbtnhidden} lossbtnhidden={this.state.lossbtnhidden} imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit}>
-
-
                     </Card>
                 </Row>
                 <Row className="text-center">
@@ -307,9 +392,6 @@ class Game extends Component {
                     <UserWordValue score={this.state.userWordValue} />
                 </Row>
                 <Row className="text-center">
-                    {this.state.error && <p style={{ color: 'red' }}>Your answer must be a word!</p>}
-                </Row>
-                <Row className="text-center">
                     <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
                 </Row>
             </div>
@@ -317,5 +399,9 @@ class Game extends Component {
     };
 
 };
+
+// <Row className="text-center">
+// {this.state.error && <p style={{ color: 'red' }}>Your answer must be a word!</p>}
+// </Row>
 
 export default Game;
