@@ -23,10 +23,10 @@ import { EventEmitter } from "events";
 // merge with dev
 // deploy to heroku
 // PREPARE PRESENTATION --
-    // tell a story: how you got there (challenges, how you've worked through them)
-    // use buzzwords: state, etc. -- JQuery to React how?
-    // focus more on demoing -- no powerpoint
-    // what we've taken from this class (how to juggle hw while working full-time)
+// tell a story: how you got there (challenges, how you've worked through them)
+// use buzzwords: state, etc. -- JQuery to React how?
+// focus more on demoing -- no powerpoint
+// what we've taken from this class (how to juggle hw while working full-time)
 
 
 // for the API, do I even need to loop through all entries? can I just see if joinedArray returns any definition?????
@@ -58,7 +58,8 @@ class Game extends Component {
         totalUserScore: 0,
         scoreThisRound: 0,
         secondsLeft: 15,
-        timer: null
+        timer: null,
+        error: null
     };
 
     timeOut = () => {
@@ -170,17 +171,17 @@ class Game extends Component {
             resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
         });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////        
         //show definition?
         //give option to play again
 
         //if want to play again...
-            //generate new POS and target score
-            //move to next level
-            this.nextLevel();
+        //generate new POS and target score
+        //move to next level
+        this.nextLevel();
         //otherwise...
-            //say thanks for playing
-            //push score to db (and leaderboard if applicable)!!!!!!!
+        //say thanks for playing
+        //push score to db (and leaderboard if applicable)!!!!!!!
 
     }
 
@@ -202,23 +203,30 @@ class Game extends Component {
         //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
-        axios.post("http://localhost:3001/api/check-word", { guess: joinedArray})
-            .then(function(response) {
-                console.log(response);
-                return;
+        axios.post(`http://localhost:3001/api/check-word`, { guess: joinedArray })
+            .then((response) => {
+                if (response.data === "its a word") {
+                    // Set the error state to null (in case there was a previous error and someone resubmited)
+                    return this.setState({
+                        error: null
+                    })
+                } else {
+                    // If the guess isn't a word, set the error state
+                    return this.setState({
+                        error: "Your guess must be a valid word"
+                    });
+                }
             })
-            .catch(function(error, response) {
-                console.log(response);
-                console.log(error);
+            .catch((error, response) => {
                 return;
             });
-        
+
         //if userScore !== targetScore, loss
         if (this.state.userWordValue === this.state.targetScore) { //CHANGE BACK TO !==
             this.loss();
-        } else { 
+        } else {
             // checkForWord();
-                
+
             //if joinedArray -- OR THAT WORD WITHOUT AN S -- isn't found in dictionary, loss
 
         } //otherwise ...
@@ -265,9 +273,9 @@ class Game extends Component {
     //     display: this.state.lossbtnhidden? "none" : "block" //if lossbuttonhidden not set to true, don't show
     // }; //////////////////////////////////////////////////////////////
 
-//ok so want to render card buttons onto card.js...
-//in game.js, need to pass in card style
-//
+    //ok so want to render card buttons onto card.js...
+    //in game.js, need to pass in card style
+    //
 
 
 
@@ -278,9 +286,9 @@ class Game extends Component {
                     <h1 className="text-center">HyperWord 2</h1>
                 </Row>
                 <Row>
-                    <Card winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}} lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}} winbtnhidden={this.state.winbtnhidden} lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit}>
-                    
-                    
+                    <Card winbtnstyle={{ display: this.state.winbtnhidden ? "none" : "block" }} lossbtnstyle={{ display: this.state.lossbtnhidden ? "none" : "block" }} winbtnhidden={this.state.winbtnhidden} lossbtnhidden={this.state.lossbtnhidden} imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit}>
+
+
                     </Card>
                 </Row>
                 <Row className="text-center">
@@ -290,21 +298,24 @@ class Game extends Component {
                     <TotalUserScore totalUserScore={this.state.totalUserScore} />
                 </Row>
                 <Row className="text-center">
-                    <Timer seconds={this.state.secondsLeft}/>
+                    <Timer seconds={this.state.secondsLeft} />
                 </Row>
                 <Row className="text-center">
-                    <AnswerSpace guesses={this.state.lettersGuessedArray.join("")}/>
+                    <AnswerSpace guesses={this.state.lettersGuessedArray.join("")} />
                 </Row>
                 <Row className="text-center">
-                    <UserWordValue score={this.state.userWordValue}/>
+                    <UserWordValue score={this.state.userWordValue} />
                 </Row>
                 <Row className="text-center">
-                <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
+                    {this.state.error && <p style={{ color: 'red' }}>Your answer must be a word!</p>}
+                </Row>
+                <Row className="text-center">
+                    <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
                 </Row>
             </div>
         );
     };
-        
-};    
+
+};
 
 export default Game;
