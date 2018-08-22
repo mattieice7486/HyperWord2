@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = require('axios');
 
 var headers = {
     "headers": {
@@ -12,8 +12,13 @@ var headers = {
     }
 };
 
-export default {
+module.exports = {
     doesDefinitionExist: function(word) { //see if it returns a definition
-        return axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word, headers);
+        axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word, headers)
+            .then(function(response) {
+                return true;
+            }).catch(function(response, error) {
+                return false;
+            });
     }
 };

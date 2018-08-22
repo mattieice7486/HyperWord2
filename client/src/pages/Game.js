@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import Keyboard from "../components/Keyboard";
 import Row from "../components/Row";
 import Col from "../components/Col";
@@ -8,6 +9,7 @@ import UserWordValue from "../components/UserWordValue"; //for this round
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
 import Card from "../components/Card";
+import { EventEmitter } from "events";
 //import CardBtn from "../components/CardBtn";
 //import API from "../utils/API.js";////////////////////////////
 //Definition??
@@ -196,33 +198,26 @@ class Game extends Component {
 
 
     submit = (event) => {
+        event.preventDefault();
         //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
-
-        function checkForWord() {
-            // API.doesDefinitionExist(joinedArray) //switch to joinedArray
-            // .then(function(res) {
-            //     if (res) {
-            //         console.log(res.data) //identify no match by error code?
-            //     }
-            //     else {
-            //         console.log("not a word!")
-            //         this.loss();
-            //     }
-            // }
-            // )
-            //   .catch(err => console.log(err));
-        };
+        axios.post("http://localhost:3001/api/check-word", { guess: joinedArray})
+            .then(function(response) {
+                console.log(response);
+                return;
+            })
+            .catch(function(error, response) {
+                console.log(response);
+                console.log(error);
+                return;
+            });
         
-
-
-
         //if userScore !== targetScore, loss
         if (this.state.userWordValue === this.state.targetScore) { //CHANGE BACK TO !==
             this.loss();
         } else { 
-            checkForWord();
+            // checkForWord();
                 
             //if joinedArray -- OR THAT WORD WITHOUT AN S -- isn't found in dictionary, loss
 
