@@ -43,7 +43,8 @@ class Game extends Component {
         super(props);
 
     this.state = {
-        randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
+        //randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
+        randomPOS: 'noun',
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
         lettersGuessedArray: [],
         winbtnhidden: true,
@@ -112,7 +113,6 @@ class Game extends Component {
 
     letterClick = (event) => {
         event.preventDefault();
-        console.log(event.target.attributes);
         var letterGuessed = event.target.attributes.getNamedItem("value").value;
         var letterScore = event.target.attributes.getNamedItem("datavalue").value;
         var newLetterArray = this.state.lettersGuessedArray;
@@ -209,6 +209,7 @@ class Game extends Component {
 
     submit = (event) => {
         event.preventDefault();
+        //console.log("submitted") //ok
         //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
@@ -218,18 +219,14 @@ class Game extends Component {
 //does this.state.randomPOS match the POS from the dictionary?????????????????????????????????????????????????????????????
 
         function checkForWord() {
-            axios.post(`http://localhost:3001/api/check-word`, { guess: joinedArray, POS: thisPOS })
+            axios.post(`http://localhost:3001/api/check-word`, { guess: 'wire', partOfSpeech: 'Noun' }) //switch
             .then((response) => {
                 //console.log(response.data)
                 if (response.data !== "it's a word") {
-                    console.log("sorry, either not a word or wrong POS!")
+                    console.log("either that isn't a word or the POS is incorrect")
                     this.loss();
                 } else {
-                    //if not found in dictionary (404 error), loss
-                    //if part of speech doesn't match, loss!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    //otherwise, win!!
                     this.win();
-                    
                 }
             })
             .catch((error, response) => {
@@ -237,13 +234,14 @@ class Game extends Component {
             });
         };
 
+checkForWord();
 
-        if (this.state.userWordValue !== this.state.targetScore) { //SWITCH BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            console.log("sorry, your score doesn't match the targetScore!");
-            this.loss();
-        } else {
-            checkForWord();
-        };
+        // if (this.state.userWordValue !== this.state.targetScore) { //SWITCH BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //     console.log("sorry, your score doesn't match the targetScore!");
+        //     this.loss();
+        // } else {
+        //     checkForWord();
+        // };
         
 
     };

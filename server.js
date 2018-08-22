@@ -27,18 +27,19 @@ if (process.env.NODE_ENV === "production") {
 
 
 // Route to check if the user input is a word
-app.post("/api/check-word", function (req, res) {
-    doesDefinitionExist(req.body.guess, req.body.POS)
+app.post("/api/check-word", function(req, res) {
+    doesDefinitionExist(req.body.guess, req.body.partOfSpeech)
         .then(function (isWord) {
             if (isWord === true) {
+                console.log("that's a word")
                 return res.send("it's a word");
             }
-            else {
-                //console.log('nope!') //ok
+            else if (isWord === false) {
+                console.log("that's not a word")
                 return res.send("it's not a word");
             }
         })
-        .catch(function (error) {
+        .catch(function(error) {
             return res.send(error).status(400);
         })
 });
