@@ -140,3 +140,19 @@
   float: right;
   margin-right: 350px;
  }
+
+ .LeaderTable {
+
+   background-color:#ded9f0;
+   opacity: .9;
+ }
+
+ thead {
+
+  color: deepskyblue;
+  font-weight: bold;
+  background-color:#ded9f0;
+  text-align: center;
+  text-shadow: 1px 1px red;
+
+ }

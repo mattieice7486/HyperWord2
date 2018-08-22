@@ -68,7 +68,7 @@ class Score extends Component {
         });
       });
     }
-
+//how do you change an element's orientation in React?
     sortByScore() {
       let items = this.state.items
       items.sort(function (a, b) {
@@ -106,7 +106,7 @@ class Score extends Component {
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col"></th>
+                        <th></th>
                         <th scope="col">Username</th>
                         <th scope="col">
                           <span onClick={this.sortByRound}>Rounds Completed&nbsp;
@@ -120,7 +120,7 @@ class Score extends Component {
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="LeaderTable">
                     {this.state.items.map((item, index) => {
                         return (
                             <tr key={item.id}>
