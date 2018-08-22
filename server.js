@@ -26,40 +26,27 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-// // Define API routes here
-// app.get("/api/words", (req, res) => { //need to call this at some point????????????????????
-//     console.log(req);
-// });
-
-
 // Route to check if the user input is a word
 app.post("/api/check-word", function (req, res) {
-    doesDefinitionExist(req.body.guess)
+    doesDefinitionExist(req.body.guess, req.body.POS)
         .then(function (isWord) {
-            // If it is a word return "its a word"
             if (isWord === true) {
                 return res.send("its a word");
             }
-            // Otherwise return "its not a word"
             else {
                 return res.send("its not a word");
             }
         })
-        // Pass along any errors we get
         .catch(function (error) {
             return res.send(error).status(400);
         })
 });
 
 
-// // Send every other request to the React app
+// Send every other request to the React app
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
-
-// app.get("/game", (req, res) => {
-//     res.sendFile(path.join(__dirname, "./client/src/pages/game.html"));
-// });
 
 app.listen(PORT, () => {
     console.log(`🌎 ==> Server now on port ${PORT}!`);

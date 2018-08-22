@@ -12,8 +12,7 @@ import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
 import Card from "../components/Card";
 import { EventEmitter } from "events";
-//import CardBtn from "../components/CardBtn";
-//import API from "../utils/API.js";////////////////////////////
+
 
 
 // need subscripts
@@ -179,6 +178,7 @@ class Game extends Component {
     };
 
     win = () => {
+        console.log("cool")
         var newWinningScore = this.state.secondsLeft * 10;
         this.setState({ scoreThisRound: newWinningScore });
         //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -223,51 +223,53 @@ class Game extends Component {
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
 
+        var thisPOS = this.state.randomPOS;
+        //console.log(thisPOS);
+//does this.state.randomPOS match the POS from the dictionary?????????????????????????????????????????????????????????????
+
         function checkForWord() {
-            axios.post(`http://localhost:3001/api/check-word`, { guess: joinedArray })
+            axios.post(`http://localhost:3001/api/check-word`, { guess: joinedArray, POS: thisPOS })
             .then((response) => {
-                if (response.data === "its a word") {
+                //console.log("response: " + response);
+                if (response.data !== "its a word") {
                     // Set the error state to null (in case there was a previous error and someone resubmited)
-                    return this.setState({
-                        error: null
-                    })
+                    this.loss();
                 } else {
                     //If the guess isn't a word, set the error state
-                    return this.setState({
-                        error: "Your guess must be a valid word"
-                    });
+                    //if not found in dictionary (404 error), loss
+                    //if part of speech doesn't match, loss!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    //otherwise, win!!
+                    this.loss();
+                    
                 }
             })
             .catch((error, response) => {
                 return;
             });
-        }
+        };
 
 
-        if (this.state.userWordValue === this.state.targetScore) { //CHANGE BACK TO !==
-            this.win(); //change back to loss
+        if (this.state.userWordValue !== this.state.targetScore) { //SWITCH BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            checkForWord();
+            //this.loss(); //SWITCH BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         } else {
             checkForWord();
-            //if not found in dictionary (404 error), loss
-
-        } //otherwise ...
-        //if part of speech doesn't match, loss        
+        };
+        
 
     };
 
 
-// RE-IMPLEMENT CHECK FOR WORD FUNCTION!!!!!!!!!!!!!!!!!!!!!! //
-
-
-
     lostQuit = () => {
         this.setState({
-            resultsMessage: "Thanks for playing! Come back soon."
+            resultsMessage: "Thanks for playing! Come back soon.",
+            lossbtnhidden: true
         });
     };
 
     wonQuit = () => {
         this.setState({
+            winbtnhidden: true,
             resultsMessage: "Thanks for playing! Come back soon."
         });
     };
@@ -277,6 +279,7 @@ class Game extends Component {
         let timer = setInterval(this.timeOut, 1000);
         this.setState({
             timer: timer,
+            winbtnhidden: true,
             level: newLevel,
             userWordValue: 0,
             resultsMessage: "Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!",
@@ -403,5 +406,17 @@ class Game extends Component {
 // <Row className="text-center">
 // {this.state.error && <p style={{ color: 'red' }}>Your answer must be a word!</p>}
 // </Row>
+
+// axios.post(`http://localhost:3001/api/check-word`, { guess: joinedArray })
+// .then((response) => {
+//     if (response.data === "its a word") {
+//         // Set the error state to null (in case there was a previous error and someone resubmited)
+//         return this.setState({
+//             error: null
+//         })
+
+// return this.setState({
+                    //     error: "Your guess must be a valid word"
+                    // });
 
 export default Game;
