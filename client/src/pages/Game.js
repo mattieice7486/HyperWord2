@@ -32,9 +32,9 @@ import { EventEmitter } from "events";
 class Game extends Component {
 
     partsOfSpeech = [
-        "noun",
-        "verb",
-        "adjective"
+        "Noun",
+        "Verb",
+        "Adjective"
     ];
 
 
@@ -54,7 +54,7 @@ class Game extends Component {
         userWordValue: 0,
         totalUserScore: 0,
         scoreThisRound: 0,
-        secondsLeft: 15,
+        secondsLeft: 30,
         timer: null,
         error: null,
         userround: 0,
@@ -112,6 +112,7 @@ class Game extends Component {
 
     letterClick = (event) => {
         event.preventDefault();
+        console.log(event.target.attributes);
         var letterGuessed = event.target.attributes.getNamedItem("value").value;
         var letterScore = event.target.attributes.getNamedItem("datavalue").value;
         var newLetterArray = this.state.lettersGuessedArray;
@@ -178,7 +179,7 @@ class Game extends Component {
     };
 
     win = () => {
-        console.log("cool")
+        console.log("you won!");
         var newWinningScore = this.state.secondsLeft * 10;
         this.setState({ scoreThisRound: newWinningScore });
         //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -189,18 +190,6 @@ class Game extends Component {
             resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
         });
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////        
-        //show definition?
-        //give option to play again
-
-        //if want to play again...
-        //generate new POS and target score
-        //move to next level
-        //this.nextLevel();
-        //otherwise...
-        //say thanks for playing
-        //push score to db (and leaderboard if applicable)!!!!!!!
-
     }
 
 
@@ -208,6 +197,7 @@ class Game extends Component {
         //need some kind of message saying they lost
         //give option to play again
         //disable all buttons
+        console.log("you lost!")
         this.setState({
             resultsMessage: "Sorry, you lost!",
             lossbtnhidden: false,
@@ -230,16 +220,15 @@ class Game extends Component {
         function checkForWord() {
             axios.post(`http://localhost:3001/api/check-word`, { guess: joinedArray, POS: thisPOS })
             .then((response) => {
-                //console.log("response: " + response);
-                if (response.data !== "its a word") {
-                    // Set the error state to null (in case there was a previous error and someone resubmited)
+                //console.log(response.data)
+                if (response.data !== "it's a word") {
+                    console.log("sorry, either not a word or wrong POS!")
                     this.loss();
                 } else {
-                    //If the guess isn't a word, set the error state
                     //if not found in dictionary (404 error), loss
                     //if part of speech doesn't match, loss!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     //otherwise, win!!
-                    this.loss();
+                    this.win();
                     
                 }
             })
@@ -250,8 +239,8 @@ class Game extends Component {
 
 
         if (this.state.userWordValue !== this.state.targetScore) { //SWITCH BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            checkForWord();
-            //this.loss(); //SWITCH BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            console.log("sorry, your score doesn't match the targetScore!");
+            this.loss();
         } else {
             checkForWord();
         };
@@ -275,7 +264,7 @@ class Game extends Component {
     };
 
     nextLevel = () => { //for when user wins and wants to continue to next level
-        var newLevel = this.state.level + 1; //show level they're on (update this.state.level)
+        var newLevel = this.state.level + 1;
         let timer = setInterval(this.timeOut, 1000);
         this.setState({
             timer: timer,
@@ -286,7 +275,7 @@ class Game extends Component {
             lettersGuessedArray: [],
             runningScoreArray: [],
             scoreThisRound: 0,
-            secondsLeft: 15,
+            secondsLeft: 30,
             randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
             targetScore: Math.floor(Math.random() * (15 - 7)) + 7
         });

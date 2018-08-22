@@ -12,6 +12,7 @@ var headers = {
     }
 };
 
+// HOW TO MAKE SURE IT RECOGNIZES PLURALS?????????????? //
 module.exports = {
     doesDefinitionExist: function(word, partOfSpeech) { //see if it returns a definition
         return axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word, headers)
@@ -19,18 +20,18 @@ module.exports = {
                 // Return true if we get a 200 response from Oxford
                 var wordResults = data.data.results;
                 for (var i=0; i<wordResults.length; i++) {
-                    for (var x=0; x<wordResults[i].lexicalEntries.length; x++) {
+                    for (var x=0; x<wordResults[i].lexicalEntries.length; x++) { //loop through all possible definitions
                         var POSResults = wordResults[i].lexicalEntries[x];
-                        //console.log(POSResults.lexicalCategory); //ok
-                        for (var z=0; z<POSResults.lexicalCategory[z].length; z++) {
-                            if (POSResults.lexicalCategory[z] == partOfSpeech) {
-                                console.log("correct POS!");
+                        for (var z=0; z<POSResults.lexicalCategory[z].length; z++) { //loop through all possible parts of speech
+                            console.log("POS: " + POSResults.lexicalCategory[z])
+                            if (POSResults.lexicalCategory[z] == partOfSpeech[0]) { //if hits correct one, return true...
+                                console.log("correct POS!");                    //otherwise, keep looking!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                 return true;
-                            } else {
-                                console.log("incorrect POS!");
-                                return false;
+                                //trigger win!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                             }
-                        }
+                            //return false;
+                            //console.log("incorrect POS!")
+                        } //return false;
                     };
                 };
                 //return true; /////////////////////////////////////////////////////////////////////////////////////

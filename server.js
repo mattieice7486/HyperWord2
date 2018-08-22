@@ -31,10 +31,11 @@ app.post("/api/check-word", function (req, res) {
     doesDefinitionExist(req.body.guess, req.body.POS)
         .then(function (isWord) {
             if (isWord === true) {
-                return res.send("its a word");
+                return res.send("it's a word");
             }
             else {
-                return res.send("its not a word");
+                //console.log('nope!') //ok
+                return res.send("it's not a word");
             }
         })
         .catch(function (error) {
