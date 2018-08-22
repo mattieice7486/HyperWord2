@@ -1,7 +1,35 @@
+
 nav.navbar.navbar-default {
   margin-bottom: 0;
+  font-family: 'Oswald', sans-serif;
+  background-image: url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/MPaEbz-/videoblocks-computer-generated-abstract-footage-with-glowing-purple-vertical-stripes-moving-against-dark-background-loop-ready-animation_hsggepohlz_thumbnail-small01.jpg);
+  color: white !important;
+  font-size: 40px;
+  border-style: ridge;
+  border-color: black;
+  height: 10%;
 }
 
+.navbar-brand {
+  padding-top: 2.25%;
+  font-weight: bolder;
+  margin-left: 3%;
+  
+}
+
+.navbar-nav {
+  text-align: center;
+  padding-top: 2.25%;
+}
+
+
 li {
-  margin: auto 50px;
+  margin: auto 110px;
+  color: white !important;
+  font-size: 20px;
+}
+
+a {
+  color: white !important;
+  background-color: transparent !important;
 }

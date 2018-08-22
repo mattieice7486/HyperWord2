@@ -364,65 +364,60 @@ export default class Game extends React.Component{
 
 
 
-    render() {
-        return (
-            <div>
-                <Row>
-                    <h1 className="header animated fadeInDown delay 3s text-center">HyperWord 2</h1>
-                </Row>
-                <div className='container'>
-                {this.state.user ?
-                <button onClick={this.logout}>Logout</button>                
-              :
-                <button onClick={this.login}>Log In</button>              
-              }
-              
-              {this.state.user ?
+render() {
+    return (
+        <div>
+            <Row>
+            <h1 className="header animated fadeInDown delay 3s text-center">HyperWord 2</h1>
                 <div>
-                  <div className='user-profile'>
-                    <img src={this.state.user.photoURL} style={{borderRadius : "50%", height : "100px", width : "auto"}}/>
-                  </div>
-                </div>
-                :
-                <div className='wrapper'>
-                  <p>You must be logged in to record your high score.</p>
-                </div>
-              }
+                    {this.state.user ?
+                    <button onClick={this.logout}>Logout</button>                
+                    :
+                    <button onClick={this.login}>Log In</button>              
+                    }
+                    {this.state.user ?
+                        <div className='profImg'>
+                            <img src={this.state.user.photoURL} style={{borderRadius : "50%", height : "50px", width : "auto"}}/>
+                        </div>
+                    :
+                        <p>You must be logged in to record your high score.</p>
+                    }     
 
-                <section className='add-item'>
-                      <form onSubmit={this.handleSubmit}>
+                {/* <section className='add-item'>
+                    <form onSubmit={this.handleSubmit}>
                         <button>Add Item</button>
-                      </form>
-                </section>
-              </div>
-                <Row>
-                    <Card winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}} lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}} winbtnhidden={this.state.winbtnhidden} lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit}>
-                    
-                    
-                    </Card>
-                </Row>
-                <Row className="text-center">
-                    <CurrentLevel level={this.state.level} />
-                </Row>
-                <Row className="text-center">
-                    <TotalUserScore totalUserScore={this.state.totalUserScore} />
-                </Row>
-                <Row className="text-center">
-                    <Timer seconds={this.state.secondsLeft}/>
-                </Row>
-                <Row className="text-center">
-                    <AnswerSpace guesses={this.state.lettersGuessedArray.join("")}/>
-                </Row>
-                <Row className="text-center">
-                    <UserWordValue score={this.state.userWordValue}/>
-                </Row>
-                <Row className="text-center">
-                <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
-                </Row>
-            </div>
-        );
-    };
-        
+                    </form>
+                </section> */}
+                </div>
+            </Row>
+            <Row>
+                <Card winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}} lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}} winbtnhidden={this.state.winbtnhidden} lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif" randomPOS={this.state.randomPOS} targetScore={this.state.targetScore} resultsMessage={this.state.resultsMessage} lostPlayAgain={this.restartGame} wonPlayAgain={this.nextLevel} wonQuit={this.wonQuit} lostQuit={this.lostQuit}>
+                
+                
+                </Card>
+            </Row>
+            <Row className="text-center">
+                <CurrentLevel level={this.state.level} />
+            </Row>
+            <Row className="text-center">
+                <TotalUserScore totalUserScore={this.state.totalUserScore} />
+            </Row>
+            <Row className="text-center">
+                <Timer seconds={this.state.secondsLeft}/>
+            </Row>
+            <Row className="text-center">
+                <AnswerSpace guesses={this.state.lettersGuessedArray.join("")}/>
+            </Row>
+            <Row className="text-center">
+                <UserWordValue score={this.state.userWordValue}/>
+            </Row>
+            <Row className="text-center">
+            <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
+            </Row>
+        </div>
+    );
+};
+    
 };    
 
-// export default Game;
+//export default Game;

@@ -3,7 +3,7 @@ import "./CardBtnLoss.css";
 
 const CardBtnLoss = props => {
 
-  return (<button
+  return (<button className="loss"
     style={props.style} className={props.classname} onClick={props.onClick} value={props.value} lossbtnhidden={props.lossbtnhidden}
   >
   {props.value}

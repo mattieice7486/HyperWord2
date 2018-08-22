@@ -87,26 +87,29 @@ export default class LoginPage extends React.Component{
 
   render(){
     return(
-      <Container>
+    
         <div>
+          <h1 className="header animated fadeInDown delay 3s text-center">HyperWord 2</h1>
+
+
           {this.state.user ?
-            <button onClick={this.logout}>Logout</button>                
+            <button className="logout" onClick={this.logout}>Logout</button>                
           :
-            <button onClick={this.login}>Log In</button>              
+            <button className="login" onClick={this.login}>Log In</button>              
           }
           {this.state.user ?
             <div>
-              <div className='user-profile'>
-                <img src={this.state.user.photoURL} />
-              </div>
+            <div className='user-profile'>
+            <img src={this.state.user.photoURL} style={{borderRadius : "50%", height : "50px", width : "auto", position: "absolute", top: "80px", left: "200px"}}/>
             </div>
+          </div>
             :
             <div className='wrapper'>
-              <p>You must be logged in to record your high score.</p>
-            </div>
+            <p className="animated zoomIn">You must be logged in to record your high score.</p>
+        </div>
           }
         </div>
-      </Container>
+      
     );
   }
 }

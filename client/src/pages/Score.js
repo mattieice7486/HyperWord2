@@ -96,10 +96,13 @@ class Score extends Component {
     }
     render() {
       return (
-        <div className='container'>
+        <div className="container">
+        
           <header>
-              <div className="wrapper">
-                <h1>Leaderboard</h1>         
+
+              <div className="title">
+              
+                <h2 className="leaderboard">Leaderboard</h2>         
               </div>
           </header>
             <table className="table table-striped">

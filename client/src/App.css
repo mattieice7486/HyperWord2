@@ -36,8 +36,9 @@
   
   .container {
     margin-top: 100px;
-    border: 5px solid rgb(204, 194, 194);
+    border: 3px solid rgb(204, 194, 194);
     background-color: transparent;
+    box-shadow: 10px 10px darkmagenta;
   }
   
   .header {
@@ -55,21 +56,17 @@
     font-size: 30px;
     font-weight: bolder;
     opacity: 1;
-    margin: 30px, 0px, 10px, 0px;
+    margin: auto;
     padding: 15px;
   }
   
   user profile image 
-  img {
+  .user-pro {
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    position: absolute;
-    top: 80px;
-    left:400px;
-    border: 1px solid darkmagenta;
-    background-color: deepskyblue;
-    box-shadow: 2px 2px 1px white;
+
+ 
   
   }
   
@@ -79,7 +76,7 @@
     border-radius: 50%;
     position: absolute;
     top: 80px;
-    right: 400px;
+    right: 200px;
     font-size: 13px;
     color:#000000;
     box-shadow: 2px 2px 1px white;
@@ -89,16 +86,16 @@
   }
   
   .login {
-    height: 50px;
-    width: 75px;
+    height: 100px;
+    width: 125px;
     border-radius: 20%;
-    position: absolute;
-    top: 410px;
     color:#000000;
     box-shadow: 2px 2px 1px white;
     text-align: center;
     border: 1px solid darkmagenta;
-    background-color: deepskyblue;
+    background-color:  rgb(130, 193, 214); /* For browsers that do not support gradients */
+    background-image: linear-gradient(deepskyblue, rgb(115, 168, 165)); 
+    margin: 15px;
   }
   
   .instruct {
@@ -148,11 +145,34 @@
  }
 
  thead {
-
-  color: deepskyblue;
+  color: darkmagenta;
+  font-size: 25px;
   font-weight: bold;
-  background-color:#ded9f0;
-  text-align: center;
-  text-shadow: 1px 1px red;
-
+  background-color:#b9b4cf;
+  text-shadow: 1px 1px #ffffff;
  }
+
+ th {
+   text-align: center;
+ }
+
+ button2 {
+  height: 50px;
+  width: 125px;
+  border-radius: 20%;
+  position: absolute;
+  margin: 30px;
+  color:#000000;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
+}
+
+.leaderboard {
+  color: rgba(45, 202, 241, 0.993);
+  font-size: 50px;
+  font-weight: bolder;
+  opacity: 1;
+  margin: auto;
+  padding: 5%;
+}
