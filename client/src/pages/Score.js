@@ -50,7 +50,7 @@ class Score extends Component {
         let newState = [];
         let counter = 0;
         for (let item in items) {
-          if (counter > 9) break;
+          if (counter > 49) break;
           newState.push({
             id: item,
             user: items[item].user,
@@ -77,7 +77,6 @@ class Score extends Component {
       this.setState({
         items: items
       });
-      console.log(items);
     }
 
     sortByRound() {
@@ -90,10 +89,6 @@ class Score extends Component {
       });
     }
 
-    removeItem(itemId) {
-      const itemRef = firebase.database().ref(`/Users/${itemId}`);
-      itemRef.remove();
-    }
     render() {
       return (
         <div className='container'>

@@ -308,23 +308,23 @@ class Game extends Component {
                 </Row>
 
                 <div className='container'>
-                {this.state.user ?
-                <button onClick={this.logout}>Logout</button>                
-              :
-                <button onClick={this.login}>Log In</button>              
-              }
-              
-              {this.state.user ?
-                <div>
-                  <div className='user-profile'>
-                    <img src={this.state.user.photoURL} style={{borderRadius : "50%", height : "100px", width : "auto"}}/>
-                  </div>
-                </div>
-                :
-                <div className='wrapper'>
-                  <p>You must be logged in to record your high score.</p>
-                </div>
-              }
+                    {this.state.user ?
+                    <button onClick={this.logout}>Logout</button>                
+                    :
+                    <button onClick={this.login}>Log In</button>              
+                    }
+                
+                    {this.state.user ?
+                        <div>
+                        <div className='user-profile'>
+                            <img src={this.state.user.photoURL} style={{borderRadius : "50%", height : "100px", width : "auto"}}/>
+                        </div>
+                        </div>
+                        :
+                        <div className='wrapper'>
+                        <p>You must be logged in to record your high score.</p>
+                        </div>
+                    }
 
                 <Row>
                     <Card
@@ -357,7 +357,7 @@ class Game extends Component {
                     <UserWordValue score={this.state.userWordValue} />
                 </Row>
                 <Row className="text-center">
-                <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
+                    <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
                 </Row>
             </div>
             </div>

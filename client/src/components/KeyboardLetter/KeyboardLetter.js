@@ -6,9 +6,9 @@ const KeyboardLetter = (props) => (
     onClick={props.onClick}
     value={props.value}
     datavalue={props.datavalue}
-    {...props}
   >
-  {props.value}
+  <span style={{fontSize: 16}} value={props.value} datavalue={props.datavalue}>{props.value}</span>
+  <span style={{fontSize: 10}} value={props.value} datavalue={props.datavalue}>{props.datavalue}</span>
   </button>
 );
 
