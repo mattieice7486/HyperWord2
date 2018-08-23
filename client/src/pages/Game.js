@@ -123,6 +123,7 @@ class Game extends Component {
         });
     };
 
+
     clear = (event) => {
         event.preventDefault();
         var blankLetterArray = [];
@@ -133,6 +134,7 @@ class Game extends Component {
             userWordValue: 0
         });
     };
+
 
     backspace = (event) => {
         event.preventDefault();
@@ -160,11 +162,10 @@ class Game extends Component {
         });
     };
 
+
     win = () => {
-        console.log("you won!");
         var newWinningScore = this.state.secondsLeft * 10;
         this.setState({ scoreThisRound: newWinningScore });
-        //add round's score to total score AND POST TO DB/LEADERBOARD!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var newTotalScore = this.state.totalUserScore + newWinningScore;
         this.setState({
             winbtnhidden: false,
@@ -175,10 +176,6 @@ class Game extends Component {
 
 
     loss = () => {
-        //need some kind of message saying they lost
-        //give option to play again
-        //disable all buttons
-        console.log("you lost!")
         this.setState({
             resultsMessage: "Sorry, you lost!",
             lossbtnhidden: false,
@@ -187,15 +184,12 @@ class Game extends Component {
     };
 
 
-
     submit = (event) => {
         event.preventDefault();
         var joined = this.state.lettersGuessedArray.join("");
         var joinedArray = joined.toLowerCase();
         clearInterval(this.state.timer);
-
         var thisPOS = this.state.randomPOS[0].toUpperCase();
-
         if (this.state.userWordValue !== this.state.targetScore) {
             this.loss();
         } else {
@@ -260,9 +254,11 @@ class Game extends Component {
         });
     };
 
+
     restartGame = () => {
         window.location.reload();
     };
+
 
     handleChange(e) {
         this.setState({
@@ -365,20 +361,5 @@ class Game extends Component {
 
 };
 
-// <Row className="text-center">
-// {this.state.error && <p style={{ color: 'red' }}>Your answer must be a word!</p>}
-// </Row>
-
-// axios.post(`http://localhost:3001/api/check-word`, { guess: joinedArray })
-// .then((response) => {
-//     if (response.data === "its a word") {
-//         // Set the error state to null (in case there was a previous error and someone resubmited)
-//         return this.setState({
-//             error: null
-//         })
-
-// return this.setState({
-                    //     error: "Your guess must be a valid word"
-                    // });
 
 export default Game;
