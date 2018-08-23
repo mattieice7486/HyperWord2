@@ -171,7 +171,7 @@ class Game extends Component {
         this.setState({
             winbtnhidden: false,
             totalUserScore: newTotalScore,
-            resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
+            resultsMessage: "Congratulations! You scored " + newWinningScore + ". Your total score  is " + newTotalScore + " points. Play again?"
         });
     };
 
@@ -330,18 +330,17 @@ class Game extends Component {
             </Row>
                 <Row>
                     <Card
-                    winbtnstyle={{
-                        display: this.state.winbtnhidden? "none" : "block"}}
-                    lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}}
-                    winbtnhidden={this.state.winbtnhidden}
-                    lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif"
-                    randomPOS={this.state.randomPOS}
-                    targetScore={this.state.targetScore}
-                    resultsMessage={this.state.resultsMessage}
-                    lostPlayAgain={this.restartGame}
-                    wonPlayAgain={this.nextLevel}
-                    wonQuit={this.wonQuit}
-                    lostQuit={this.lostQuit}>
+                        winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}}
+                        lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}}
+                        winbtnhidden={this.state.winbtnhidden}
+                        lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif"
+                        randomPOS={this.state.randomPOS}
+                        targetScore={this.state.targetScore}
+                        resultsMessage={this.state.resultsMessage}
+                        lostPlayAgain={this.restartGame}
+                        wonPlayAgain={this.nextLevel}
+                        wonQuit={this.wonQuit}
+                        lostQuit={this.lostQuit}>
                     </Card>
                 </Row>
                 <Row>
