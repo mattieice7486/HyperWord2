@@ -36,8 +36,9 @@
   
   .container {
     margin-top: 100px;
-    border: 5px solid rgb(204, 194, 194);
+    border: 3px solid rgb(204, 194, 194);
     background-color: transparent;
+    box-shadow: 10px 10px darkmagenta;
   }
   
   .header {
@@ -55,22 +56,15 @@
     font-size: 30px;
     font-weight: bolder;
     opacity: 1;
-    margin: 30px, 0px, 10px, 0px;
+    margin: auto;
     padding: 15px;
   }
   
   user profile image 
-  img {
+  .user-pro {
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    position: absolute;
-    top: 80px;
-    left:400px;
-    border: 1px solid darkmagenta;
-    background-color: deepskyblue;
-    box-shadow: 2px 2px 1px white;
-  
   }
   
   .logout {
@@ -78,27 +72,28 @@
     width: 50px;
     border-radius: 50%;
     position: absolute;
-    top: 80px;
-    right: 400px;
+    top: 150px;
+    left: 200px;
     font-size: 13px;
     color:#000000;
     box-shadow: 2px 2px 1px white;
     text-align: center;
     border: 1px solid darkmagenta;
     background-color: deepskyblue;
+    margin-top: 10px;
   }
   
   .login {
-    height: 50px;
-    width: 75px;
+    height: 100px;
+    width: 125px;
     border-radius: 20%;
-    position: absolute;
-    top: 410px;
     color:#000000;
     box-shadow: 2px 2px 1px white;
     text-align: center;
     border: 1px solid darkmagenta;
-    background-color: deepskyblue;
+    background-color: deepskyblue; /* For browsers that do not support gradients */
+    background-image: linear-gradient(deepskyblue,rgb(175, 188, 192), #ffffff); 
+    margin: 15px;
   }
   
   .instruct {
@@ -109,16 +104,6 @@
     
   }
 
-/*.US {
-  color: #ffffff;
-  border: 1px solid darkmagenta;
-  border-radius: 40%;
-  width: 300px; 
-  opacity: 1;
-  padding: 5px;
-  position: relative;
-  
-}*/
 
  .card {
    float: left;
@@ -134,11 +119,8 @@
   width: 400px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   position: relative;
-  bottom: 330px;
-  margin: 0 auto;
   margin-top: 30px;
-  float: right;
-  margin-right: 350px;
+  margin-left: 800px;
  }
 
  .LeaderTable {
@@ -148,11 +130,47 @@
  }
 
  thead {
-
-  color: deepskyblue;
+  color: darkmagenta;
+  font-size: 25px;
   font-weight: bold;
-  background-color:#ded9f0;
-  text-align: center;
-  text-shadow: 1px 1px red;
-
+  background-color:#b9b4cf;
+  text-shadow: 1px 1px #ffffff;
  }
+
+ th {
+   text-align: center;
+ }
+
+
+
+.leaderboard {
+  color: rgba(45, 202, 241, 0.993);
+  font-size: 50px;
+  font-weight: bolder;
+  opacity: 1;
+  margin: auto;
+  padding: 5%;
+}
+
+img.us {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    position: absolute;
+    top: 80px;
+    left: 200px;
+    margin-top: 10px;
+  }
+.level {
+  margin-top: 10px;
+}  
+
+.userScore {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.answerSpace {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
