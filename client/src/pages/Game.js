@@ -236,6 +236,7 @@ class Game extends Component {
             winbtnhidden: true,
             resultsMessage: "Thanks for playing! Come back soon."
         });
+        this.handleSubmit();
     };
 
     nextLevel = () => {
@@ -289,13 +290,15 @@ class Game extends Component {
   
     handleSubmit(e) {
       const itemsRef = firebase.database().ref('Users');
-      const item = {
-        user: this.state.user.displayName,
-        round: this.state.level,
-        score: this.state.secondsLeft,
-        avatar: this.state.user.photoURL
-      }
-      itemsRef.push(item);
+      if (this.state.user !== null) {
+        const item = {
+            user: this.state.user.displayName,
+            round: this.state.level,
+            score: this.state.totalUserScore,
+            avatar: this.state.user.photoURL
+        }
+        itemsRef.push(item);
+      };
     };
 
 
