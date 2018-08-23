@@ -12,15 +12,14 @@ import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
 import Card from "../components/Card";
 import { EventEmitter } from "events";
+//import wordList from "word-list-json";
+//var wordList = require("word-list-json");
+var wordList = require("categorized-words");
 
 
 
-// need subscripts
 // disable buttons on click of submit
-// start button to begin game if time (see trivia game)
-// on submit, trigger next card with score, result, definition (loadNextDog function!)
-// merge with dev
-// deploy to heroku
+// merge & deploy
 // PREPARE PRESENTATION --
     // tell a story: how you got there (challenges, how you've worked through them)
     // use buzzwords: state, etc. -- JQuery to React how?
@@ -43,8 +42,7 @@ class Game extends Component {
         super(props);
 
     this.state = {
-        //randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
-        randomPOS: 'noun',
+        randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
         targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
         lettersGuessedArray: [],
         winbtnhidden: true,
@@ -210,24 +208,104 @@ class Game extends Component {
     submit = (event) => {
         event.preventDefault();
         //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        var joinedArray = this.state.lettersGuessedArray.join("");
+        var joined = this.state.lettersGuessedArray.join("");
+        var joinedArray = joined.toLowerCase();
+        //console.log(joinedArray);
         clearInterval(this.state.timer);
 
-        var thisPOS = this.state.randomPOS; /////
+        var thisPOS = this.state.randomPOS[0];
+
+        if (thisPOS == "A") {
+            var AList = wordList.A;
+            var AIndex = AList.indexOf(joinedArray);
+            //console.log(AIndex);
+            if (AIndex > -1) {
+                this.win();
+            }
+        } else if (thisPOS == "V") {
+            //console.log(wordList.V)
+            var VList = wordList.V;
+            var VIndex = VList.indexOf(joinedArray);
+            if (VIndex > -1) {
+                this.win();
+            }
+            //console.log(VIndex);
+        } else if (thisPOS == "N") {
+            //console.log(wordList.N)
+            var NList = wordList.N;
+            var NIndex = NList.indexOf(joinedArray);
+            if (NIndex > -1) {
+                this.win();
+            }
+            //console.log(NIndex);
+        }
+        //console.log(thisPOS);
 
         function checkForWord() {
-            axios.post(`http://localhost:3001/api/check-word`, { guess: 'wire', partOfSpeech: 'Noun' }) //switch
-            .then((response) => {
-                if (response.data !== "it's a word") {
-                    console.log("either that isn't a word or the POS is incorrect")
-                    this.loss();
-                } else {
-                    this.win();
-                }
-            })
-            .catch((error, response) => {
-                return;
-            });
+            
+
+            //if randomPOS is a verb, look for the word in V list!
+
+            // var n = wordList.indexOf(joinedArray); //switch to joinedArray
+            // if (n < 0) {
+            //     console.log("no matching word!");
+            //     this.loss();
+            // }
+            // else {
+            //     console.log("found word!")
+            //     //check POS?
+            // }
+            
+
+
+
+            // var elementPos = array.map(function(x) {
+            //     return x.id;
+            // }).indexOf(idYourAreLookingFor);
+            // var objectFound = array[elementPos];
+
+
+            // function search(nameKey, myArray){
+            //     for (var i=0; i < myArray.length; i++) {
+            //         if (myArray[i].name === nameKey) {
+            //             return myArray[i];
+            //         }
+            //     }
+            // }
+            
+            // var array = [
+            //     { name:"string 1", value:"this", other: "that" },
+            //     { name:"string 2", value:"this", other: "that" }
+            // ];
+            
+            // var resultObject = search("string 1", array);
+
+
+
+            
+            // let obj = wordList.find(o => o.name === joinedArray);
+            // console.log(obj);
+
+            // var elementPos = wordList.map(function(x) {return x.joinedArray; }).indexOf(joinedArray);
+            // var objectFound = wordList[elementPos];
+            // console.log(elementPos)
+
+
+            // wordList.findIndex(function(obj){return obj[0] == joinedArray});
+
+
+            // axios.post(`http://localhost:3001/api/check-word`, { guess: 'wire', partOfSpeech: 'Noun' }) //switch
+            // .then((response) => {
+            //     if (response.data !== "it's a word") {
+            //         console.log("either that isn't a word or the POS is incorrect")
+            //         this.loss();
+            //     } else {
+            //         this.win();
+            //     }
+            // })
+            // .catch((error, response) => {
+            //     return;
+            // });
         };
 
 checkForWord();

@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
 //const routes = require("./routes");
 const app = express();
-const { doesDefinitionExist } = require("./client/src/utils/API.js");
+// const { doesDefinitionExist } = require("./client/src/utils/API.js");
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,24 +26,24 @@ if (process.env.NODE_ENV === "production") {
 };
 
 
-// Route to check if the user input is a word
-app.post("/api/check-word", function(req, res) {
-    doesDefinitionExist(req.body.guess, req.body.partOfSpeech)
-        .then(function (isWord) {
-            //console.log(isWord);
-            if (isWord === true) {
-                console.log("that's a word")
-                return res.send("it's a word");
-            }
-            else if (isWord === false) {
-                console.log("that's not a word")
-                return res.send("it's not a word");
-            }
-        })
-        .catch(function(error) {
-            return res.send(error).status(400);
-        })
-});
+// // Route to check if the user input is a word
+// app.post("/api/check-word", function(req, res) {
+//     doesDefinitionExist(req.body.guess, req.body.partOfSpeech)
+//         .then(function (isWord) {
+//             //console.log(isWord); //false
+//             if (isWord === true) {
+//                 console.log("that's a word")
+//                 return res.send("it's a word");
+//             }
+//             else if (isWord === false) {
+//                 console.log("that's not a word")
+//                 return res.send("it's not a word");
+//             }
+//         })
+//         .catch(function(error) {
+//             return res.send(error).status(400);
+//         })
+// });
 
 
 // Send every other request to the React app
