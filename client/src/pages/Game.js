@@ -7,36 +7,22 @@ import Row from "../components/Row";
 import Col from "../components/Col";
 import Timer from "../components/Timer";
 import AnswerSpace from "../components/AnswerSpace";
-import UserWordValue from "../components/UserWordValue"; //for this round
+import UserWordValue from "../components/UserWordValue";
 import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
 import Card from "../components/Card";
 import { EventEmitter } from "events";
-//import wordList from "word-list-json";
-//var wordList = require("word-list-json");
 var wordList = require("categorized-words");
-
-
-
-// disable buttons on click of submit
-// merge & deploy
-// PREPARE PRESENTATION --
-    // tell a story: how you got there (challenges, how you've worked through them)
-    // use buzzwords: state, etc. -- JQuery to React how?
-    // focus more on demoing -- no powerpoint
-    // what we've taken from this class (how to juggle hw while working full-time)
 
 
 
 class Game extends Component {
 
     partsOfSpeech = [
-        "Noun",
-        "Verb",
-        "Adjective"
+        "noun",
+        "verb",
+        "adjective"
     ];
-
-
     
     constructor(props) {
         super(props);
@@ -67,7 +53,7 @@ class Game extends Component {
     this.handleSubmit = this.handleSubmit.bind(this); 
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-}
+    }
 
     timeOut = () => {
         var newSecondsCount = this.state.secondsLeft;
@@ -81,7 +67,7 @@ class Game extends Component {
         };
     };
 
-    componentDidMount() { //component = game, in this case
+    componentDidMount() {
         let timer = setInterval(this.timeOut, 1000);
         this.setState({ timer });
         auth.onAuthStateChanged((user) => {
@@ -122,7 +108,6 @@ class Game extends Component {
         newScoreArray.push(letterScore);
 
         function parse(item) {
-            //parse runningScoreArray to integers, then calculate total
             var parsed = parseInt(item);
             return parsed;
         };
@@ -160,7 +145,6 @@ class Game extends Component {
         newScoreArray.pop();
 
         function parse(item) {
-            //parse runningScoreArray to integers, then calculate total
             var parsed = parseInt(item);
             return parsed;
         };
@@ -187,8 +171,7 @@ class Game extends Component {
             totalUserScore: newTotalScore,
             resultsMessage: "Congratulations, you won! You scored " + newWinningScore + " points this round. Your total score so far is " + newTotalScore + " points. Would you like to play again?"
         });
-
-    }
+    };
 
 
     loss = () => {
@@ -207,119 +190,43 @@ class Game extends Component {
 
     submit = (event) => {
         event.preventDefault();
-        //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var joined = this.state.lettersGuessedArray.join("");
         var joinedArray = joined.toLowerCase();
-        //console.log(joinedArray);
         clearInterval(this.state.timer);
 
-        var thisPOS = this.state.randomPOS[0];
+        var thisPOS = this.state.randomPOS[0].toUpperCase();
 
-        if (thisPOS == "A") {
-            var AList = wordList.A;
-            var AIndex = AList.indexOf(joinedArray);
-            //console.log(AIndex);
-            if (AIndex > -1) {
-                this.win();
-            }
-        } else if (thisPOS == "V") {
-            //console.log(wordList.V)
-            var VList = wordList.V;
-            var VIndex = VList.indexOf(joinedArray);
-            if (VIndex > -1) {
-                this.win();
-            }
-            //console.log(VIndex);
-        } else if (thisPOS == "N") {
-            //console.log(wordList.N)
-            var NList = wordList.N;
-            var NIndex = NList.indexOf(joinedArray);
-            if (NIndex > -1) {
-                this.win();
-            }
-            //console.log(NIndex);
+        if (this.state.userWordValue !== this.state.targetScore) {
+            this.loss();
+        } else {
+            if (thisPOS == "A") {
+                var AList = wordList.A;
+                var AIndex = AList.indexOf(joinedArray);
+                if (AIndex > -1) {
+                    this.win();
+                } else {
+                    this.loss();
+                }
+            } else if (thisPOS == "V") {
+                var VList = wordList.V;
+                var VIndex = VList.indexOf(joinedArray);
+                if (VIndex > -1) {
+                    this.win();
+                } else {
+                    this.loss();
+                }
+            } else if (thisPOS == "N") {
+                var NList = wordList.N;
+                var NIndex = NList.indexOf(joinedArray);
+                if (NIndex > -1) {
+                    this.win();
+                }
+                else {
+                    this.loss();
+                }
+            };
         }
-        //console.log(thisPOS);
-
-        function checkForWord() {
-            
-
-            //if randomPOS is a verb, look for the word in V list!
-
-            // var n = wordList.indexOf(joinedArray); //switch to joinedArray
-            // if (n < 0) {
-            //     console.log("no matching word!");
-            //     this.loss();
-            // }
-            // else {
-            //     console.log("found word!")
-            //     //check POS?
-            // }
-            
-
-
-
-            // var elementPos = array.map(function(x) {
-            //     return x.id;
-            // }).indexOf(idYourAreLookingFor);
-            // var objectFound = array[elementPos];
-
-
-            // function search(nameKey, myArray){
-            //     for (var i=0; i < myArray.length; i++) {
-            //         if (myArray[i].name === nameKey) {
-            //             return myArray[i];
-            //         }
-            //     }
-            // }
-            
-            // var array = [
-            //     { name:"string 1", value:"this", other: "that" },
-            //     { name:"string 2", value:"this", other: "that" }
-            // ];
-            
-            // var resultObject = search("string 1", array);
-
-
-
-            
-            // let obj = wordList.find(o => o.name === joinedArray);
-            // console.log(obj);
-
-            // var elementPos = wordList.map(function(x) {return x.joinedArray; }).indexOf(joinedArray);
-            // var objectFound = wordList[elementPos];
-            // console.log(elementPos)
-
-
-            // wordList.findIndex(function(obj){return obj[0] == joinedArray});
-
-
-            // axios.post(`http://localhost:3001/api/check-word`, { guess: 'wire', partOfSpeech: 'Noun' }) //switch
-            // .then((response) => {
-            //     if (response.data !== "it's a word") {
-            //         console.log("either that isn't a word or the POS is incorrect")
-            //         this.loss();
-            //     } else {
-            //         this.win();
-            //     }
-            // })
-            // .catch((error, response) => {
-            //     return;
-            // });
-        };
-
-checkForWord();
-
-        // if (this.state.userWordValue !== this.state.targetScore) { //SWITCH BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //     console.log("sorry, your score doesn't match the targetScore!");
-        //     this.loss();
-        // } else {
-        //     checkForWord();
-        // };
-        
-
     };
-
 
     lostQuit = () => {
         this.setState({
@@ -335,7 +242,7 @@ checkForWord();
         });
     };
 
-    nextLevel = () => { //for when user wins and wants to continue to next level
+    nextLevel = () => {
         var newLevel = this.state.level + 1;
         let timer = setInterval(this.timeOut, 1000);
         this.setState({
@@ -351,7 +258,6 @@ checkForWord();
             randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
             targetScore: Math.floor(Math.random() * (15 - 7)) + 7
         });
-
     };
 
     restartGame = () => {
@@ -371,7 +277,7 @@ checkForWord();
             user: null
           });
         });
-       }
+    };
     
       login() {
         auth.signInWithPopup(provider) 
@@ -381,7 +287,7 @@ checkForWord();
               user
             });
           });
-      }
+      };
     
       handleSubmit(e) {
         e.preventDefault();
@@ -394,12 +300,7 @@ checkForWord();
           avatar: this.state.user.photoURL
         }
         itemsRef.push(item);
-        this.setState({
-          // username: '',
-          // userround: 0,
-          // userscore: 0
-        });
-      }
+      };
 
 
 
