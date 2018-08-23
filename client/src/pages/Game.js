@@ -209,19 +209,15 @@ class Game extends Component {
 
     submit = (event) => {
         event.preventDefault();
-        //console.log("submitted") //ok
         //disable all buttons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         var joinedArray = this.state.lettersGuessedArray.join("");
         clearInterval(this.state.timer);
 
-        var thisPOS = this.state.randomPOS;
-        //console.log(thisPOS);
-//does this.state.randomPOS match the POS from the dictionary?????????????????????????????????????????????????????????????
+        var thisPOS = this.state.randomPOS; /////
 
         function checkForWord() {
             axios.post(`http://localhost:3001/api/check-word`, { guess: 'wire', partOfSpeech: 'Noun' }) //switch
             .then((response) => {
-                //console.log(response.data)
                 if (response.data !== "it's a word") {
                     console.log("either that isn't a word or the POS is incorrect")
                     this.loss();

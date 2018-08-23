@@ -22,41 +22,38 @@ function doesPOSMatch (partOfSpeech, word) {
             var wordResults = data.data.results[0].lexicalEntries;
             
             for (var i=0; i<wordResults.length; i++) {
-                
-                //console.log("this: " + wordResults[i].lexicalCategory)
-                //console.log("random: " + partOfSpeech)
                 if (wordResults[i].lexicalCategory === partOfSpeech) {
                     count++;
-                    //return;
+                    return;
                     //console.log("correct POS! Count is " + count)
                 }
-                //console.log(count)
+            };
+            if (count >= 1) {
+                console.log(count)
+                return true; //works
             }
-            //console.log(count)
-            if (count > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        })
-        .catch(function (response, error) {
-            // Return false if we get a 404 response from Oxford
+            console.log("no hits") //doesn't work
             return false;
-        });
-}
+        })
+        // .catch(function (response, error) {
+        //     // Return false if we get a 404 response from Oxford
+        //     return false;
+        // });
+};
 
 
 module.exports = {
 
     doesDefinitionExist: function(word, partOfSpeech) { //see if it returns a definition
-        return axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word, headers)
+        // return axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word, headers)
+        return axios.get("https://od-api.oxforddictionaries.com/api/v1/entries/en/wire", headers)
             .then(function(data) {
                 // Return true if we get a 200 response from Oxford *AND* POS MATCHES
-                console.log("does it match?" + doesPOSMatch(partOfSpeech));
-                if (doesPOSMatch(partOfSpeech) == true) {
+                console.log("does it match? " + doesPOSMatch(partOfSpeech));
+                if (doesPOSMatch(partOfSpeech) === true) {
                     return true;
                 }
-                else if (doesPOSMatch(partOfSpeech) == false) {
+                else {
                     return false;
                 }
             })

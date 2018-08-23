@@ -23,13 +23,14 @@ app.use(function (request, response, next) {
 if (process.env.NODE_ENV === "production") {
     // app.use(express.static("/"));
     app.use(express.static("client/build"));
-}
+};
 
 
 // Route to check if the user input is a word
 app.post("/api/check-word", function(req, res) {
     doesDefinitionExist(req.body.guess, req.body.partOfSpeech)
         .then(function (isWord) {
+            //console.log(isWord);
             if (isWord === true) {
                 console.log("that's a word")
                 return res.send("it's a word");
