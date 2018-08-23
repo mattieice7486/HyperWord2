@@ -141,17 +141,7 @@
    text-align: center;
  }
 
- button.CardBtnLoss {
-  height: 50px;
-  width: 125px;
-  border-radius: 20%;
-  position: absolute;
-  margin: 30px;
-  color:#000000;
-  text-align: center;
-  border: 1px solid darkmagenta;
-  background-color: deepskyblue;
-}
+
 
 .leaderboard {
   color: rgba(45, 202, 241, 0.993);
@@ -185,18 +175,6 @@ img.us {
   margin-bottom: 10px;
 }
 
-lossbtnstyle {
 
-    height: 50px;
-    width: 100px;
-    border-radius: 20%;
-    position: absolute;
-    margin: 5px;
-    color:#000000;
-    text-align: center;
-    border: 1px solid darkmagenta;
-    background-color: deepskyblue;
-
-}
 
 
