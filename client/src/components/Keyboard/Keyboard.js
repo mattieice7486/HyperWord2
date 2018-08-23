@@ -4,12 +4,6 @@ import KeyboardSpecial from "../KeyboardSpecial";
 import "./Keyboard.css";
 import KeyboardSubmit from "../KeyboardSubmit";
 
-//see card & cardbutton.js for keys template
-//for now, just is right or wrong (don't worry about dictionary yet)
-//need to add subscripts!!
-
-//need function to push values to answerSpace?? shouldn't go here though, right?????????? How to access function here from Game.js? Game.function doesn't seem to work!!
-
 const Keyboard = props => (
   
 <div className="keyboard">    
@@ -34,8 +28,7 @@ const Keyboard = props => (
     <KeyboardLetter value={"F"} datavalue={4} onClick={props.letterClick} />
     <KeyboardLetter value={"G"} datavalue={2} onClick={props.letterClick} />
     <KeyboardLetter value={"H"} datavalue={4} onClick={props.letterClick} />
-    <KeyboardLetter value={"J"} datavalue={8} 
-    onClick={props.letterClick}/>
+    <KeyboardLetter value={"J"} datavalue={8} onClick={props.letterClick}/>
     <KeyboardLetter value={"K"} datavalue={5} onClick={props.letterClick} />
     <KeyboardLetter value={"L"} datavalue={1} onClick={props.letterClick} />
 </div>

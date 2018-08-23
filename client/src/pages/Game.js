@@ -53,6 +53,7 @@ class Game extends Component {
     this.handleSubmit = this.handleSubmit.bind(this); 
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     timeOut = () => {
@@ -181,6 +182,7 @@ class Game extends Component {
             lossbtnhidden: false,
             winbtnhidden: true
         });
+        this.handleSubmit();
     };
 
 
@@ -286,8 +288,6 @@ class Game extends Component {
     };
   
     handleSubmit(e) {
-      e.preventDefault();
-      console.log(this.state.user);
       const itemsRef = firebase.database().ref('Users');
       const item = {
         user: this.state.user.displayName,
@@ -326,13 +326,6 @@ class Game extends Component {
                 </div>
               }
 
-                <section className='add-item'>
-                      <form onSubmit={this.handleSubmit}>
-                        <button>Add Item</button>
-                      </form>
-                </section>
-              </div>
-
                 <Row>
                     <Card
                     winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}}
@@ -366,6 +359,7 @@ class Game extends Component {
                 <Row className="text-center">
                 <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
                 </Row>
+            </div>
             </div>
         );
     };
