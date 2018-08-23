@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import logo from "../../assets/logo.png";
 
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
 const Navbar = props => (
   <nav className="navbar navbar-default navbar-expand-lg navbar-light">
     <Link className="navbar-brand" to="/">
-      HyperWord 2
+      <img src={logo} />
     </Link>
     <div>
       <ul className="navbar-nav">

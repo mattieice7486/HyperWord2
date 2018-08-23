@@ -12,6 +12,7 @@ import CurrentLevel from "../components/CurrentLevel";
 import TotalUserScore from "../components/TotalUserScore";
 import Card from "../components/Card";
 import { EventEmitter } from "events";
+import logo from "../assets/logo.png";
 var wordList = require("categorized-words");
 
 
@@ -307,7 +308,7 @@ class Game extends Component {
         return (
             <div>
                 <Row>
-                    <h1 className="header animated fadeInDown delay 3s text-center">HyperWord 2</h1>
+                    <h1 className="header animated fadeInDown delay 3s text-center"><img src={logo} /></h1>
                 </Row>
 
                 <div className='container'>
