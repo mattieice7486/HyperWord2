@@ -3,12 +3,14 @@
   background-position: center;
   background-clip: content-box;
   border: 6px solid white;
-  height: 400px;
+  height: 300px;
   width: 400px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  position: relative;
-  margin: 0 auto;
+  position: absolute;
+  margin-left: 350px;
+
   margin-top: 30px;
+  float: left;
 }
 
 .card .fa-spinner {
@@ -17,7 +19,15 @@
   left: 25%;
   top: 25%;
 }
-/* 
-.wonPlayAgain {
-    display: "none"
-} */
+
+.CardBtnLoss {
+  height: 50px;
+  width: 100px;
+  border-radius: 20%;
+  position: absolute;
+  margin: 5px;
+  color:#000000;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
+}

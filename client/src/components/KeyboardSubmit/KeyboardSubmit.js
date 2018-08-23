@@ -3,7 +3,7 @@ import "./KeyboardSubmit.css";
 
 
 const KeyboardSubmit = props => (
-  <button
+  <button className="keyBoard"
     onClick={props.onClick} value={props.value}
     //className={`specialBtn ${props["value"]}`}
     //{...props} //is this necessary??

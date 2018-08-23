@@ -13,9 +13,9 @@ import "./App.css";
 
 const App = () => (
   <Router>
-    <div>
-      <Navbar />
-      <Wrapper>
+  <div>
+    <Navbar />
+    <Wrapper>
         <Route exact path="/" component={Game} />
         <Route exact path="/about" component={About} />
         <Route exact path="/score" component={Score} />

@@ -20,14 +20,19 @@ const Card = props => (
   >
     <PartOfSpeech randomPOS={props.randomPOS} />  
     <TargetScore targetScore={props.targetScore} />
-    <CardImg imgSrc={props.imgSrc} className="cardImage animated fadeOut"/>
+
+    <CardImg imgSrc={props.imgSrc} className={"cardImage"}/>
+
+
+<br />
+
     <ResultsMessage resultsMessage={props.resultsMessage}/>
 
-    <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Won: play again"} />
-    <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} onClick={props.wonQuit} value={"Won: quit"}/>
+    <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Play again"} />
+    <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} onClick={props.wonQuit} value={"Quit"}/>
 
-    <CardBtnLoss style={props.lossbtnstyle} lostbtnhidden={props.lossbtnhidden} onClick={props.lostPlayAgain} value={"Lost: play again"}/>
-    <CardBtnLoss style={props.lossbtnstyle} lostbtnhidden={props.lossbtnhidden} onClick={props.lostQuit} value={"Lost: quit"}/>
+    <CardBtnLoss style={props.lossbtnstyle} lostbtnhidden={props.lossbtnhidden} className={"wonPlayAgain"} onClick={props.lostPlayAgain} value={"Play again"}/>
+    <CardBtnLoss style={props.lossbtnstyle} lostbtnhidden={props.lossbtnhidden} onClick={props.lostQuit} value={"Quit"}/>
 
 
   </div>

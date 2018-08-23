@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Keyboard from "../components/Keyboard";
 import firebase from "firebase";
 import Firebase, { auth, provider } from '../utils/Firebase';
-
+//import { Link } from 'react-router';
 import Row from "../components/Row";
 import Col from "../components/Col";
 import Timer from "../components/Timer";
@@ -368,16 +368,21 @@ render() {
     return (
         <div>
             <Row>
-            <h1 className="header animated fadeInDown delay 3s text-center">HyperWord 2</h1>
+            {/* <h1 className="header animated fadeInDown delay 3s text-center">HyperWord 2</h1> */}
                 <div>
                     {this.state.user ?
-                    <button onClick={this.logout}>Logout</button>                
+                    <button className="logout" onClick={this.logout}>Logout</button>                
                     :
-                    <button onClick={this.login}>Log In</button>              
+                    <button className="login" onClick={this.login}>Log In</button>              
                     }
+
+            <Row className="level text-center animated wobble delay 3s">
+                    <CurrentLevel level={this.state.level} />
+            </Row>      
+
                     {this.state.user ?
-                        <div className='profImg'>
-                            <img src={this.state.user.photoURL} style={{borderRadius : "50%", height : "50px", width : "auto"}}/>
+                        <div className>
+                            <img className="us" src={this.state.user.photoURL} style={{borderRadius : "50%", height : "50px", width : "auto"}}/>
                         </div>
                     :
                         <p>You must be logged in to record your high score.</p>
@@ -396,21 +401,26 @@ render() {
                 
                 </Card>
             </Row>
-            <Row className="text-center">
-                <CurrentLevel level={this.state.level} />
+            <Row>
+                <div className="block animated slideInRight delay 3s">
+                    <Row className="userScore text-center">
+                    <TotalUserScore totalUserScore={this.state.totalUserScore} />
+                        <Timer seconds={this.state.secondsLeft}/>
+                    </Row>
+                    <Row className="answerSpace text-center">
+                        <AnswerSpace guesses={this.state.lettersGuessedArray.join("")}/>
+                    </Row>
+                    <Row className="text-center">
+                        <UserWordValue score={this.state.userWordValue}/>
+                        </Row>
+                </div>
             </Row>
-            <Row className="text-center">
-                <TotalUserScore totalUserScore={this.state.totalUserScore} />
-            </Row>
-            <Row className="text-center">
-                <Timer seconds={this.state.secondsLeft}/>
-            </Row>
-            <Row className="text-center">
-                <AnswerSpace guesses={this.state.lettersGuessedArray.join("")}/>
-            </Row>
-            <Row className="text-center">
-                <UserWordValue score={this.state.userWordValue}/>
-            </Row>
+
+        
+        
+          
+        
+
             <Row className="text-center">
             <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
             </Row>

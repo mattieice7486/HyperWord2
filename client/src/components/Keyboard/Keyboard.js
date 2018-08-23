@@ -1,3 +1,4 @@
+
 import React from "react";
 import KeyboardLetter from "../KeyboardLetter";
 import KeyboardSpecial from "../KeyboardSpecial";
@@ -15,7 +16,7 @@ const Keyboard = props => (
 <div className="keyboard">    
 
 <div className="row">
-    <KeyboardLetter value={"Q"} datavalue={10} onClick={props.letterClick} /> 
+    <KeyboardLetter value={"Q"} datavalue={10} onClick={props.letterClick} />
     <KeyboardLetter value={"W"} datavalue={4} onClick={props.letterClick} />
     <KeyboardLetter value={"E"} datavalue={1} onClick={props.letterClick} />
     <KeyboardLetter value={"R"} datavalue={1} onClick={props.letterClick} />
@@ -34,8 +35,7 @@ const Keyboard = props => (
     <KeyboardLetter value={"F"} datavalue={4} onClick={props.letterClick} />
     <KeyboardLetter value={"G"} datavalue={2} onClick={props.letterClick} />
     <KeyboardLetter value={"H"} datavalue={4} onClick={props.letterClick} />
-    <KeyboardLetter value={"J"} datavalue={8} 
-    onClick={props.letterClick}/>
+    <KeyboardLetter value={"J"} datavalue={8} onClick={props.letterClick} />
     <KeyboardLetter value={"K"} datavalue={5} onClick={props.letterClick} />
     <KeyboardLetter value={"L"} datavalue={1} onClick={props.letterClick} />
 </div>
@@ -51,9 +51,9 @@ const Keyboard = props => (
 </div>
 
 <div>
-    <KeyboardSpecial value={"Clear"} onClick={props.clear} />
-    <KeyboardSpecial value={"Backspace"} onClick={props.backspace} />
-    <KeyboardSubmit value={"Submit"} onClick={props.submit} />
+    <KeyboardSpecial value={" Clear"} onClick={props.clear} />
+    <KeyboardSpecial value={"Back"} onClick={props.backspace} />
+    <KeyboardSubmit value={" Submit"} onClick={props.submit} />
 </div>
 
 </div>
