@@ -3,7 +3,7 @@ import "./KeyboardSubmit.css";
 
 
 const KeyboardSubmit = props => (
-  <button className="keyBoard"
+  <button className="keyBoardSubmit"
     onClick={props.onClick} value={props.value}
   >
   {props.value}

@@ -2,15 +2,7 @@
   background-size: cover;
   background-position: center;
   background-clip: content-box;
-  border: 6px solid white;
-  height: 300px;
-  width: 400px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  position: absolute;
-  margin-left: 350px;
-
   margin-top: 30px;
-  float: left;
 }
 
 .card .fa-spinner {

@@ -1,116 +1,128 @@
 .App {
     text-align: center;
-  }
-  
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
-  }
-  
-  .App-header {
-    background-color: #222;
-    height: 150px;
-    padding: 20px;
-    color: white;
-  }
-  
-  .App-intro {
-    font-size: large;
-  }
-  
-  @keyframes App-logo-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  
-  body {
-    background-image: url("https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-    background-color: gray;
-    font-family: 'Baloo Bhai', cursive !important;
-    text-align: center;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    position: relative;
-  }
-  
-  .container {
-    margin-top: 100px;
-    border: 3px solid rgb(204, 194, 194);
-    background-color: transparent;
-    box-shadow: 10px 10px darkmagenta;
-  }
-  
-  .header {
-    color:#ffffff;
-    font-size: 50px;
-    font-weight: bolder;
-    opacity: 1;
-    margin-top: 20px;
-    height: 75px;
-    text-shadow: 3px 3px deepskyblue;
-  }
-  
-  p {
-    color: rgba(45, 202, 241, 0.993);
-    font-size: 30px;
-    font-weight: bolder;
-    opacity: 1;
-    margin: auto;
-    padding: 15px;
-  }
-  
-  user profile image 
-  .user-pro {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-  }
-  
-  .logout {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    position: absolute;
-    top: 150px;
-    left: 200px;
-    font-size: 13px;
-    color:#000000;
-    box-shadow: 2px 2px 1px white;
-    text-align: center;
-    border: 1px solid darkmagenta;
-    background-color: deepskyblue;
-    margin-top: 10px;
-  }
-  
-  .login {
-    height: 100px;
-    width: 125px;
-    border-radius: 20%;
-    color:#000000;
-    box-shadow: 2px 2px 1px white;
-    text-align: center;
-    border: 1px solid darkmagenta;
-    background-color: deepskyblue; /* For browsers that do not support gradients */
-    background-image: linear-gradient(deepskyblue,rgb(175, 188, 192), #ffffff); 
-    margin: 15px;
-  }
-  
-  .instruct {
-    color:#ffffff;
-    font-size: 20px;
-    font-weight: bold;
-    opacity: 1;
-    
-  }
+}
 
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
 
- .card {
-   float: left;
-   margin-left: 350px;
- }
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
 
- .block {
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+body {
+  background-image: url("https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-color: gray;
+  font-family: 'Baloo Bhai', cursive !important;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  text-shadow:  2px 2px 1px #525252;
+}
+
+.container {
+  margin-top: 100px;
+  border: 3px solid rgb(204, 194, 194);
+  background-color: transparent;
+  box-shadow: 10px 10px darkmagenta;
+}
+
+.header {
+  color:#ffffff;
+  font-size: 50px;
+  font-weight: bolder;
+  opacity: 1;
+  margin-top: 20px;
+  height: 75px;
+  text-shadow: 3px 3px deepskyblue;
+}
+
+p {
+  color: rgba(45, 202, 241, 0.993);
+  font-size: 30px;
+  font-weight: bolder;
+  opacity: 1;
+  margin: auto;
+  padding: 15px;
+}
+
+#loginStatement {
+  font-size: 18px;
+  text-align: left;
+  position: absolute;
+  margin-top: 5%;
+  margin-left: 5%;
+  width: 200px;
+}
+
+user profile image 
+.user-pro {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 15%;
+  left: 5%;
+}
+
+.logout {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  font-size: 13px;
+  color:#000000;
+  box-shadow: 2px 2px 1px white;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue;
+  margin-top: 10px;
+  z-index: 10;
+}
+  
+.login {
+  height: 80px;
+  width: 100px;
+  border-radius: 20%;
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  font-size: 28px;
+  color:#000000;
+  box-shadow: 2px 2px 1px white;
+  text-align: center;
+  border: 1px solid darkmagenta;
+  background-color: deepskyblue; /* For browsers that do not support gradients */
+  background-image: linear-gradient(deepskyblue,rgb(175, 188, 192), #ffffff); 
+  margin: 15px;
+  z-index: 10;
+}
+  
+.instruct {
+  color:#ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  opacity: 1;
+}
+
+.block {
   background-size: cover;
   background-position: center;
   background-clip: content-box;
@@ -121,27 +133,25 @@
   position: relative;
   margin-top: 30px;
   margin-left: 800px;
- }
+}
 
- .LeaderTable {
+.LeaderTable {
 
    background-color:#ded9f0;
    opacity: .9;
- }
+}
 
- thead {
+thead {
   color: darkmagenta;
   font-size: 25px;
   font-weight: bold;
   background-color:#b9b4cf;
   text-shadow: 1px 1px #ffffff;
- }
+}
 
- th {
-   text-align: center;
- }
-
-
+th {
+  text-align: center;
+}
 
 .leaderboard {
   color: rgba(45, 202, 241, 0.993);
@@ -153,25 +163,23 @@
 }
 
 img.us {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    position: absolute;
-    top: 250px;
-    left: 200px;
-    margin-top: 10px;
-  }
-.level {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 10%;
+  left: 5%;
   margin-top: 10px;
+}
+
+.level {
+  position: absolute;
+  top: 50%;
+  left: 5%;
 }  
 
 .userScore {
-  margin-top: 15px;
-  margin-bottom: 10px;
+  position: absolute;
+  top: 10%;
+  right: 5%;
 }
-
-.answerSpace {
-  margin-top: 15px;
-  margin-bottom: 10px;
-}
-

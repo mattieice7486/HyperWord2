@@ -1,9 +1,9 @@
-.lossbtnstyle {
-    background-color: deepskyblue; /* For browsers that do not support gradients */
-    background-image: linear-gradient(deepskyblue,rgb(175, 188, 192), #ffffff); 
-    border-radius: 20%;
-    height: 70px;
-    width: 80px;
-    font-weight: bold;
-    text-align: center;
-  }
+.loseBtn {
+  background-color: deepskyblue; /* For browsers that do not support gradients */
+  background-image: linear-gradient(deepskyblue,rgb(175, 188, 192), #ffffff); 
+  border-radius: 20%;
+  height: 40px;
+  width: 45px;
+  font-weight: bold;
+  text-align: center;
+}

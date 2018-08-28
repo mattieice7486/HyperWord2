@@ -1,5 +1,9 @@
 .timer {
-font-size: 30px;
-
-
+    font-size: 64px;
+    color: #fff;
+    background-color: #888;
+    border-radius: 50%;
+    padding: 5px;
+    width: 100px;
+    height: 100px;
 }

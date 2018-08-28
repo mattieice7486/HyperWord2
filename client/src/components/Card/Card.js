@@ -12,26 +12,16 @@ import "../TargetScore/TargetScore.css";
 //want to have part of speech and target score on here
 
 const Card = props => (
-  <div
-    className="card"
-    // style={{
-    //   backgroundImage: props.image ? `url(${props.image})` : "none"
-    // }}
-  >
-    <PartOfSpeech randomPOS={props.randomPOS} />  
-    <TargetScore targetScore={props.targetScore} />
-    <CardImg imgSrc={props.imgSrc}
-     className="cardImage"
-     />
-    <ResultsMessage resultsMessage={props.resultsMessage}/>
+  <div className="card">
+      <PartOfSpeech randomPOS={props.randomPOS} />  
+      <CardImg imgSrc={props.imgSrc}
+      className="cardImage"
+      />
+      <TargetScore targetScore={props.targetScore} />
+      <ResultsMessage resultsMessage={props.resultsMessage}/>
 
-    <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Won: play again"} />
-    <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} onClick={props.wonQuit} value={"Won: quit"}/>
-
-    <CardBtnLoss style={props.lossbtnstyle} lostbtnhidden={props.lossbtnhidden} onClick={props.lostPlayAgain} value={"Lost: play again"}/>
-    <CardBtnLoss style={props.lossbtnstyle} lostbtnhidden={props.lossbtnhidden} onClick={props.lostQuit} value={"Lost: quit"}/>
-
-
+      <CardBtnWin style={props.winbtnstyle} winbtnhidden={props.winbtnhidden} className={"wonPlayAgain"} onClick={props.wonPlayAgain} value={"Next Round"} />
+      <CardBtnLoss style={props.lossbtnstyle} lostbtnhidden={props.lossbtnhidden} onClick={props.lostPlayAgain} value={"Restart"}/>
   </div>
 );
 

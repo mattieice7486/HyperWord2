@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import firebase from "firebase";
-import Firebase, { auth, provider } from '../utils/Firebase';
+import { auth, provider } from '../utils/Firebase';
 import Keyboard from "../components/Keyboard";
 import Row from "../components/Row";
 import Col from "../components/Col";
@@ -77,6 +77,19 @@ class Game extends Component {
           } 
         });
         const itemsRef = firebase.database().ref('Users');
+        if (this.state.randomPOS === "noun") {
+            console.log(this)
+            this.style={color : "#ff0000"}
+        }
+        if (this.state.randomPOS === "adjective") {
+            console.log(this)
+            this.style={color : "#00ff00"}
+        }
+        if (this.state.randomPOS === "verb") {
+            console.log(this)
+            this.style={color : "#0000ff"}
+        }
+
         itemsRef.on('value', (snapshot) => {
           let items = snapshot.val();
           let newState = [];
@@ -224,21 +237,6 @@ class Game extends Component {
         }
     };
 
-    lostQuit = () => {
-        this.setState({
-            resultsMessage: "Thanks for playing! Come back soon.",
-            lossbtnhidden: true
-        });
-    };
-
-    wonQuit = () => {
-        this.setState({
-            winbtnhidden: true,
-            resultsMessage: "Thanks for playing! Come back soon."
-        });
-        this.handleSubmit();
-    };
-
     nextLevel = () => {
         var newLevel = this.state.level + 1;
         let timer = setInterval(this.timeOut, 1000);
@@ -255,13 +253,21 @@ class Game extends Component {
             randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
             targetScore: Math.floor(Math.random() * (15 - 7)) + 7
         });
-    };
+        console.log(this.state.randomPOS);
+        if (this.state.randomPOS === "noun") {
 
+        }
+        if (this.state.randomPOS === "verb") {
+
+        }
+        if (this.state.randomPOS === "adjective") {
+
+        }
+    };
 
     restartGame = () => {
         window.location.reload();
     };
-
 
     handleChange(e) {
       this.setState({
@@ -301,70 +307,57 @@ class Game extends Component {
       };
     };
 
-
-
     render() {
         return (
             <div>
                 <Row>
-
                 <div>
                     {this.state.user ?
-                    <button className="logout" onClick={this.logout}>Logout</button>                
-                    :
-                    <button className="login" onClick={this.login}>Log In</button>              
+                        <button className="logout" onClick={this.logout}>Logout</button>                
+                        :
+                        <button className="login" onClick={this.login}>Log In</button>              
                     }
-
-            <Row className="level text-center animated wobble delay 3s">
-                    <CurrentLevel level={this.state.level} />
-            </Row>      
-
                     {this.state.user ?
-                        <div className>
+                        <div className="profilePic">
                             <img className="us" src={this.state.user.photoURL} style={{borderRadius : "50%", height : "100px", width : "auto"}}/>
                         </div>
                         :
-                        <p>You must be logged in to record your high score.</p>
+                        <p id="loginStatement">You must be logged in to record your high score.</p>
                     }
                 </div>
-            </Row>
-                <Row>
-                    <Card
-                        winbtnstyle={{display: this.state.winbtnhidden? "none" : "block"}}
-                        lossbtnstyle={{display: this.state.lossbtnhidden? "none" : "block"}}
-                        winbtnhidden={this.state.winbtnhidden}
-                        lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif"
-                        randomPOS={this.state.randomPOS}
-                        targetScore={this.state.targetScore}
-                        resultsMessage={this.state.resultsMessage}
-                        lostPlayAgain={this.restartGame}
-                        wonPlayAgain={this.nextLevel}
-                        wonQuit={this.wonQuit}
-                        lostQuit={this.lostQuit}>
-                    </Card>
                 </Row>
-                <Row>
-                <div className="block animated slideInRight delay 3s">
-                    <Row className="userScore text-center">
+                <Row className="level text-center animated wobble delay 3s">
+                    <CurrentLevel level={this.state.level} />
+                </Row>      
+                    <div className="animated slideInLeft delay 3s">
+                        <Card
+                            winbtnstyle={{marginLeft : "48%", display: this.state.winbtnhidden? "none" : "block"}}
+                            lossbtnstyle={{marginLeft : "48%", display: this.state.lossbtnhidden? "none" : "block"}}
+                            winbtnhidden={this.state.winbtnhidden}
+                            lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif"
+                            randomPOS={this.state.randomPOS}
+                            targetScore={this.state.targetScore}
+                            resultsMessage={this.state.resultsMessage}
+                            lostPlayAgain={this.restartGame}
+                            wonPlayAgain={this.nextLevel}
+                            wonQuit={this.wonQuit}
+                            lostQuit={this.lostQuit}>
+                        </Card>
+                    </div>
+                <Row className="userScore text-center">
                     <TotalUserScore totalUserScore={this.state.totalUserScore} />
-                        <Timer seconds={this.state.secondsLeft}/>
-                    </Row>
-                    <Row className="answerSpace text-center">
-                        <AnswerSpace guesses={this.state.lettersGuessedArray.join("")}/>
-                    </Row>
-                    <Row className="text-center">
-                        <UserWordValue score={this.state.userWordValue}/>
-                        </Row>
-                </div>
-            </Row>
+                    <Timer seconds={this.state.secondsLeft}/>
+                </Row>
                 <Row className="text-center">
+                    <UserWordValue score={this.state.userWordValue}/>
+                        <Row className="answerSpace text-center">
+                            <AnswerSpace guesses={this.state.lettersGuessedArray.join("")}/>
+                        </Row>
                     <Keyboard letterClick={this.letterClick} clear={this.clear} backspace={this.backspace} submit={this.submit} />
                 </Row>
             </div>
-
         );
-    };
-        
+    };       
 };    
 
 

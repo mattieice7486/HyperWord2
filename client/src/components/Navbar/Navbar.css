@@ -7,7 +7,7 @@ nav.navbar.navbar-default {
   font-size: 80px;
   border-style: ridge;
   border-color: black;
-  height: 10%;
+  height: 7.5%;
 }
 
 .navbar-brand {
@@ -24,9 +24,10 @@ nav.navbar.navbar-default {
 
 
 li {
-  margin: auto 110px;
+  margin: auto 10px;
   color: white !important;
   font-size: 30px;
+  list-style: none;
 }
 
 a {

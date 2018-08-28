@@ -10,6 +10,7 @@ const AnswerSpace = (props) => {
                 Your letters: 
                 <br/>
                 <br/>
+                &nbsp;
                 {props.guesses.toString()}
             </h1>
         </div>
