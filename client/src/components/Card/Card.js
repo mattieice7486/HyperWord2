@@ -13,10 +13,10 @@ import "../TargetScore/TargetScore.css";
 
 const Card = props => (
   <div className="card">
-      <PartOfSpeech randomPOS={props.randomPOS} />  
       <CardImg imgSrc={props.imgSrc}
       className="cardImage"
       />
+      <PartOfSpeech randomPOS={props.randomPOS} />  
       <TargetScore targetScore={props.targetScore} />
       <ResultsMessage resultsMessage={props.resultsMessage}/>
 

@@ -2,7 +2,7 @@ import React from "react";
 import "./KeyboardSpecial.css";
 
 const KeyboardSpecial = props => (
-  <button className="keyBoard"
+  <button className="keyboardSpecial"
     onClick={props.onClick} value={props.value}
   >
   {props.value}

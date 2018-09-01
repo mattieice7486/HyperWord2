@@ -54,7 +54,7 @@ body {
 
 p {
   color: rgba(45, 202, 241, 0.993);
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bolder;
   opacity: 1;
   margin: auto;
@@ -98,13 +98,13 @@ user profile image
 }
   
 .login {
-  height: 80px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   border-radius: 20%;
   position: absolute;
   top: 25%;
   left: 5%;
-  font-size: 28px;
+  font-size: 18px;
   color:#000000;
   box-shadow: 2px 2px 1px white;
   text-align: center;
@@ -136,7 +136,6 @@ user profile image
 }
 
 .LeaderTable {
-
    background-color:#ded9f0;
    opacity: .9;
 }
@@ -171,12 +170,6 @@ img.us {
   left: 5%;
   margin-top: 10px;
 }
-
-.level {
-  position: absolute;
-  top: 50%;
-  left: 5%;
-}  
 
 .userScore {
   position: absolute;

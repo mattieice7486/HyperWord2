@@ -20,9 +20,6 @@ const Navbar = props => (
               : "nav-item"
           }
         >
-          <Link to="/game" className="nav-link">
-            Game
-          </Link>
         </li>
 
         <li
@@ -33,11 +30,9 @@ const Navbar = props => (
           }
         >
           <Link to="/score" className="nav-link">
-            Score
+            Hi-Score
           </Link>
         </li>
-        
-        <li><Link to="login">Login</Link></li>
       </ul>
     </div>
   </nav>

@@ -7,8 +7,8 @@ const KeyboardLetter = (props) => (
     value={props.value}
     datavalue={props.datavalue}
   >
-  <span style={{fontSize: 24}} value={props.value} datavalue={props.datavalue}>{props.value}</span>
-  <span style={{fontSize: 20}} value={props.value} datavalue={props.datavalue}>{props.datavalue}</span>
+  <span style={{fontSize: 18}} value={props.value} datavalue={props.datavalue}>{props.value}</span>
+  <span style={{fontSize: 14}} value={props.value} datavalue={props.datavalue}>{props.datavalue}</span>
   </button>
 );
 

@@ -33,7 +33,7 @@ class Game extends Component {
         lettersGuessedArray: [],
         winbtnhidden: true,
         lossbtnhidden: true,
-        resultsMessage: "Fill in the blanks with letters that add up to the target score. Your word must match the part of speech as well!",
+        resultsMessage: "Your word must match the part of speech and equal the Hit Points!",
         runningScoreArray: [],
         level: 1,
         userWordValue: 0,
@@ -319,7 +319,7 @@ class Game extends Component {
                     }
                     {this.state.user ?
                         <div className="profilePic">
-                            <img className="us" src={this.state.user.photoURL} style={{borderRadius : "50%", height : "100px", width : "auto"}}/>
+                            <img className="us" src={this.state.user.photoURL} style={{borderRadius : "50%", height : "50px", width : "auto"}}/>
                         </div>
                         :
                         <p id="loginStatement">You must be logged in to record your high score.</p>
@@ -337,16 +337,17 @@ class Game extends Component {
                             lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif"
                             randomPOS={this.state.randomPOS}
                             targetScore={this.state.targetScore}
+                            totalUserScore={this.state.totalUserScore}
                             resultsMessage={this.state.resultsMessage}
                             lostPlayAgain={this.restartGame}
-                            wonPlayAgain={this.nextLevel}
-                            wonQuit={this.wonQuit}
-                            lostQuit={this.lostQuit}>
+                            wonPlayAgain={this.nextLevel}>
                         </Card>
                     </div>
+                <Row>
+                    <Timer seconds={this.state.secondsLeft}/>
+                </Row>
                 <Row className="userScore text-center">
                     <TotalUserScore totalUserScore={this.state.totalUserScore} />
-                    <Timer seconds={this.state.secondsLeft}/>
                 </Row>
                 <Row className="text-center">
                     <UserWordValue score={this.state.userWordValue}/>

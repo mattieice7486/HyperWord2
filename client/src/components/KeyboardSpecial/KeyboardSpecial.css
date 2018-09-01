@@ -12,6 +12,16 @@
     outline: none;
   }
   
+  .keyboardSpecial {
+    background-color: deepskyblue; /* For browsers that do not support gradients */
+    background-image: linear-gradient(deepskyblue,rgb(175, 188, 192), #ffffff); 
+    border-radius: 20%;
+    height: 40px;
+    width: 65px;
+    font-weight: bold;
+    text-align: center;
+  }
+
   .pass {
     left: 1%;
     background: #E53935;
