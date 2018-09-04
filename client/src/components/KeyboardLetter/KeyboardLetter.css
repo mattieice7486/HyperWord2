@@ -2,8 +2,8 @@
   background-color: deepskyblue; /* For browsers that do not support gradients */
   background-image: linear-gradient(deepskyblue,rgb(175, 188, 192), #ffffff); 
   border-radius: 20%;
-  height: 23px;
-  width: 28px;
-  /* font-weight: bold; */
+  height: 28px;
+  width: 30px;
   text-align: center;
+  padding-left: 1%;
 }

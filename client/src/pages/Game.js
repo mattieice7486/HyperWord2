@@ -331,8 +331,8 @@ class Game extends Component {
                 </Row>      
                     <div className="animated slideInLeft delay 3s">
                         <Card
-                            winbtnstyle={{marginLeft : "48%", display: this.state.winbtnhidden? "none" : "block"}}
-                            lossbtnstyle={{marginLeft : "48%", display: this.state.lossbtnhidden? "none" : "block"}}
+                            winbtnstyle={{marginLeft : "46%", display: this.state.winbtnhidden? "none" : "block"}}
+                            lossbtnstyle={{marginLeft : "46%", display: this.state.lossbtnhidden? "none" : "block"}}
                             winbtnhidden={this.state.winbtnhidden}
                             lossbtnhidden={this.state.lossbtnhidden}imgSrc="https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif"
                             randomPOS={this.state.randomPOS}

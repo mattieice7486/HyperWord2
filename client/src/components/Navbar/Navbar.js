@@ -16,8 +16,8 @@ const Navbar = props => (
           className={
             window.location.pathname === "/" ||
             window.location.pathname === "/game"
-              ? "nav-item active"
-              : "nav-item"
+              // ? "nav-item active"
+              // : "nav-item"
           }
         >
         </li>
@@ -25,8 +25,8 @@ const Navbar = props => (
         <li
           className={
             window.location.pathname === "/leaderboard"
-              ? "nav-item active"
-              : "nav-item"
+              // ? "nav-item active"
+              // : "nav-item"
           }
         >
           <Link to="/score" className="nav-link">

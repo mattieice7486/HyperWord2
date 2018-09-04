@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Score from "./pages/Score";
 import Game from "./pages/Game";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
 import "./App.css";
 
@@ -17,7 +16,6 @@ const App = () => (
         <Route exact path="/score" component={Score} />
         <Route exact path="/game" component={Game} />
       </Wrapper>
-      <Footer />
     </div>
   </Router>
 );
