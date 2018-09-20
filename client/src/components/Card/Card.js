@@ -16,7 +16,7 @@ const Card = props => (
       <CardImg imgSrc={props.imgSrc}
       className="cardImage"
       />
-      <PartOfSpeech randomPOS={props.randomPOS} />  
+      <PartOfSpeech style={props.POScolor} randomPOS={props.randomPOS} />  
       <TargetScore targetScore={props.targetScore} />
       <ResultsMessage resultsMessage={props.resultsMessage}/>
 

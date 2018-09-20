@@ -28,7 +28,7 @@ class Game extends Component {
 
     this.state = {
         randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
-        targetScore: Math.floor(Math.random() * (15 - 7)) + 7,
+        targetScore: Math.floor(Math.random() * (15 - 7)) + 4,
         lettersGuessedArray: [],
         winbtnhidden: true,
         lossbtnhidden: true,
@@ -194,7 +194,7 @@ class Game extends Component {
             winbtnhidden: false,
             totalUserScore: newTotalScore,
             gifToDisplay: "https://i.giphy.com/media/pj30metmXzsoQU77pb/giphy.gif",
-            resultsMessage: "Congratulations! You scored " + newWinningScore + ". Your total score  is " + newTotalScore + " points. Play again?"
+            resultsMessage: "Congratulations! You scored " + newWinningScore + ". Your total score  is " + newTotalScore + " points."
         });
     };
 
@@ -261,10 +261,32 @@ class Game extends Component {
             runningScoreArray: [],
             scoreThisRound: 0,
             secondsLeft: 30,
+            gifToDisplay: null,
             randomPOS: this.partsOfSpeech[Math.floor(Math.random() * this.partsOfSpeech.length)],
             targetScore: Math.floor(Math.random() * (15 - 7)) + 7
         });
         console.log(this.state.randomPOS);
+        if (this.state.randomPOS === "noun") {
+            console.log(this);
+            this.style={color : "#ff0000"};
+            this.setState({
+                gifToDisplay: "https://media.giphy.com/media/SIulatisvJhV7KPfFz/giphy.gif"
+            });
+        };
+        if (this.state.randomPOS === "adjective") {
+            console.log(this);
+            this.style={color : "#00ff00"};
+            this.setState({
+                gifToDisplay: "https://i.giphy.com/media/EPYJo9G2ZwXwoCIxJz/giphy.gif"
+            });
+        };
+        if (this.state.randomPOS === "verb") {
+            console.log(this);
+            this.style={color : "#0000ff"};
+            this.setState({
+                gifToDisplay: "https://i.giphy.com/media/xVvXhryyKL41I5iWa0/giphy.gif"
+            });
+        };
         // if (this.state.randomPOS === "noun") {
 
         // }
@@ -347,6 +369,7 @@ class Game extends Component {
                             winbtnhidden={this.state.winbtnhidden}
                             lossbtnhidden={this.state.lossbtnhidden} imgSrc={this.state.gifToDisplay}
                             randomPOS={this.state.randomPOS}
+                            POScolor={{color : "#445566"}}
                             targetScore={this.state.targetScore}
                             totalUserScore={this.state.totalUserScore}
                             resultsMessage={this.state.resultsMessage}
